@@ -23,7 +23,20 @@ public class PixBuilderTest {
     }
 
     @Test
-    public void shouldNotBuildValidPi_nullMerchantName() {
+    public void shouldBuildValidPix_NoAmount() {
+        assertDoesNotThrow(
+                () -> PixBuilder
+                .staticPix()
+                .merchantName("John Doe")
+                .merchantCity("Porto Alegre")
+                .merchantAmount(null)
+                .txid("0512TX123456789")
+                .pixKey("a2eb0360-493e-96b1-ac86-22df16706d7a")
+                .build());
+    }
+
+    @Test
+    public void shouldNotBuildInvalidPix_MerchantIsNull() {
         // null
         IllegalStateException nullException = assertThrows(IllegalStateException.class, () -> PixBuilder
                 .staticPix()
@@ -38,7 +51,7 @@ public class PixBuilderTest {
     }
 
     @Test
-    public void shouldNotBuildValidPi_longMerchantName() {
+    public void shouldNotBuildInvalidPix_LargeMerchantName() {
         IllegalArgumentException sizeException = assertThrows(IllegalArgumentException.class, () -> PixBuilder
                 .staticPix()
                 .merchantName("A".repeat(100))
