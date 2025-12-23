@@ -24,7 +24,7 @@ public class PixBuilderTest {
 
     @Test
     public void shouldBuildValidPix_NoAmount() {
-        assertDoesNotThrow(
+        String validPix = assertDoesNotThrow(
                 () -> PixBuilder
                 .staticPix()
                 .merchantName("John Doe")
@@ -33,6 +33,8 @@ public class PixBuilderTest {
                 .txid("0512TX123456789")
                 .pixKey("a2eb0360-493e-96b1-ac86-22df16706d7a")
                 .build());
+
+        assertNotNull(validPix);
     }
 
     @Test
