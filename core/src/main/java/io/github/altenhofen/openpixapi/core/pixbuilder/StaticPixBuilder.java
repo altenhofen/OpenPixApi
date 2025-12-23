@@ -1,5 +1,7 @@
 package io.github.altenhofen.openpixapi.core.pixbuilder;
 
+import io.github.altenhofen.openpixapi.core.payload.PixPayloadFactory;
+
 public class StaticPixBuilder extends AbstractPixBuilder<StaticPixBuilder> {
 
     private String pixKey;

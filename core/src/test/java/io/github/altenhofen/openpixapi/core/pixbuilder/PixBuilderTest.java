@@ -31,7 +31,7 @@ public class PixBuilderTest {
                 .merchantCity("Porto Alegre")
                 .merchantAmount(null)
                 .txid("0512TX123456789")
-                .pixKey("a2eb0360-493e-96b1-ac86-22df16706d7a")
+                .pixKey("+5551999999999")
                 .build());
 
         assertNotNull(validPix);

@@ -1,8 +1,7 @@
-package io.github.altenhofen.openpixapi.core.pixbuilder;
+package io.github.altenhofen.openpixapi.core.payload;
 
 
 import io.github.altenhofen.openpixapi.core.field.CompositeEMVField;
-import io.github.altenhofen.openpixapi.core.field.EMVCRC16;
 import io.github.altenhofen.openpixapi.core.field.EMVField;
 import io.github.altenhofen.openpixapi.core.formatter.*;
 
@@ -10,6 +9,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
+
+import static io.github.altenhofen.openpixapi.core.payload.PixPayload.appendCRC;
 
 public final class PixPayloadFactory {
 
@@ -37,47 +38,43 @@ public final class PixPayloadFactory {
         }
 
 
-        String payload =
+        PixPayload payload = new PixPayload(
                 payloadFormatIndicator()
-                        + pointOfInitiationMethod()
-                        + merchantAccount(pixKey)
-                        + merchantCategoryCode()
-                        + transactionCurrency()
-                        + transactionAmount(amount)
-                        + countryCode()
-                        + merchantName(merchantName)
-                        + merchantCity(merchantCity)
-                        + additionalData(txid);
+                , pointOfInitiationMethod()
+                , merchantAccount(pixKey)
+                , merchantCategoryCode()
+                , transactionCurrency()
+                , transactionAmount(amount)
+                , countryCode()
+                , merchantName(merchantName)
+                , merchantCity(merchantCity)
+                , additionalData(txid)
+                );
 
-        return appendCRC(payload);
+        return appendCRC(payload.toString());
     }
 
 
-    private static String appendCRC(String payload) {
-        String toSign = payload + "6304";
-        String crc = EMVCRC16.calculate(toSign);
-        return toSign + crc;
-    }
 
-    private static String payloadFormatIndicator() {
+    private static EMVField<Integer> payloadFormatIndicator() {
         return new EMVField<Integer>(
                 "Payload Format Indicator",
                 "00",
                 1,
                 new LengthFormatter(2, PaddingPolicy.LEFT)
-        ).serialize();
+        );
     }
 
-    private static String pointOfInitiationMethod() {
+    private static EMVField<Integer> pointOfInitiationMethod() {
         return new EMVField<Integer>(
                 "Point Initiation Method",
                 "01",
                 11,
                 new LengthFormatter(2, PaddingPolicy.LEFT)
-        ).serialize();
+        );
     }
 
-    private static String merchantAccount(String pixKey) {
+    private static CompositeEMVField merchantAccount(String pixKey) {
         EMVField<String> globallyUniqueIdentifier = new EMVField<String>(
                 "Globally Unique Identifier",
                 "00",
@@ -102,30 +99,30 @@ public final class PixPayloadFactory {
                 "Merchant Account Information",
                 "26",
                 List.of(globallyUniqueIdentifier, pixKeyField) // ,additionalInformation) we remove this because most banks do
-        ).serialize();
+        );
     }
 
-    private static String merchantCategoryCode() {
+    private static EMVField<Integer> merchantCategoryCode() {
         return new EMVField<Integer>(
                 "Merchant Category Code",
                 "52",
                 0,
                 new LengthFormatter(4, PaddingPolicy.LEFT)
-        ).serialize();
+        );
     }
 
-    private static String transactionCurrency() {
+    private static EMVField<Integer> transactionCurrency() {
         return new EMVField<Integer>(
                 "Transaction Currency",
                 "53",
                 986,
                 new LengthFormatter(3, PaddingPolicy.LEFT)
-        ).serialize();
+        );
     }
 
-    private static String transactionAmount(BigDecimal amount) {
+    private static EMVField<BigDecimal> transactionAmount(BigDecimal amount) {
         if (amount == null) {
-            return ""; // allowed for static Pix
+            return null; // allowed by pix standard
         }
 
         BigDecimal normalized = amount
@@ -137,28 +134,28 @@ public final class PixPayloadFactory {
                 "54",
                 normalized,
                 new AmountFormatter()
-        ).serialize();
+        );
     }
 
-    private static String countryCode() {
+    private static EMVField<String> countryCode() {
         return new EMVField<String>(
                 "Country Code",
                 "58",
                 "BR",
                 new StringFormatter(2, CharsetPolicy.UPPERCASE_ALPHANUMERIC, PaddingPolicy.NONE)
-        ).serialize();
+        );
     }
 
-    private static String merchantName(String name) {
+    private static EMVField<String> merchantName(String name) {
         return new EMVField<String>(
                 "Merchant Name",
                 "59",
                 name,
                 new StringFormatter(25, CharsetPolicy.ALPHANUMERIC, PaddingPolicy.NONE)
-        ).serialize();
+        );
     }
 
-    private static String merchantCity(String merchantCity) {
+    private static EMVField<String> merchantCity(String merchantCity) {
         String normalized = merchantCity
                 .trim()
                 .toUpperCase();
@@ -167,12 +164,12 @@ public final class PixPayloadFactory {
                 "60",
                 normalized,
                 new StringFormatter(15, CharsetPolicy.ALPHANUMERIC, PaddingPolicy.NONE)
-        ).serialize();
+        );
     }
 
-    private static String additionalData(String txid) {
+    private static CompositeEMVField additionalData(String txid) {
         if (txid == null || txid.isBlank()) {
-            return "";
+            return null;
         }
 
         return new CompositeEMVField(
@@ -181,9 +178,7 @@ public final class PixPayloadFactory {
                 List.of(
                         new EMVField<>("TXID", "05", txid,
                                 new StringFormatter(25, CharsetPolicy.ALPHANUMERIC, PaddingPolicy.NONE
-                                )))).serialize();
+                                ))));
     }
-
-
 }
 

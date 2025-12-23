@@ -1,7 +1,7 @@
 package io.github.altenhofen.openpixapi.core.formatter;
 
 public enum CharsetPolicy {
-    ALPHANUMERIC("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz./-:* "),
+    ALPHANUMERIC("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz./+-:* "),
     UPPERCASE_ALPHANUMERIC("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
     DIGITS_ONLY("0123456789"),
     ;
