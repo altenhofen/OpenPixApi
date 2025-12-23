@@ -1,6 +1,6 @@
 package io.github.altenhofen.openpixapi.core.formatter;
 
-final class StringFormatter implements EMVFormatter<String> {
+public final class StringFormatter implements EMVFormatter<String> {
     final private int maxLength;
     final private CharsetPolicy permittedCharset;
     final private PaddingPolicy paddingPolicy;

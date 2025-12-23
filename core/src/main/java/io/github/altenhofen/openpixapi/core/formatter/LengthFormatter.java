@@ -1,6 +1,6 @@
 package io.github.altenhofen.openpixapi.core.formatter;
 
-public class LengthFormatter  implements EMVFormatter<Integer>{
+public class LengthFormatter implements EMVFormatter<Integer>{
     final private int maxLength;
     final private CharsetPolicy charsetPolicy;
     final private PaddingPolicy paddingPolicy;
@@ -14,7 +14,8 @@ public class LengthFormatter  implements EMVFormatter<Integer>{
     @Override
     public String format(Integer value) {
         String valueString = value.toString();
-        if (valueString.length() > maxLength) {
+        int valueStringLength = valueString.length();
+        if (valueStringLength > maxLength) {
             throw new IllegalArgumentException(
                     String.format("Length exceeds maximum of %d", maxLength)
             );
