@@ -1,11 +1,11 @@
 package io.github.altenhofen.openpixapi.core.formatter;
 
-public class LengthFormatter implements EMVFormatter<Integer>{
+public class DigitFormatter implements EMVFormatter<Integer>{
     final private int maxLength;
     final private CharsetPolicy charsetPolicy;
     final private PaddingPolicy paddingPolicy;
 
-    public LengthFormatter(int maxLength, PaddingPolicy paddingPolicy) {
+    public DigitFormatter(int maxLength, PaddingPolicy paddingPolicy) {
         this.maxLength = maxLength;
         this.charsetPolicy = CharsetPolicy.DIGITS_ONLY;
         this.paddingPolicy = paddingPolicy;

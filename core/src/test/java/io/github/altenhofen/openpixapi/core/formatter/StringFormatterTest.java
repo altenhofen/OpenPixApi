@@ -8,38 +8,35 @@ import static org.junit.jupiter.api.Assertions.*;
 public class StringFormatterTest {
     @Test
     void shouldFormatWithLeftPadding() {
-        StringFormatter formatter = new StringFormatter(
+        DigitFormatter formatter = new DigitFormatter(
                 5,
-                CharsetPolicy.DIGITS_ONLY,
                 PaddingPolicy.LEFT
         );
 
-        String result = formatter.format("12");
+        String result = formatter.format(12);
 
         assertEquals("00012", result);
     }
 
     @Test
     void shouldFormatWithRightPadding() {
-        StringFormatter formatter = new StringFormatter(
+        DigitFormatter formatter = new DigitFormatter(
                 5,
-                CharsetPolicy.DIGITS_ONLY,
                 PaddingPolicy.RIGHT
         );
 
-        String result = formatter.format("12");
+        String result = formatter.format(12);
         assertEquals("12000", result);
     }
 
     @Test
     void shouldReturnSameValueWhenPaddingIsNone() {
-        StringFormatter formatter = new StringFormatter(
+        DigitFormatter formatter = new DigitFormatter(
                 2,
-                CharsetPolicy.DIGITS_ONLY,
                 PaddingPolicy.NONE
         );
 
-        String result = formatter.format("12");
+        String result = formatter.format(12);
         assertEquals("12", result);
     }
 
@@ -47,8 +44,7 @@ public class StringFormatterTest {
     void shouldThrowWhenCharacterIsNotAllowed() {
         StringFormatter formatter = new StringFormatter(
                 5,
-                CharsetPolicy.DIGITS_ONLY,
-                PaddingPolicy.LEFT
+                CharsetPolicy.DIGITS_ONLY
         );
 
         IllegalArgumentException ex = assertThrows(
@@ -64,8 +60,7 @@ public class StringFormatterTest {
     void shouldThrowWhenValueExceedsMaxLength() {
         StringFormatter formatter = new StringFormatter(
                 3,
-                CharsetPolicy.ALPHANUMERIC,
-                PaddingPolicy.NONE
+                CharsetPolicy.ALPHANUMERIC
         );
 
         assertThrows(
@@ -78,8 +73,7 @@ public class StringFormatterTest {
     void shouldThrowWhenValueIsNull() {
         StringFormatter formatter = new StringFormatter(
                 5,
-                CharsetPolicy.ALPHANUMERIC,
-                PaddingPolicy.NONE
+                CharsetPolicy.ALPHANUMERIC
         );
 
         assertThrows(

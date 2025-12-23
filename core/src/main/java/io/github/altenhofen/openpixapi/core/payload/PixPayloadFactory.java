@@ -49,11 +49,10 @@ public final class PixPayloadFactory {
                 , merchantName(merchantName)
                 , merchantCity(merchantCity)
                 , additionalData(txid)
-                );
+        );
 
         return appendCRC(payload.toString());
     }
-
 
 
     private static EMVField<Integer> payloadFormatIndicator() {
@@ -61,7 +60,7 @@ public final class PixPayloadFactory {
                 "Payload Format Indicator",
                 "00",
                 1,
-                new LengthFormatter(2, PaddingPolicy.LEFT)
+                new DigitFormatter(2, PaddingPolicy.LEFT)
         );
     }
 
@@ -70,7 +69,7 @@ public final class PixPayloadFactory {
                 "Point Initiation Method",
                 "01",
                 11,
-                new LengthFormatter(2, PaddingPolicy.LEFT)
+                new DigitFormatter(2, PaddingPolicy.LEFT)
         );
     }
 
@@ -79,20 +78,20 @@ public final class PixPayloadFactory {
                 "Globally Unique Identifier",
                 "00",
                 "br.gov.bcb.pix",
-                new StringFormatter(14, CharsetPolicy.ALPHANUMERIC, PaddingPolicy.NONE)
+                new StringFormatter(14, CharsetPolicy.ALPHANUMERIC)
         );
         EMVField<String> additionalInformation = new EMVField<String>(
                 "Aditional Information",
                 "02",
                 "",
-                new StringFormatter(4, CharsetPolicy.ALPHANUMERIC, PaddingPolicy.NONE)
+                new StringFormatter(4, CharsetPolicy.ALPHANUMERIC)
         );
 
         EMVField<String> pixKeyField = new EMVField<String>(
                 "Chave PIX",
                 "01",
                 pixKey,
-                new StringFormatter(36, CharsetPolicy.ALPHANUMERIC, PaddingPolicy.NONE)
+                new StringFormatter(36, CharsetPolicy.ALPHANUMERIC)
         );
 
         return new CompositeEMVField(
@@ -107,7 +106,7 @@ public final class PixPayloadFactory {
                 "Merchant Category Code",
                 "52",
                 0,
-                new LengthFormatter(4, PaddingPolicy.LEFT)
+                new DigitFormatter(4, PaddingPolicy.LEFT)
         );
     }
 
@@ -116,7 +115,7 @@ public final class PixPayloadFactory {
                 "Transaction Currency",
                 "53",
                 986,
-                new LengthFormatter(3, PaddingPolicy.LEFT)
+                new DigitFormatter(3, PaddingPolicy.LEFT)
         );
     }
 
@@ -142,7 +141,7 @@ public final class PixPayloadFactory {
                 "Country Code",
                 "58",
                 "BR",
-                new StringFormatter(2, CharsetPolicy.UPPERCASE_ALPHANUMERIC, PaddingPolicy.NONE)
+                new StringFormatter(2, CharsetPolicy.UPPERCASE_ALPHANUMERIC)
         );
     }
 
@@ -151,7 +150,7 @@ public final class PixPayloadFactory {
                 "Merchant Name",
                 "59",
                 name,
-                new StringFormatter(25, CharsetPolicy.ALPHANUMERIC, PaddingPolicy.NONE)
+                new StringFormatter(25, CharsetPolicy.ALPHANUMERIC)
         );
     }
 
@@ -163,7 +162,7 @@ public final class PixPayloadFactory {
                 "Merchant City",
                 "60",
                 normalized,
-                new StringFormatter(15, CharsetPolicy.ALPHANUMERIC, PaddingPolicy.NONE)
+                new StringFormatter(15, CharsetPolicy.ALPHANUMERIC)
         );
     }
 
@@ -177,8 +176,10 @@ public final class PixPayloadFactory {
                 "62",
                 List.of(
                         new EMVField<>("TXID", "05", txid,
-                                new StringFormatter(25, CharsetPolicy.ALPHANUMERIC, PaddingPolicy.NONE
-                                ))));
+                                new StringFormatter(25, CharsetPolicy.ALPHANUMERIC)
+                        )
+                )
+        );
     }
 }
 

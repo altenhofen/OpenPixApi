@@ -1,7 +1,7 @@
 package io.github.altenhofen.openpixapi.core.field;
 
 import io.github.altenhofen.openpixapi.core.formatter.EMVFormatter;
-import io.github.altenhofen.openpixapi.core.formatter.LengthFormatter;
+import io.github.altenhofen.openpixapi.core.formatter.DigitFormatter;
 import io.github.altenhofen.openpixapi.core.formatter.PaddingPolicy;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,21 +11,21 @@ public class EMVField<T> {
     @Nullable
     private final String fieldName;
     private final EMVFormatter<T> formatter;
-    private final LengthFormatter lengthFormatter;
+    private final DigitFormatter digitFormatter;
 
     public EMVField(@Nullable String fieldName, String id, T value, EMVFormatter<T> formatter) {
         this.fieldName = fieldName;
         this.id = id;
         this.value = value;
         this.formatter = formatter;
-        this.lengthFormatter = new LengthFormatter(2, PaddingPolicy.LEFT);
+        this.digitFormatter = new DigitFormatter(2, PaddingPolicy.LEFT);
     }
 
     public String serialize() {
         String formatted = serializeValue();
         int length = formatted.length();
 
-        return formatId() + lengthFormatter.format(length) + formatted;
+        return formatId() + digitFormatter.format(length) + formatted;
     }
 
     protected String serializeValue() {
