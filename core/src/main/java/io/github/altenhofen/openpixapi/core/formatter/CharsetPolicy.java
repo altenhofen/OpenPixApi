@@ -1,15 +1,31 @@
 package io.github.altenhofen.openpixapi.core.formatter;
 
 public enum CharsetPolicy {
-    ALPHANUMERIC("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz./+-:*@ "),
-    UPPERCASE_ALPHANUMERIC("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+    EMV_COMMON(
+            "0123456789" +
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                    "abcdefghijklmnopqrstuvwxyz" +
+                    " -./:"
+    ),
+    EMV_COMMON_UPPER(
+            "0123456789" +
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                    " -./:"
+    ),
+
+    PIX_KEY_RELAXED(
+        "0123456789" +
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        "abcdefghijklmnopqrstuvwxyz" +
+        " -./:@"
+    ),
     DIGITS_ONLY("0123456789"),
     ;
 
     final private String charset;
 
     CharsetPolicy(String s) {
-        charset =  s;
+        charset = s;
     }
 
     public boolean allows(char c) {

@@ -76,20 +76,20 @@ public final class PixPayloadFactory {
                 "Globally Unique Identifier",
                 "00",
                 "br.gov.bcb.pix",
-                new StringFormatter(14, CharsetPolicy.ALPHANUMERIC)
+                new StringFormatter(14, CharsetPolicy.EMV_COMMON)
         );
         EMVField<String> additionalInformation = new EMVField<String>(
                 "Aditional Information",
                 "02",
                 "",
-                new StringFormatter(4, CharsetPolicy.ALPHANUMERIC)
+                new StringFormatter(4, CharsetPolicy.EMV_COMMON)
         );
 
         EMVField<String> pixKeyField = new EMVField<String>(
                 "Chave PIX",
                 "01",
                 pixKey,
-                new StringFormatter(36, CharsetPolicy.ALPHANUMERIC)
+                new StringFormatter(36, CharsetPolicy.PIX_KEY_RELAXED)
         );
 
         return new CompositeEMVField(
@@ -139,7 +139,7 @@ public final class PixPayloadFactory {
                 "Country Code",
                 "58",
                 "BR",
-                new StringFormatter(2, CharsetPolicy.UPPERCASE_ALPHANUMERIC)
+                new StringFormatter(2, CharsetPolicy.EMV_COMMON_UPPER)
         );
     }
 
@@ -148,7 +148,7 @@ public final class PixPayloadFactory {
                 "Merchant Name",
                 "59",
                 name,
-                new StringFormatter(25, CharsetPolicy.ALPHANUMERIC)
+                new StringFormatter(25, CharsetPolicy.EMV_COMMON)
         );
     }
 
@@ -160,7 +160,7 @@ public final class PixPayloadFactory {
                 "Merchant City",
                 "60",
                 normalized,
-                new StringFormatter(15, CharsetPolicy.ALPHANUMERIC)
+                new StringFormatter(15, CharsetPolicy.EMV_COMMON)
         );
     }
 
@@ -174,7 +174,7 @@ public final class PixPayloadFactory {
                 "62",
                 List.of(
                         new EMVField<>("TXID", "05", txid,
-                                new StringFormatter(25, CharsetPolicy.ALPHANUMERIC)
+                                new StringFormatter(25, CharsetPolicy.EMV_COMMON)
                         )
                 )
         );

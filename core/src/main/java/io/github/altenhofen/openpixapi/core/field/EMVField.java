@@ -3,24 +3,59 @@ package io.github.altenhofen.openpixapi.core.field;
 import io.github.altenhofen.openpixapi.core.formatter.EMVFormatter;
 import io.github.altenhofen.openpixapi.core.formatter.DigitFormatter;
 import io.github.altenhofen.openpixapi.core.formatter.PaddingPolicy;
+import io.github.altenhofen.openpixapi.core.payload.PixPayload;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * This is the base class for a single field on EMV.
+ * I've chosen to keep it not abstract and extending it for composite scenarios
+ * <br><br>
+ * See the constructor annotation for more details on architectural choices for
+ * formatters.
+ *
+ * @param <T> type of EMVField's value field
+ * @author Augusto Bussmann Altenhofen
+ * @see io.github.altenhofen.openpixapi.core.field.CompositeEMVField
+ * @since 0.01-DEV
+ */
 public class EMVField<T> {
-    private final String id;
+    private final String tag;
     private final T value;
     @Nullable
     private final String fieldName;
     private final EMVFormatter<T> formatter;
     private final DigitFormatter digitFormatter;
 
-    public EMVField(@Nullable String fieldName, String id, T value, EMVFormatter<T> formatter) {
+    /**
+     *
+     * @param fieldName used only for debugging situations.
+     *                  <br>It does not affect the {@link PixPayload} generation
+     * @param tag       as specified in the EMV standard, it's usually a numeric string of 1 or 2 digits.
+     * @param value     the value of type T that can be represented by the
+     *                  Common Character Set as defined in <b>EMV Book 4</b>
+     * @param formatter a class that implements {@link EMVFormatter}
+     */
+    public EMVField(@Nullable String fieldName, String tag, T value, EMVFormatter<T> formatter) {
         this.fieldName = fieldName;
-        this.id = id;
+        this.tag = tag;
         this.value = value;
         this.formatter = formatter;
         this.digitFormatter = new DigitFormatter(2, PaddingPolicy.LEFT);
     }
 
+
+    /**
+     * Serializes this field using the EMV "ID + Length + Value" format.
+     *
+     * <p>Example:</p>
+     * <pre>
+     * ID       = "00"
+     * Value    = "JA"
+     * Result   = "0002JA"
+     * </pre>
+     *
+     * <p>If the field is not present (field name is {@code null}),
+     */
     public String serialize() {
         if (this.fieldName == null) {
             return "";
@@ -41,12 +76,12 @@ public class EMVField<T> {
     }
 
     protected String formatId() {
-        if (id.length() != 2) {
+        if (tag.length() != 2) {
             throw new IllegalArgumentException(
-                    String.format("EMV id must be exactly 2 characters: %s", id)
+                    String.format("EMV id must be exactly 2 characters: %s", tag)
             );
         }
-        return id;
+        return tag;
     }
 
 
@@ -58,8 +93,8 @@ public class EMVField<T> {
         return this.value;
     }
 
-    public String getId() {
-        return this.id;
+    public String getTag() {
+        return this.tag;
     }
 }
 
