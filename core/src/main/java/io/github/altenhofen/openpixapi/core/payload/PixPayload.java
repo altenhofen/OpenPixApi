@@ -49,7 +49,7 @@ public class PixPayload {
         sb.append(countryCode.serialize());
         sb.append(merchantName.serialize());
         sb.append(merchantCity.serialize());
-
+        
         if (additionalData != null) {
             sb.append(additionalData.serialize());
         }
