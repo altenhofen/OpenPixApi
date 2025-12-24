@@ -90,6 +90,14 @@ public class PixQrCodeGeneratorTest {
         assertEquals(staticPixPayload.getEmv(), result.getText());
     }
 
+    @Test
+    void braile_Works() throws Exception {
+        PixQrOutput.Braile braile = (PixQrOutput.Braile)
+                PixQrCodeGenerator
+                        .generate(staticPixPayload.getEmv(), PixQrFormat.BRAILE, config);
+
+        assertNotNull(braile);
+    }
 
     @Test
     void base64Png_decodesToValidImage() throws Exception {
