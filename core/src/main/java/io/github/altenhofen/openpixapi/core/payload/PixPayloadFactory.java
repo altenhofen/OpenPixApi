@@ -10,13 +10,28 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
 
-import static io.github.altenhofen.openpixapi.core.payload.PixPayload.appendCRC;
-
+/**
+ * This class is used to create the payload based on the
+ * Manual de Padrões para Iniciação do Pix
+ *
+ * @author Augusto Bussmann Altenhofen
+ * @see io.github.altenhofen.openpixapi.core.field.CompositeEMVField
+ * @since 0.01-DEV
+ */
 public final class PixPayloadFactory {
 
     private PixPayloadFactory() {
     }
 
+    /**
+     *
+     * @param pixKey the pixKey as a random key, e-mail, phone number or CPF
+     * @param merchantName name of the person who's receiving the transaction
+     * @param merchantCity city of the person who's receiving the transaction
+     * @param amount value to be received, can be null
+     * @param txid used in dynamic pix, it's basically ignored for now
+     * @return a payload to be used by other classes or serialized to String
+     */
     public static PixPayload staticPix(
             String pixKey,
             String merchantName,

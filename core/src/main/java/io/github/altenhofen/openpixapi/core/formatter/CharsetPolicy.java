@@ -1,5 +1,12 @@
 package io.github.altenhofen.openpixapi.core.formatter;
-
+/**
+ * Charsets for validation
+ * Pix's charset is somewhat more flexible than the
+ * specified by EMV standard, and we make the distinction here.
+ *
+ * @author Augusto Bussmann Altenhofen
+ * @since 0.01-DEV
+ */
 public enum CharsetPolicy {
     EMV_COMMON(
             "0123456789" +

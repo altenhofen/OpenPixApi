@@ -3,6 +3,14 @@ package io.github.altenhofen.openpixapi.core.formatter;
 import java.text.Normalizer;
 import java.util.Locale;
 
+/**
+ * Implements EMVFormatter for String, normalizing the text as of the EMV specifications.
+ *
+ * @author Augusto Bussmann Altenhofen
+ * @see io.github.altenhofen.openpixapi.core.field.CompositeEMVField
+ * @see EMVFormatter
+ * @since 0.01-DEV
+ */
 public final class StringFormatter implements EMVFormatter<String> {
     final private int maxLength;
     final private CharsetPolicy permittedCharset;
@@ -13,6 +21,13 @@ public final class StringFormatter implements EMVFormatter<String> {
         this.permittedCharset = permittedCharset;
     }
 
+    /**
+     *
+     * @param input String to be normalized
+     * @param maxLength if <code>input.length</code> is larget, we truncate based on this
+     * @param fieldName passed for debugging reasons
+     * @return
+     */
     private String normalize(
             String input,
             int maxLength,

@@ -1,5 +1,12 @@
 package io.github.altenhofen.openpixapi.core.formatter;
 
+/**
+ * Implements the PaddingPolicy strategy for formatting Strings
+ *
+ * @author Augusto Bussmann Altenhofen
+ * @see io.github.altenhofen.openpixapi.core.payload.PixPayloadFactory
+ * @since 0.01-DEV
+ */
 public enum PaddingPolicy {
     NONE {
         public String pad(String value, int targetLength, char padChar) throws IllegalArgumentException {

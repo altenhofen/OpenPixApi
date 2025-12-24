@@ -7,7 +7,7 @@ import io.github.altenhofen.openpixapi.core.payload.PixPayload;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * This is the base class for a single field on EMV.
+ * Base class for a single field on EMV.
  * I've chosen to keep it not abstract and extending it for composite scenarios
  * <br><br>
  * See the constructor annotation for more details on architectural choices for
@@ -67,6 +67,13 @@ public class EMVField<T> {
         return formatId() + digitFormatter.format(length) + formatted;
     }
 
+    /**
+     * This is where the actual serialization happens.
+     * It's done this way so inherited classes can override just the serialization part
+     *
+     * @see CompositeEMVField
+     * @return a String containing the formatted value
+     */
     protected String serializeValue() {
         if (formatter == null) {
             throw new IllegalStateException("formatter is null");

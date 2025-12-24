@@ -1,5 +1,12 @@
 package io.github.altenhofen.openpixapi.core.field;
 
+/**
+ * Basic EMVCRC16 implementation.
+ *
+ * @author Augusto Bussmann Altenhofen
+ * @see io.github.altenhofen.openpixapi.core.payload.PixPayload
+ * @since 0.01-DEV
+ */
 public final class EMVCRC16 {
 
     private static final int POLYNOMIAL = 0x1021;
