@@ -9,6 +9,7 @@
     <version>0.01-DEV</version>
     <modules>
         <module>core</module>
+        <module>qrcode</module>
     </modules>
 
     <properties>
