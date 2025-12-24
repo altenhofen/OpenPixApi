@@ -24,6 +24,21 @@ public class PixBuilderTest {
     }
 
     @Test
+    public void shouldBuildValidPix_NoTxid() {
+        PixPayload validPix = assertDoesNotThrow(
+                () -> PixBuilder
+                        .staticPix()
+                        .merchantName("John Doe")
+                        .merchantCity("Porto Alegre")
+                        .merchantAmount(BigDecimal.valueOf(52.00))
+                        .pixKey("+5551999999999")
+                        .txid(null)
+                        .build());
+
+        assertNotNull(validPix);
+    }
+
+    @Test
     public void shouldBuildValidPix_NoAmount() {
         PixPayload validPix = assertDoesNotThrow(
                 () -> PixBuilder

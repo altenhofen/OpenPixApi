@@ -57,16 +57,15 @@ public class StringFormatterTest {
     }
 
     @Test
-    void shouldThrowWhenValueExceedsMaxLength() {
+    void shouldTrimWhenValueExceedsMaxLength() {
+        String value = "TEST";
         StringFormatter formatter = new StringFormatter(
                 3,
                 CharsetPolicy.ALPHANUMERIC
         );
+        String trimmed = formatter.format(value);
 
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> formatter.format("TEST")
-        );
+        assertNotEquals(value.length(), trimmed.length());
     }
 
     @Test

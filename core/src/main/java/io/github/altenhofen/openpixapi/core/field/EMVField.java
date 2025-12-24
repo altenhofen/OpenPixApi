@@ -22,6 +22,10 @@ public class EMVField<T> {
     }
 
     public String serialize() {
+        if (this.fieldName == null) {
+            return "";
+        }
+
         String formatted = serializeValue();
         int length = formatted.length();
 

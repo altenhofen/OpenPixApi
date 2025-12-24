@@ -34,16 +34,27 @@ public class PixPayload {
     }
 
     private String NoCrcString() {
-        return this.payloadFormatIndicator.serialize()
-                + pointOfInitiationMethod.serialize()
-                +  merchantAccount.serialize()
-                + merchantCategoryCode.serialize()
-                + transactionCurrency.serialize()
-                + transactionAmount.serialize()
-                + countryCode.serialize()
-                + merchantName.serialize()
-                + merchantCity.serialize()
-                + additionalData.serialize();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(payloadFormatIndicator.serialize());
+        sb.append(pointOfInitiationMethod.serialize());
+        sb.append(merchantAccount.serialize());
+        sb.append(merchantCategoryCode.serialize());
+        sb.append(transactionCurrency.serialize());
+
+        if (transactionAmount != null) {
+            sb.append(transactionAmount.serialize());
+        }
+
+        sb.append(countryCode.serialize());
+        sb.append(merchantName.serialize());
+        sb.append(merchantCity.serialize());
+
+        if (additionalData != null) {
+            sb.append(additionalData.serialize());
+        }
+
+        return sb.toString();
     }
 
     @Override
