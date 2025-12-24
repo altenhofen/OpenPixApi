@@ -59,11 +59,6 @@ public final class StringFormatter implements EMVFormatter<String> {
             throw new NullPointerException("Variable 'value' is null");
         }
 
-        if (value.length() > maxLength) {
-            throw new IllegalArgumentException(
-                    String.format("Invalid length for %s, expected %d got %d", value, maxLength, value.length()));
-        }
-
         return normalize(value, maxLength, value);
     }
 }

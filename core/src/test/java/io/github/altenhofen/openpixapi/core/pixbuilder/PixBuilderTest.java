@@ -1,5 +1,6 @@
 package io.github.altenhofen.openpixapi.core.pixbuilder;
 
+import io.github.altenhofen.openpixapi.core.payload.PixPayload;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -10,7 +11,7 @@ public class PixBuilderTest {
 
     @Test
     public void shoudBuildValidPix() {
-        String validPix = PixBuilder
+        PixPayload validPix = PixBuilder
                 .staticPix()
                 .merchantName("John Doe")
                 .merchantCity("Porto Alegre")
@@ -24,7 +25,7 @@ public class PixBuilderTest {
 
     @Test
     public void shouldBuildValidPix_NoAmount() {
-        String validPix = assertDoesNotThrow(
+        PixPayload validPix = assertDoesNotThrow(
                 () -> PixBuilder
                 .staticPix()
                 .merchantName("John Doe")
@@ -53,16 +54,17 @@ public class PixBuilderTest {
     }
 
     @Test
-    public void shouldNotBuildInvalidPix_LargeMerchantName() {
-        IllegalArgumentException sizeException = assertThrows(IllegalArgumentException.class, () -> PixBuilder
+    public void shouldTruncateLargeMerchantName() {
+        String name = "A".repeat(100);
+        PixPayload payload = PixBuilder
                 .staticPix()
-                .merchantName("A".repeat(100))
+                .merchantName(name)
                 .merchantCity("Porto Alegre")
                 .merchantAmount(BigDecimal.valueOf(123.99))
                 .txid("0512TX123456789")
                 .pixKey("+5551999999999")
-                .build());
+                .build();
 
-        assertTrue(sizeException.getMessage().contains("length"));
+        assertNotEquals(payload.getMerchantName(), name);
     }
 }

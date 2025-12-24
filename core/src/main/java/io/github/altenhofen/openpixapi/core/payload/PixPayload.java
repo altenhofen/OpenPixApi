@@ -17,7 +17,7 @@ public class PixPayload {
     private final EMVField<String> merchantName;
     private final EMVField<String> merchantCity;
     private final CompositeEMVField additionalData;
-
+    private final String crc;
 
     PixPayload(EMVField<Integer> payloadFormatIndicator, EMVField<Integer> pointOfInitiationMethod, CompositeEMVField merchantAccount, EMVField<Integer> merchantCategoryCode, EMVField<Integer> transactionCurrency, EMVField<BigDecimal> transactionAmount, EMVField<String> countryCode, EMVField<String> merchantName, EMVField<String> merchantCity, CompositeEMVField additionalData) {
         this.payloadFormatIndicator = payloadFormatIndicator;
@@ -30,10 +30,10 @@ public class PixPayload {
         this.merchantName = merchantName;
         this.merchantCity = merchantCity;
         this.additionalData = additionalData;
+        this.crc = appendCRC(this.NoCrcString());
     }
 
-    @Override
-    public String toString() {
+    private String NoCrcString() {
         return this.payloadFormatIndicator.serialize()
                 + pointOfInitiationMethod.serialize()
                 +  merchantAccount.serialize()
@@ -45,10 +45,60 @@ public class PixPayload {
                 + merchantCity.serialize()
                 + additionalData.serialize();
     }
+
+    @Override
+    public String toString() {
+        return appendCRC(this.NoCrcString());
+    }
+
     // We chose not to include the CRC on toString for scalability reasons
-    static String appendCRC(String payload) {
-        String toSign = payload + "6304";
+    static String appendCRC(String payloadUntilCrc) {
+        String toSign = payloadUntilCrc + "6304";
         String crc = EMVCRC16.calculate(toSign);
         return toSign + crc;
+    }
+
+    public EMVField<Integer> getPayloadFormatIndicator() {
+        return payloadFormatIndicator;
+    }
+
+    public EMVField<Integer> getPointOfInitiationMethod() {
+        return pointOfInitiationMethod;
+    }
+
+    public CompositeEMVField getMerchantAccount() {
+        return merchantAccount;
+    }
+
+    public EMVField<Integer> getMerchantCategoryCode() {
+        return merchantCategoryCode;
+    }
+
+    public EMVField<Integer> getTransactionCurrency() {
+        return transactionCurrency;
+    }
+
+    public EMVField<BigDecimal> getTransactionAmount() {
+        return transactionAmount;
+    }
+
+    public EMVField<String> getCountryCode() {
+        return countryCode;
+    }
+
+    public EMVField<String> getMerchantName() {
+        return merchantName;
+    }
+
+    public EMVField<String> getMerchantCity() {
+        return merchantCity;
+    }
+
+    public CompositeEMVField getAdditionalData() {
+        return additionalData;
+    }
+
+    public String getCrc() {
+        return crc;
     }
 }

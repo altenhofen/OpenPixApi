@@ -17,7 +17,7 @@ public final class PixPayloadFactory {
     private PixPayloadFactory() {
     }
 
-    public static String staticPix(
+    public static PixPayload staticPix(
             String pixKey,
             String merchantName,
             String merchantCity,
@@ -38,7 +38,7 @@ public final class PixPayloadFactory {
         }
 
 
-        PixPayload payload = new PixPayload(
+        return new PixPayload(
                 payloadFormatIndicator()
                 , pointOfInitiationMethod()
                 , merchantAccount(pixKey)
@@ -50,8 +50,6 @@ public final class PixPayloadFactory {
                 , merchantCity(merchantCity)
                 , additionalData(txid)
         );
-
-        return appendCRC(payload.toString());
     }
 
 
