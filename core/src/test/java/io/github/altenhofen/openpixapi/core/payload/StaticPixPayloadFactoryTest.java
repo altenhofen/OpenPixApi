@@ -26,7 +26,7 @@ class StaticPixPayloadFactoryTest {
                 "TX123"
         );
 
-        assertEquals(pix1.toString(), pix2.toString());
+        assertEquals(pix1.getEmv(), pix2.getEmv());
     }
 
     @Test
@@ -39,7 +39,7 @@ class StaticPixPayloadFactoryTest {
                 "TX123"
         );
 
-        assertFalse(payload.toString().contains("54"));
+        assertFalse(payload.getEmv().contains("54"));
     }
 
     @Test
@@ -52,6 +52,6 @@ class StaticPixPayloadFactoryTest {
                 null
         );
 
-        assertFalse(payload.toString().contains("62"));
+        assertFalse(payload.getEmv().contains("62"));
     }
 }

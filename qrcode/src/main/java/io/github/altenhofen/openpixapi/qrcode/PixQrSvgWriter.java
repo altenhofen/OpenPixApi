@@ -2,14 +2,19 @@ package io.github.altenhofen.openpixapi.qrcode;
 
 import com.google.zxing.common.BitMatrix;
 
+import java.awt.*;
+
 final class PixQrSvgWriter {
 
     private PixQrSvgWriter() {
     }
 
-    public static String toSvg(BitMatrix matrix, int moduleSize) {
+    public static String toSvg(BitMatrix matrix, int moduleSize, PixQrConfig config) {
+
         int width = matrix.getWidth();
         int height = matrix.getHeight();
+        String fgHex = toHex(config.getForeground());
+        String bgHex = toHex(config.getBackground());
 
         StringBuilder sb = new StringBuilder();
 
@@ -19,26 +24,31 @@ final class PixQrSvgWriter {
                      viewBox="0 0 %d %d">
                 """.formatted(width * moduleSize, height * moduleSize));
 
-        sb.append("<rect width=\"100%\" height=\"100%\" fill=\"white\"/>");
+        sb.append(String.format("<rect width=\"100%%\" height=\"100%%\" fill=\"%s\"/>", bgHex));
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (matrix.get(x, y)) {
-                    sb.append(
-                            "<rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" fill=\"black\"/>"
-                                    .formatted(
+                    sb.append(String.format(
+                            "<rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" fill=\"%s\"/>",
                                             x * moduleSize,
                                             y * moduleSize,
                                             moduleSize,
-                                            moduleSize
+                                            moduleSize,
+                                            fgHex
                                     )
                     );
                 }
-            }
+                }
         }
 
         sb.append("</svg>");
         return sb.toString();
     }
+
+    private static String toHex(Color color) {
+        return "#" + Integer.toHexString(color.getRGB()).substring(2);
+    }
+
 }
 
