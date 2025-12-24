@@ -24,7 +24,7 @@ public enum CharsetPolicy {
         "0123456789" +
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
         "abcdefghijklmnopqrstuvwxyz" +
-        " -./:@"
+        " -./:@+"
     ),
     DIGITS_ONLY("0123456789"),
     ;
