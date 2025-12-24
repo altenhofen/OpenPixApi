@@ -10,7 +10,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class PixQrCodeBuilder {
-    private final PixPayload payload;
+    private final String emvPayload;
     private Color foreground = Color.black;
     private Color background = Color.white;
     private ErrorCorrectionLevel errorCorrectionLevel = ErrorCorrectionLevel.M;
@@ -19,11 +19,11 @@ public class PixQrCodeBuilder {
     private int width, height = size;
 
 
-    public PixQrCodeBuilder(PixPayload payload) {
-        this.payload = payload;
+    public PixQrCodeBuilder(String emvPayload) {
+        this.emvPayload = emvPayload;
     }
 
-    public static PixQrCodeBuilder from(PixPayload payload) {
+    public static PixQrCodeBuilder from(String payload) {
         return new PixQrCodeBuilder(payload);
     }
 
@@ -69,13 +69,17 @@ public class PixQrCodeBuilder {
     }
 
     private PixQrOutput build(PixQrFormat format) throws PixQrGenerationException {
+        PixQrConfig config = PixQrConfig.builder()
+                .foreground(this.foreground)
+                .background(this.background)
+                .size(this.size)
+                .errorCorrectionLevel(this.errorCorrectionLevel)
+                .build();
         return PixQrCodeGenerator.generate(
-                this.payload,
+                this.emvPayload,
                 format,
-                this.size,
-                this.foreground,
-                this.background,
-                this.errorCorrectionLevel);
+                config
+        );
     };
 
 }

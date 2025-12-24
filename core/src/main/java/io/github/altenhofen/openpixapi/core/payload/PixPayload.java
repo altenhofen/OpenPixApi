@@ -131,7 +131,7 @@ public abstract class PixPayload {
         return crc;
     }
 
-    public String emvRepresentation() {
+    public String getEmv() {
         return appendCRC(this.NoCrcString());
     }
 }

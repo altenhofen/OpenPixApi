@@ -24,14 +24,13 @@ final class PixQrSvgWriter {
                      viewBox="0 0 %d %d">
                 """.formatted(width * moduleSize, height * moduleSize));
 
-        sb.append("<rect width=\"100%\" height=\"100%\" fill=\"%s\"/>".formatted(bgHex));
+        sb.append(String.format("<rect width=\"100%%\" height=\"100%%\" fill=\"%s\"/>", bgHex));
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (matrix.get(x, y)) {
-                    sb.append(
-                            "<rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" fill=\"%s\"/>"
-                                    .formatted(
+                    sb.append(String.format(
+                            "<rect x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" fill=\"%s\"/>",
                                             x * moduleSize,
                                             y * moduleSize,
                                             moduleSize,
@@ -40,7 +39,7 @@ final class PixQrSvgWriter {
                                     )
                     );
                 }
-            }
+                }
         }
 
         sb.append("</svg>");

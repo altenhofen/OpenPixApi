@@ -19,6 +19,7 @@ import java.util.Base64;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PixQrCodeGeneratorTest {
+    final PixQrConfig config = PixQrConfig.defaultConfig();
     final PixPayload staticPixPayload = PixPayloadFactory.staticPix(
             "email@test.com",
             "JOAO SILVA",
@@ -37,13 +38,13 @@ public class PixQrCodeGeneratorTest {
     @Test
     void static_qrGeneration_works() {
         PixQrOutput output = assertDoesNotThrow(() ->
-                PixQrCodeGenerator.generate(staticPixPayload.emvRepresentation(), PixQrFormat.PNG, 300));
+                PixQrCodeGenerator.generate(staticPixPayload.getEmv(), PixQrFormat.PNG, config));
     }
 
     @Test
     void dynamic_qrGeneration_works() throws IOException {
         PixQrOutput output = assertDoesNotThrow(() ->
-                PixQrCodeGenerator.generate(dynamicPixPayload.emvRepresentation(), PixQrFormat.PNG, 300));
+                PixQrCodeGenerator.generate(dynamicPixPayload.getEmv(), PixQrFormat.PNG, config));
 
         PixQrOutput.Png png = (PixQrOutput.Png) output;
 
@@ -57,7 +58,7 @@ public class PixQrCodeGeneratorTest {
     @Test
     void png_isValidImage() throws Exception {
         PixQrOutput output = PixQrCodeGenerator
-                .generate(staticPixPayload.emvRepresentation(), PixQrFormat.PNG, 300);
+                .generate(staticPixPayload.getEmv(), PixQrFormat.PNG, config);
 
         PixQrOutput.Png png = (PixQrOutput.Png) output;
 
@@ -75,7 +76,7 @@ public class PixQrCodeGeneratorTest {
     void png_decodesBackToPayload() throws Exception {
         PixQrOutput.Png png = (PixQrOutput.Png)
                 PixQrCodeGenerator
-                        .generate(staticPixPayload.emvRepresentation(), PixQrFormat.PNG, 300);
+                        .generate(staticPixPayload.getEmv(), PixQrFormat.PNG, config);
 
         BufferedImage image = ImageIO.read(
                 new ByteArrayInputStream(png.bytes())
@@ -93,7 +94,7 @@ public class PixQrCodeGeneratorTest {
     @Test
     void base64Png_decodesToValidImage() throws Exception {
         PixQrOutput.Base64 base64 = (PixQrOutput.Base64)
-                PixQrCodeGenerator.generate(staticPixPayload.emvRepresentation(), PixQrFormat.BASE64_PNG, 300);
+                PixQrCodeGenerator.generate(staticPixPayload.getEmv(), PixQrFormat.BASE64_PNG, config);
 
         byte[] bytes = Base64.getDecoder().decode(base64.value());
 

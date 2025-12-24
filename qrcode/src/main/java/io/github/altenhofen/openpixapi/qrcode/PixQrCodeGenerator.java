@@ -1,7 +1,6 @@
 package io.github.altenhofen.openpixapi.qrcode;
 
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.awt.*;
 import java.util.Objects;

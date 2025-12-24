@@ -4,11 +4,14 @@ import io.github.altenhofen.openpixapi.core.payload.PixPayload;
 import io.github.altenhofen.openpixapi.core.payload.PixPayloadFactory;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PixQrSvgWriterTest {
+    final PixQrConfig config = PixQrConfig.builder().foreground(Color.YELLOW).build();
+
     final PixPayload staticPayload = PixPayloadFactory.staticPix(
             "email@test.com",
             "JOAO SILVA",
@@ -21,12 +24,13 @@ class PixQrSvgWriterTest {
     @Test
     void svg_containsSvgRoot() throws PixQrGenerationException {
         PixQrOutput output = PixQrCodeGenerator.generate(
-                staticPayload,
+                staticPayload.getEmv(),
                 PixQrFormat.SVG,
-                300);
+                config);
 
 
         PixQrOutput.Svg svg = (PixQrOutput.Svg) output;
         assertTrue(svg.toString().contains("<svg"));
     }
+
 }
