@@ -5,6 +5,7 @@ import com.google.zxing.MultiFormatReader;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import io.github.altenhofen.openpixapi.core.payload.PixPayload;
 import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
 import io.github.altenhofen.openpixapi.core.payload.PixPayloadFactory;
 import org.junit.jupiter.api.Test;
@@ -12,13 +13,14 @@ import org.junit.jupiter.api.Test;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Base64;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PixQrCodeGeneratorTest {
-    final StaticPixPayload payload = PixPayloadFactory.staticPix(
+    final PixPayload staticPixPayload = PixPayloadFactory.staticPix(
             "email@test.com",
             "JOAO SILVA",
             "SAO PAULO",
@@ -26,17 +28,39 @@ public class PixQrCodeGeneratorTest {
             "TX123"
     );
 
+    final PixPayload dynamicPixPayload = PixPayloadFactory.dynamicPix(
+            "https://pix.example.com/api/webhook",
+            "JOAO SILVA",
+            "SAO PAULO",
+            "TX123"
+    );
+
     @Test
-    void qrGeneration_works() {
+    void static_qrGeneration_works() {
         PixQrOutput output = assertDoesNotThrow(() ->
-                PixQrCodeGenerator.generate(payload, PixQrFormat.PNG, 300)
+                PixQrCodeGenerator.generate(staticPixPayload, PixQrFormat.PNG, 300)
         );
+    }
+
+    @Test
+    void dynamic_qrGeneration_works() throws IOException {
+        PixQrOutput output = assertDoesNotThrow(() ->
+                PixQrCodeGenerator.generate(dynamicPixPayload, PixQrFormat.PNG, 300)
+        );
+
+        PixQrOutput.Png png = (PixQrOutput.Png) output;
+
+        BufferedImage image = ImageIO.read(
+                new ByteArrayInputStream(png.bytes())
+        );
+
+        assertNotNull(image);
     }
 
     @Test
     void png_isValidImage() throws Exception {
         PixQrOutput output = PixQrCodeGenerator
-                .generate(payload, PixQrFormat.PNG, 300);
+                .generate(staticPixPayload, PixQrFormat.PNG, 300);
 
         PixQrOutput.Png png = (PixQrOutput.Png) output;
 
@@ -54,7 +78,7 @@ public class PixQrCodeGeneratorTest {
     void png_decodesBackToPayload() throws Exception {
         PixQrOutput.Png png = (PixQrOutput.Png)
                 PixQrCodeGenerator
-                        .generate(payload, PixQrFormat.PNG, 300);
+                        .generate(staticPixPayload, PixQrFormat.PNG, 300);
 
         BufferedImage image = ImageIO.read(
                 new ByteArrayInputStream(png.bytes())
@@ -65,14 +89,14 @@ public class PixQrCodeGeneratorTest {
         );
 
         Result result = new MultiFormatReader().decode(bitmap);
-        assertEquals(payload.toString(), result.getText());
+        assertEquals(staticPixPayload.toString(), result.getText());
     }
 
 
     @Test
     void base64Png_decodesToValidImage() throws Exception {
         PixQrOutput.Base64 base64 = (PixQrOutput.Base64)
-                PixQrCodeGenerator.generate(payload, PixQrFormat.BASE64_PNG, 300);
+                PixQrCodeGenerator.generate(staticPixPayload, PixQrFormat.BASE64_PNG, 300);
 
         byte[] bytes = Base64.getDecoder().decode(base64.value());
 

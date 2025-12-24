@@ -1,14 +1,14 @@
 package io.github.altenhofen.openpixapi.qrcode;
 
 import com.google.zxing.common.BitMatrix;
-import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
+import io.github.altenhofen.openpixapi.core.payload.PixPayload;
 
 import java.util.Objects;
 
 public final class PixQrCodeGenerator {
 
     public static PixQrOutput generate(
-            StaticPixPayload staticPixPayload,
+            PixPayload staticPixPayload,
             PixQrFormat format,
             int size
     ) throws PixQrGenerationException {
