@@ -14,7 +14,7 @@ public class EMVFieldTest {
                 "Merchant Name",
                 "59",
                 "JOAO",
-                new StringFormatter(25, CharsetPolicy.ALPHANUMERIC)
+                new StringFormatter(25, CharsetPolicy.EMV_COMMON)
         );
 
         assertEquals("5904JOAO", field.serialize());

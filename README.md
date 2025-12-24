@@ -10,7 +10,7 @@ We plan to offer state-of-the-art APIs for making Pix integration seamless in yo
 
 I can already create valid Pix EMV Codes that can be used to generate a QRCode
 at [pix-qr-decoder](https://pix.nascent.com.br/tools/pix-qr-decoder/).
-We plan to have full ASCII, svg, png, base64-encoded, you name it, QRCode support. But for now it's out of scope.
+We plan to have full ASCII, svg, png, base64-encoded, you name it, QRCode support. But for now it's out oft scope.
 
 ## Features
 

@@ -6,6 +6,15 @@ import io.github.altenhofen.openpixapi.core.field.EMVField;
 
 import java.math.BigDecimal;
 
+/**
+ * Data structure that represents a PixPayload object.
+ * Studying this class is core to understanding how this library works.
+ *
+ *
+ * @author Augusto Bussmann Altenhofen
+ * @see PixPayloadFactory
+ * @since 0.01-DEV
+ */
 public class PixPayload {
     private final EMVField<Integer> payloadFormatIndicator;
     private final EMVField<Integer> pointOfInitiationMethod;
@@ -33,6 +42,11 @@ public class PixPayload {
         this.crc = appendCRC(this.NoCrcString());
     }
 
+    /**
+     * It is required to have all fields other than CRC calculated
+     *
+     * @return a String with all serialized values, but the CRC
+     */
     private String NoCrcString() {
         StringBuilder sb = new StringBuilder();
 
@@ -57,12 +71,17 @@ public class PixPayload {
         return sb.toString();
     }
 
+    /**
+     *
+     * @return The String representation of payload,
+     * can be pasted on websites that generate the QRCode
+     * such as <code>pix-qr-decoder/</code>
+     */
     @Override
     public String toString() {
         return appendCRC(this.NoCrcString());
     }
 
-    // We chose not to include the CRC on toString for scalability reasons
     static String appendCRC(String payloadUntilCrc) {
         String toSign = payloadUntilCrc + "6304";
         String crc = EMVCRC16.calculate(toSign);

@@ -1,5 +1,13 @@
 package io.github.altenhofen.openpixapi.core.formatter;
 
+/**
+ * Implement the EMVFormatter interface for Integer values
+ *
+ * @author Augusto Bussmann Altenhofen
+ * @see io.github.altenhofen.openpixapi.core.payload.PixPayloadFactory
+ * @see EMVFormatter
+ * @since 0.01-DEV
+ */
 public class DigitFormatter implements EMVFormatter<Integer>{
     final private int maxLength;
     final private CharsetPolicy charsetPolicy;

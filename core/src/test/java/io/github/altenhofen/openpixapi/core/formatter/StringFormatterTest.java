@@ -61,7 +61,7 @@ public class StringFormatterTest {
         String value = "TEST";
         StringFormatter formatter = new StringFormatter(
                 3,
-                CharsetPolicy.ALPHANUMERIC
+                CharsetPolicy.EMV_COMMON
         );
         String trimmed = formatter.format(value);
 
@@ -72,7 +72,7 @@ public class StringFormatterTest {
     void shouldThrowWhenValueIsNull() {
         StringFormatter formatter = new StringFormatter(
                 5,
-                CharsetPolicy.ALPHANUMERIC
+                CharsetPolicy.EMV_COMMON
         );
 
         assertThrows(

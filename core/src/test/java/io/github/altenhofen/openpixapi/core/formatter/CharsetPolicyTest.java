@@ -9,10 +9,10 @@ public class CharsetPolicyTest {
 
     @Test
     void charsetPolicy_ShouldAllowChar() {
-        CharsetPolicy alphanumericPolicy = CharsetPolicy.ALPHANUMERIC;
+        CharsetPolicy alphanumericPolicy = CharsetPolicy.EMV_COMMON;
         assertTrue(alphanumericPolicy.allows('a'));
 
-        CharsetPolicy uppercaseAlphanumericPolicy = CharsetPolicy.UPPERCASE_ALPHANUMERIC;
+        CharsetPolicy uppercaseAlphanumericPolicy = CharsetPolicy.EMV_COMMON_UPPER;
         assertTrue(uppercaseAlphanumericPolicy.allows('A'));
 
         CharsetPolicy digitPolicy = CharsetPolicy.DIGITS_ONLY;
@@ -21,10 +21,10 @@ public class CharsetPolicyTest {
 
     @Test
     void charsetPolicy_ShouldNotAllowChar() {
-        final CharsetPolicy charsetPolicy = CharsetPolicy.ALPHANUMERIC;
+        final CharsetPolicy charsetPolicy = CharsetPolicy.EMV_COMMON;
         assertFalse(charsetPolicy.allows('#'));
 
-        CharsetPolicy uppercaseAlphanumericPolicy = CharsetPolicy.UPPERCASE_ALPHANUMERIC;
+        CharsetPolicy uppercaseAlphanumericPolicy = CharsetPolicy.EMV_COMMON_UPPER;
         assertFalse(uppercaseAlphanumericPolicy.allows('a'));
 
         CharsetPolicy digitPolicy = CharsetPolicy.DIGITS_ONLY;
