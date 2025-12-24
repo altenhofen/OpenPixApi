@@ -51,6 +51,7 @@ public class PixBuilderTest {
 
         assertNotNull(validPix);
     }
+
     @Test
     public void shouldNotBuildDynamicPix_NoTxid() {
         IllegalArgumentException validPix = assertThrows(IllegalArgumentException.class,
@@ -60,12 +61,36 @@ public class PixBuilderTest {
                         .merchantName("John Doe")
                         .merchantCity("Porto Alegre")
                         .merchantAmount(BigDecimal.valueOf(52.00))
-                        .txid(null)
                         .build()
         );
         assertNotNull(validPix);
     }
 
+    @Test
+    public void shouldBuildDynamicPix_WithPspUrlInConstructor() {
+        PixPayload validPix = PixBuilder
+                        .dynamicPix("https://pix.example.com/api/webhook")
+                        .merchantName("John Doe")
+                        .merchantCity("Porto Alegre")
+                        .merchantAmount(BigDecimal.valueOf(52.00))
+                        .txid("1234ABC")
+                        .build();
+        assertNotNull(validPix);
+    }
+
+    @Test
+    public void shouldNotBuildDynamicPix_NoPspUrl() {
+        IllegalArgumentException validPix = assertThrows(IllegalArgumentException.class,
+                () -> PixBuilder
+                        .dynamicPix()
+                        .merchantName("John Doe")
+                        .merchantCity("Porto Alegre")
+                        .merchantAmount(BigDecimal.valueOf(52.00))
+                        .txid("1234ABC")
+                        .build()
+        );
+        assertNotNull(validPix);
+    }
 
     @Test
     public void shouldBuildValidPix_NoAmount() {
