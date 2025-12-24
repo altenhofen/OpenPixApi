@@ -6,7 +6,7 @@ import io.github.altenhofen.openpixapi.core.field.EMVField;
 
 import java.math.BigDecimal;
 
-public abstract class AbstractPixPayload {
+public abstract class PixPayload {
 
     private final EMVField<Integer> payloadFormatIndicator;
     protected final EMVField<Integer> pointOfInitiationMethod;
@@ -21,16 +21,16 @@ public abstract class AbstractPixPayload {
     protected final String crc;
 
 
-    public AbstractPixPayload(EMVField<Integer> payloadFormatIndicator,
-                              EMVField<Integer> pointOfInitiationMethod,
-                              CompositeEMVField merchantAccount,
-                              EMVField<Integer> merchantCategoryCode,
-                              EMVField<Integer> transactionCurrency,
-                              EMVField<BigDecimal> transactionAmount,
-                              EMVField<String> countryCode,
-                              EMVField<String> merchantName,
-                              EMVField<String> merchantCity,
-                              CompositeEMVField additionalData
+    public PixPayload(EMVField<Integer> payloadFormatIndicator,
+                      EMVField<Integer> pointOfInitiationMethod,
+                      CompositeEMVField merchantAccount,
+                      EMVField<Integer> merchantCategoryCode,
+                      EMVField<Integer> transactionCurrency,
+                      EMVField<BigDecimal> transactionAmount,
+                      EMVField<String> countryCode,
+                      EMVField<String> merchantName,
+                      EMVField<String> merchantCity,
+                      CompositeEMVField additionalData
     ) {
         this.payloadFormatIndicator = payloadFormatIndicator;
         this.pointOfInitiationMethod = pointOfInitiationMethod;

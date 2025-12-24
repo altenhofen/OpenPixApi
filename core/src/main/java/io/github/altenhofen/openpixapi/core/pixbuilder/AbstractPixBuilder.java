@@ -1,8 +1,7 @@
 package io.github.altenhofen.openpixapi.core.pixbuilder;
 
-import io.github.altenhofen.openpixapi.core.payload.AbstractPixPayload;
+import io.github.altenhofen.openpixapi.core.payload.PixPayload;
 
-import javax.swing.*;
 import java.math.BigDecimal;
 
 abstract class AbstractPixBuilder<T extends AbstractPixBuilder<T>> {
@@ -41,5 +40,5 @@ abstract class AbstractPixBuilder<T extends AbstractPixBuilder<T>> {
             throw new IllegalStateException("Merchant city is required");
     }
 
-    public abstract AbstractPixPayload build();
+    public abstract PixPayload build();
 }

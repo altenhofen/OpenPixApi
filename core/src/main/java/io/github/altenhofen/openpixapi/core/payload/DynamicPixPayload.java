@@ -3,9 +3,7 @@ package io.github.altenhofen.openpixapi.core.payload;
 import io.github.altenhofen.openpixapi.core.field.CompositeEMVField;
 import io.github.altenhofen.openpixapi.core.field.EMVField;
 
-import java.math.BigDecimal;
-
-public class DynamicPixPayload extends AbstractPixPayload {
+public class DynamicPixPayload extends PixPayload {
     DynamicPixPayload(EMVField<Integer> payloadFormatIndicator,
                       EMVField<Integer> pointOfInitiationMethod,
                       CompositeEMVField merchantAccount,

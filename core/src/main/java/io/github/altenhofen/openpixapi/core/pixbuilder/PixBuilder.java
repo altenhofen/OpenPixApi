@@ -12,4 +12,7 @@ public final class PixBuilder {
         return new DynamicPixBuilder();
     }
 
+    public static DynamicPixBuilder dynamicPix(String pspUrl) {
+        return new DynamicPixBuilder(pspUrl);
+    }
 }

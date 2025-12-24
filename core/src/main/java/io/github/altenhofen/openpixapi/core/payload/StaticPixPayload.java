@@ -1,7 +1,6 @@
 package io.github.altenhofen.openpixapi.core.payload;
 
 import io.github.altenhofen.openpixapi.core.field.CompositeEMVField;
-import io.github.altenhofen.openpixapi.core.field.EMVCRC16;
 import io.github.altenhofen.openpixapi.core.field.EMVField;
 
 import java.math.BigDecimal;
@@ -15,7 +14,7 @@ import java.math.BigDecimal;
  * @see PixPayloadFactory
  * @since 0.01-DEV
  */
-public class StaticPixPayload extends AbstractPixPayload {
+public class StaticPixPayload extends PixPayload {
 
 
     StaticPixPayload(EMVField<Integer> payloadFormatIndicator,

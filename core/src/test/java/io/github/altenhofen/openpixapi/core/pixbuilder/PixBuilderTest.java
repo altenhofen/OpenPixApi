@@ -1,5 +1,6 @@
 package io.github.altenhofen.openpixapi.core.pixbuilder;
 
+import io.github.altenhofen.openpixapi.core.payload.PixPayload;
 import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PixBuilderTest {
 
     @Test
-    public void shoudBuildValidPix() {
+    public void shouldBuildValidStaticPix() {
         StaticPixPayload validPix = PixBuilder
                 .staticPix()
                 .merchantName("John Doe")
@@ -22,9 +23,22 @@ public class PixBuilderTest {
 
         assertNotNull(validPix);
     }
+    @Test
+    public void shouldBuildValidDynamicPix() {
+        PixPayload validPix = PixBuilder
+                .dynamicPix()
+                .pspUrl("https://pix.example.com/api/webhook")
+                .merchantName("John Doe")
+                .merchantCity("Porto Alegre")
+                .merchantAmount(BigDecimal.valueOf(123.99))
+                .txid("0512TX123456789")
+                .build();
+
+        assertNotNull(validPix);
+    }
 
     @Test
-    public void shouldBuildValidPix_NoTxid() {
+    public void shouldBuildValidStaticPix_NoTxid() {
         StaticPixPayload validPix = assertDoesNotThrow(
                 () -> PixBuilder
                         .staticPix()
@@ -37,6 +51,21 @@ public class PixBuilderTest {
 
         assertNotNull(validPix);
     }
+    @Test
+    public void shouldNotBuildDynamicPix_NoTxid() {
+        IllegalArgumentException validPix = assertThrows(IllegalArgumentException.class,
+                () -> PixBuilder
+                        .dynamicPix()
+                        .pspUrl("https://pix.example.com/api/webhook")
+                        .merchantName("John Doe")
+                        .merchantCity("Porto Alegre")
+                        .merchantAmount(BigDecimal.valueOf(52.00))
+                        .txid(null)
+                        .build()
+        );
+        assertNotNull(validPix);
+    }
+
 
     @Test
     public void shouldBuildValidPix_NoAmount() {
