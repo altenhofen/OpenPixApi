@@ -1,6 +1,6 @@
 package io.github.altenhofen.openpixapi.core.pixbuilder;
 
-import io.github.altenhofen.openpixapi.core.payload.PixPayload;
+import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
 import io.github.altenhofen.openpixapi.core.payload.PixPayloadFactory;
 
 public class StaticPixBuilder extends AbstractPixBuilder<StaticPixBuilder> {
@@ -18,7 +18,7 @@ public class StaticPixBuilder extends AbstractPixBuilder<StaticPixBuilder> {
     }
 
     @Override
-    public PixPayload build() {
+    public StaticPixPayload build() {
         validateCommon();
 
         if (pixKey == null || pixKey.isBlank()) {

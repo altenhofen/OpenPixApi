@@ -1,6 +1,6 @@
 package io.github.altenhofen.openpixapi.core.pixbuilder;
 
-import io.github.altenhofen.openpixapi.core.payload.PixPayload;
+import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -11,7 +11,7 @@ public class PixBuilderTest {
 
     @Test
     public void shoudBuildValidPix() {
-        PixPayload validPix = PixBuilder
+        StaticPixPayload validPix = PixBuilder
                 .staticPix()
                 .merchantName("John Doe")
                 .merchantCity("Porto Alegre")
@@ -25,7 +25,7 @@ public class PixBuilderTest {
 
     @Test
     public void shouldBuildValidPix_NoTxid() {
-        PixPayload validPix = assertDoesNotThrow(
+        StaticPixPayload validPix = assertDoesNotThrow(
                 () -> PixBuilder
                         .staticPix()
                         .merchantName("John Doe")
@@ -40,7 +40,7 @@ public class PixBuilderTest {
 
     @Test
     public void shouldBuildValidPix_NoAmount() {
-        PixPayload validPix = assertDoesNotThrow(
+        StaticPixPayload validPix = assertDoesNotThrow(
                 () -> PixBuilder
                 .staticPix()
                 .merchantName("John Doe")
@@ -71,7 +71,7 @@ public class PixBuilderTest {
     @Test
     public void shouldTruncateLargeMerchantName() {
         String name = "A".repeat(100);
-        PixPayload payload = PixBuilder
+        StaticPixPayload payload = PixBuilder
                 .staticPix()
                 .merchantName(name)
                 .merchantCity("Porto Alegre")

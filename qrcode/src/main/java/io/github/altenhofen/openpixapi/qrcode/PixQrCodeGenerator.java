@@ -1,25 +1,25 @@
 package io.github.altenhofen.openpixapi.qrcode;
 
 import com.google.zxing.common.BitMatrix;
-import io.github.altenhofen.openpixapi.core.payload.PixPayload;
+import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
 
 import java.util.Objects;
 
 public final class PixQrCodeGenerator {
 
     public static PixQrOutput generate(
-            PixPayload pixPayload,
+            StaticPixPayload staticPixPayload,
             PixQrFormat format,
             int size
     ) throws PixQrGenerationException {
-        Objects.requireNonNull(pixPayload);
+        Objects.requireNonNull(staticPixPayload);
         Objects.requireNonNull(format);
 
         if (size <= 0) {
             throw new IllegalArgumentException(String.format("Size must be greater than zero, is %d", size));
         }
 
-        String payloadString = pixPayload.toString();
+        String payloadString = staticPixPayload.toString();
         BitMatrix matrix;
         try {
             matrix = PixQrMatrixFactory.generate(payloadString, size);

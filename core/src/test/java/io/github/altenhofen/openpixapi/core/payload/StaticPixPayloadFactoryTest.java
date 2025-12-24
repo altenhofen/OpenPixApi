@@ -1,19 +1,16 @@
 package io.github.altenhofen.openpixapi.core.payload;
 
-import io.github.altenhofen.openpixapi.core.field.EMVCRC16;
-import io.github.altenhofen.openpixapi.core.field.EMVField;
-import io.github.altenhofen.openpixapi.core.formatter.StringFormatter;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PixPayloadFactoryTest {
+class StaticPixPayloadFactoryTest {
 
     @Test
     void staticPix_isDeterministic() {
-        PixPayload pix1 = PixPayloadFactory.staticPix(
+        StaticPixPayload pix1 = PixPayloadFactory.staticPix(
                 "email@test.com",
                 "JOAO SILVA",
                 "SAO PAULO",
@@ -21,7 +18,7 @@ class PixPayloadFactoryTest {
                 "TX123"
         );
 
-        PixPayload pix2 = PixPayloadFactory.staticPix(
+        StaticPixPayload pix2 = PixPayloadFactory.staticPix(
                 "email@test.com",
                 "JOAO SILVA",
                 "SAO PAULO",
@@ -34,7 +31,7 @@ class PixPayloadFactoryTest {
 
     @Test
     void staticPix_withoutAmount_doesNotContainField54() {
-        PixPayload payload = PixPayloadFactory.staticPix(
+        StaticPixPayload payload = PixPayloadFactory.staticPix(
                 "email@test.com",
                 "JOAO SILVA",
                 "SAO PAULO",
@@ -47,7 +44,7 @@ class PixPayloadFactoryTest {
 
     @Test
     void staticPix_withoutTxid_doesNotContainField62() {
-        PixPayload payload = PixPayloadFactory.staticPix(
+        StaticPixPayload payload = PixPayloadFactory.staticPix(
                 "email@test.com",
                 "JOAO SILVA",
                 "SAO PAULO",

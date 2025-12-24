@@ -1,6 +1,6 @@
 package io.github.altenhofen.openpixapi.qrcode;
 
-import io.github.altenhofen.openpixapi.core.payload.PixPayload;
+import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
 import io.github.altenhofen.openpixapi.core.payload.PixPayloadFactory;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ class PixQrSvgWriterTest {
 
     @Test
     void svg_containsSvgRoot() throws PixQrGenerationException {
-        PixPayload payload = PixPayloadFactory.staticPix(
+        StaticPixPayload payload = PixPayloadFactory.staticPix(
                 "email@test.com",
                 "JOAO SILVA",
                 "SAO PAULO",
