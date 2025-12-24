@@ -87,7 +87,7 @@ public class PixQrCodeGeneratorTest {
         );
 
         Result result = new MultiFormatReader().decode(bitmap);
-        assertEquals(staticPixPayload.toString(), result.getText());
+        assertEquals(staticPixPayload.getEmv(), result.getText());
     }
 
 
