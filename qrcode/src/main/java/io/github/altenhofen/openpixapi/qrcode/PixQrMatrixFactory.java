@@ -11,11 +11,11 @@ import java.util.Map;
 
 final class PixQrMatrixFactory {
 
-    public static BitMatrix generate(String pixPayload, int size) throws Exception {
+    public static BitMatrix generate(String pixPayload, int size, ErrorCorrectionLevel errorCorrectionLevel) throws Exception {
         QRCodeWriter writer = new QRCodeWriter();
 
         Map<EncodeHintType, Object> hints = new HashMap<>();
-        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
+        hints.put(EncodeHintType.ERROR_CORRECTION, errorCorrectionLevel);
         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 
         return writer.encode(

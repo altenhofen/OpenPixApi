@@ -87,11 +87,6 @@ public abstract class PixPayload {
      * can be pasted on websites that generate the QRCode
      * such as <code>pix-qr-decoder/</code>
      */
-    @Override
-    public String toString() {
-        return appendCRC(this.NoCrcString());
-    }
-
     public EMVField<Integer> getPayloadFormatIndicator() {
         return payloadFormatIndicator;
     }
@@ -134,5 +129,9 @@ public abstract class PixPayload {
 
     public String getCrc() {
         return crc;
+    }
+
+    public String emvRepresentation() {
+        return appendCRC(this.NoCrcString());
     }
 }

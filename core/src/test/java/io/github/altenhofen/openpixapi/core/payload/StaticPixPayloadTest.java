@@ -18,7 +18,7 @@ class StaticPixPayloadTest {
                 "TX123"
         );
 
-        String payloadString = payload.toString();
+        String payloadString = payload.emvRepresentation();
         String withoutCrc = payloadString.substring(0, payloadString.length() - 4);
         String crc = payloadString.substring(payloadString.length() - 4);
 

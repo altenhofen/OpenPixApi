@@ -23,8 +23,8 @@ class PixQrSvgWriterTest {
         PixQrOutput output = PixQrCodeGenerator.generate(
                 staticPayload,
                 PixQrFormat.SVG,
-                300
-        );
+                300);
+
 
         PixQrOutput.Svg svg = (PixQrOutput.Svg) output;
         assertTrue(svg.toString().contains("<svg"));
