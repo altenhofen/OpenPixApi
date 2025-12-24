@@ -9,12 +9,12 @@ final class PixQrSvgWriter {
     private PixQrSvgWriter() {
     }
 
-    public static String toSvg(BitMatrix matrix, int moduleSize, Color foreground, Color background) {
+    public static String toSvg(BitMatrix matrix, int moduleSize, PixQrConfig config) {
 
         int width = matrix.getWidth();
         int height = matrix.getHeight();
-        String fgHex = toHex(foreground);
-        String bgHex = toHex(background);
+        String fgHex = toHex(config.getForeground());
+        String bgHex = toHex(config.getBackground());
 
         StringBuilder sb = new StringBuilder();
 

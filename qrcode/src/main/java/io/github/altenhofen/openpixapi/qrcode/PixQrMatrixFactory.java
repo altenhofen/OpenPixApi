@@ -11,18 +11,18 @@ import java.util.Map;
 
 final class PixQrMatrixFactory {
 
-    public static BitMatrix generate(String pixPayload, int size, ErrorCorrectionLevel errorCorrectionLevel) throws Exception {
+    public static BitMatrix generate(String pixPayload, PixQrConfig config) throws Exception {
         QRCodeWriter writer = new QRCodeWriter();
 
         Map<EncodeHintType, Object> hints = new HashMap<>();
-        hints.put(EncodeHintType.ERROR_CORRECTION, errorCorrectionLevel);
+        hints.put(EncodeHintType.ERROR_CORRECTION, config.getErrorCorrectionLevel());
         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 
         return writer.encode(
                 pixPayload,
                 BarcodeFormat.QR_CODE,
-                size,
-                size,
+                config.getSize(),
+                config.getSize(),
                 hints
         );
     }
