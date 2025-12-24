@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PixPayloadTest {
+class StaticPixPayloadTest {
     @Test
     void crc_isValid() {
-        PixPayload payload = PixPayloadFactory.staticPix(
+        StaticPixPayload payload = PixPayloadFactory.staticPix(
                 "email@test.com",
                 "JOAO SILVA",
                 "SAO PAULO",

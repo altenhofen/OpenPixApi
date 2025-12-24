@@ -3,7 +3,7 @@ package io.github.altenhofen.openpixapi.core.field;
 import io.github.altenhofen.openpixapi.core.formatter.EMVFormatter;
 import io.github.altenhofen.openpixapi.core.formatter.DigitFormatter;
 import io.github.altenhofen.openpixapi.core.formatter.PaddingPolicy;
-import io.github.altenhofen.openpixapi.core.payload.PixPayload;
+import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -29,7 +29,7 @@ public class EMVField<T> {
     /**
      *
      * @param fieldName used only for debugging situations.
-     *                  <br>It does not affect the {@link PixPayload} generation
+     *                  <br>It does not affect the {@link StaticPixPayload} generation
      * @param tag       as specified in the EMV standard, it's usually a numeric string of 1 or 2 digits.
      * @param value     the value of type T that can be represented by the
      *                  Common Character Set as defined in <b>EMV Book 4</b>

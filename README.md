@@ -6,6 +6,25 @@ We plan to offer state-of-the-art APIs for making Pix integration seamless in yo
 
 **It is not suitable for use in production as of this commit**
 
+## Scope
+
+This library does:
+
+- Generate a valid EMV QR payload
+- Insert the dynamic URL correctly
+- Compute CRC
+- Enforce EMV/Pix constraints
+- Generate QR images
+- Etc, see roadmap
+
+This library does **NOT**
+
+- Create charges at the PSP
+- Host the dynamic Pix endpoint
+- Handle webhooks or payment confirmation
+
+Think of it as a building block to your backend system.
+
 ## State of the project
 
 I can already create valid Pix EMV Codes that can be used to generate a QRCode

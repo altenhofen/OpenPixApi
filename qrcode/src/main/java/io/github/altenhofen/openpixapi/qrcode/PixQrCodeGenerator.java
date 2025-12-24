@@ -8,18 +8,18 @@ import java.util.Objects;
 public final class PixQrCodeGenerator {
 
     public static PixQrOutput generate(
-            PixPayload pixPayload,
+            PixPayload staticPixPayload,
             PixQrFormat format,
             int size
     ) throws PixQrGenerationException {
-        Objects.requireNonNull(pixPayload);
+        Objects.requireNonNull(staticPixPayload);
         Objects.requireNonNull(format);
 
         if (size <= 0) {
             throw new IllegalArgumentException(String.format("Size must be greater than zero, is %d", size));
         }
 
-        String payloadString = pixPayload.toString();
+        String payloadString = staticPixPayload.toString();
         BitMatrix matrix;
         try {
             matrix = PixQrMatrixFactory.generate(payloadString, size);

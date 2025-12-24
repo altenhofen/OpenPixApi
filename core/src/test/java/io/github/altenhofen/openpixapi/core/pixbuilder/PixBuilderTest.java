@@ -1,6 +1,7 @@
 package io.github.altenhofen.openpixapi.core.pixbuilder;
 
 import io.github.altenhofen.openpixapi.core.payload.PixPayload;
+import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -10,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PixBuilderTest {
 
     @Test
-    public void shoudBuildValidPix() {
-        PixPayload validPix = PixBuilder
+    public void shouldBuildValidStaticPix() {
+        StaticPixPayload validPix = PixBuilder
                 .staticPix()
                 .merchantName("John Doe")
                 .merchantCity("Porto Alegre")
@@ -22,10 +23,23 @@ public class PixBuilderTest {
 
         assertNotNull(validPix);
     }
+    @Test
+    public void shouldBuildValidDynamicPix() {
+        PixPayload validPix = PixBuilder
+                .dynamicPix()
+                .pspUrl("https://pix.example.com/api/webhook")
+                .merchantName("John Doe")
+                .merchantCity("Porto Alegre")
+                .merchantAmount(BigDecimal.valueOf(123.99))
+                .txid("0512TX123456789")
+                .build();
+
+        assertNotNull(validPix);
+    }
 
     @Test
-    public void shouldBuildValidPix_NoTxid() {
-        PixPayload validPix = assertDoesNotThrow(
+    public void shouldBuildValidStaticPix_NoTxid() {
+        StaticPixPayload validPix = assertDoesNotThrow(
                 () -> PixBuilder
                         .staticPix()
                         .merchantName("John Doe")
@@ -39,8 +53,48 @@ public class PixBuilderTest {
     }
 
     @Test
+    public void shouldNotBuildDynamicPix_NoTxid() {
+        IllegalArgumentException validPix = assertThrows(IllegalArgumentException.class,
+                () -> PixBuilder
+                        .dynamicPix()
+                        .pspUrl("https://pix.example.com/api/webhook")
+                        .merchantName("John Doe")
+                        .merchantCity("Porto Alegre")
+                        .merchantAmount(BigDecimal.valueOf(52.00))
+                        .build()
+        );
+        assertNotNull(validPix);
+    }
+
+    @Test
+    public void shouldBuildDynamicPix_WithPspUrlInConstructor() {
+        PixPayload validPix = PixBuilder
+                        .dynamicPix("https://pix.example.com/api/webhook")
+                        .merchantName("John Doe")
+                        .merchantCity("Porto Alegre")
+                        .merchantAmount(BigDecimal.valueOf(52.00))
+                        .txid("1234ABC")
+                        .build();
+        assertNotNull(validPix);
+    }
+
+    @Test
+    public void shouldNotBuildDynamicPix_NoPspUrl() {
+        IllegalArgumentException validPix = assertThrows(IllegalArgumentException.class,
+                () -> PixBuilder
+                        .dynamicPix()
+                        .merchantName("John Doe")
+                        .merchantCity("Porto Alegre")
+                        .merchantAmount(BigDecimal.valueOf(52.00))
+                        .txid("1234ABC")
+                        .build()
+        );
+        assertNotNull(validPix);
+    }
+
+    @Test
     public void shouldBuildValidPix_NoAmount() {
-        PixPayload validPix = assertDoesNotThrow(
+        StaticPixPayload validPix = assertDoesNotThrow(
                 () -> PixBuilder
                 .staticPix()
                 .merchantName("John Doe")
@@ -71,7 +125,7 @@ public class PixBuilderTest {
     @Test
     public void shouldTruncateLargeMerchantName() {
         String name = "A".repeat(100);
-        PixPayload payload = PixBuilder
+        StaticPixPayload payload = PixBuilder
                 .staticPix()
                 .merchantName(name)
                 .merchantCity("Porto Alegre")

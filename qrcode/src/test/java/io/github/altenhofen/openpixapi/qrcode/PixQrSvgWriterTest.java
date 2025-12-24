@@ -9,19 +9,19 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PixQrSvgWriterTest {
+    final PixPayload staticPayload = PixPayloadFactory.staticPix(
+            "email@test.com",
+            "JOAO SILVA",
+            "SAO PAULO",
+            new BigDecimal("10.00"),
+            "TX123"
+    );
 
 
     @Test
     void svg_containsSvgRoot() throws PixQrGenerationException {
-        PixPayload payload = PixPayloadFactory.staticPix(
-                "email@test.com",
-                "JOAO SILVA",
-                "SAO PAULO",
-                new BigDecimal("10.00"),
-                "TX123"
-        );
         PixQrOutput output = PixQrCodeGenerator.generate(
-                payload,
+                staticPayload,
                 PixQrFormat.SVG,
                 300
         );

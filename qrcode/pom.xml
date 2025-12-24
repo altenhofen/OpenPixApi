@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.altenhofen</groupId>
         <artifactId>openpixapi</artifactId>
-        <version>0.01-DEV</version>
+        <version>0.2-SNAPSHOT</version>
     </parent>
 
     <groupId>io.github.altenhofen.openpixapi</groupId>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>io.github.altenhofen.openpixapi</groupId>
             <artifactId>core</artifactId>
-            <version>0.01-DEV</version>
+            <version>0.2-SNAPSHOT</version>
         </dependency>
         <!-- tests -->
         <dependency>

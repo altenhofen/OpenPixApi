@@ -1,10 +1,12 @@
 package io.github.altenhofen.openpixapi.core.field;
 
+import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
+
 /**
  * Basic EMVCRC16 implementation.
  *
  * @author Augusto Bussmann Altenhofen
- * @see io.github.altenhofen.openpixapi.core.payload.PixPayload
+ * @see StaticPixPayload
  * @since 0.01-DEV
  */
 public final class EMVCRC16 {

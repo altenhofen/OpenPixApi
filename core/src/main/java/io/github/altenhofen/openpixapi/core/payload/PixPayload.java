@@ -6,29 +6,32 @@ import io.github.altenhofen.openpixapi.core.field.EMVField;
 
 import java.math.BigDecimal;
 
-/**
- * Data structure that represents a PixPayload object.
- * Studying this class is core to understanding how this library works.
- *
- *
- * @author Augusto Bussmann Altenhofen
- * @see PixPayloadFactory
- * @since 0.01-DEV
- */
-public class PixPayload {
-    private final EMVField<Integer> payloadFormatIndicator;
-    private final EMVField<Integer> pointOfInitiationMethod;
-    private final CompositeEMVField merchantAccount;
-    private final EMVField<Integer> merchantCategoryCode;
-    private final EMVField<Integer> transactionCurrency;
-    private final EMVField<BigDecimal> transactionAmount;
-    private final EMVField<String> countryCode;
-    private final EMVField<String> merchantName;
-    private final EMVField<String> merchantCity;
-    private final CompositeEMVField additionalData;
-    private final String crc;
+public abstract class PixPayload {
 
-    PixPayload(EMVField<Integer> payloadFormatIndicator, EMVField<Integer> pointOfInitiationMethod, CompositeEMVField merchantAccount, EMVField<Integer> merchantCategoryCode, EMVField<Integer> transactionCurrency, EMVField<BigDecimal> transactionAmount, EMVField<String> countryCode, EMVField<String> merchantName, EMVField<String> merchantCity, CompositeEMVField additionalData) {
+    private final EMVField<Integer> payloadFormatIndicator;
+    protected final EMVField<Integer> pointOfInitiationMethod;
+    protected final CompositeEMVField merchantAccount;
+    protected final EMVField<Integer> merchantCategoryCode;
+    protected final EMVField<Integer> transactionCurrency;
+    protected final EMVField<BigDecimal> transactionAmount;
+    protected final EMVField<String> countryCode;
+    protected final EMVField<String> merchantName;
+    protected final EMVField<String> merchantCity;
+    protected final CompositeEMVField additionalData;
+    protected final String crc;
+
+
+    public PixPayload(EMVField<Integer> payloadFormatIndicator,
+                      EMVField<Integer> pointOfInitiationMethod,
+                      CompositeEMVField merchantAccount,
+                      EMVField<Integer> merchantCategoryCode,
+                      EMVField<Integer> transactionCurrency,
+                      EMVField<BigDecimal> transactionAmount,
+                      EMVField<String> countryCode,
+                      EMVField<String> merchantName,
+                      EMVField<String> merchantCity,
+                      CompositeEMVField additionalData
+    ) {
         this.payloadFormatIndicator = payloadFormatIndicator;
         this.pointOfInitiationMethod = pointOfInitiationMethod;
         this.merchantAccount = merchantAccount;
@@ -41,6 +44,7 @@ public class PixPayload {
         this.additionalData = additionalData;
         this.crc = appendCRC(this.NoCrcString());
     }
+
 
     /**
      * It is required to have all fields other than CRC calculated
@@ -63,12 +67,18 @@ public class PixPayload {
         sb.append(countryCode.serialize());
         sb.append(merchantName.serialize());
         sb.append(merchantCity.serialize());
-        
+
         if (additionalData != null) {
             sb.append(additionalData.serialize());
         }
 
         return sb.toString();
+    }
+
+    static String appendCRC(String payloadUntilCrc) {
+        String toSign = payloadUntilCrc + "6304";
+        String crc = EMVCRC16.calculate(toSign);
+        return toSign + crc;
     }
 
     /**
@@ -80,12 +90,6 @@ public class PixPayload {
     @Override
     public String toString() {
         return appendCRC(this.NoCrcString());
-    }
-
-    static String appendCRC(String payloadUntilCrc) {
-        String toSign = payloadUntilCrc + "6304";
-        String crc = EMVCRC16.calculate(toSign);
-        return toSign + crc;
     }
 
     public EMVField<Integer> getPayloadFormatIndicator() {
