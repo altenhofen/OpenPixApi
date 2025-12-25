@@ -3,9 +3,7 @@ package io.github.altenhofen.openpixapi.core.payload;
 
 import io.github.altenhofen.openpixapi.core.field.*;
 import io.github.altenhofen.openpixapi.core.formatter.*;
-import io.github.altenhofen.openpixapi.core.parser.EmvComposite;
-import io.github.altenhofen.openpixapi.core.parser.EmvLeaf;
-import io.github.altenhofen.openpixapi.core.parser.EmvNode;
+import io.github.altenhofen.openpixapi.core.parser.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -157,6 +155,11 @@ public final class PixPayloadFactory {
                 .toList();
 
         return new CompositeEmvField(fieldName, id, (List<EmvField<?>>) children);
+    }
+
+    public static PixPayload fromPayloadString(String payloadString) throws EmvParseException {
+        List<EmvNode> nodes = EmvParser.parse(payloadString);
+        return fromNodes(nodes);
     }
 
     public static PixPayload fromNodes(List<EmvNode> nodes) {
