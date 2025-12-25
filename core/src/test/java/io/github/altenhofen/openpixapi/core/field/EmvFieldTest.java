@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EMVFieldTest {
+public class EmvFieldTest {
 
     @Test
     void emvField_calculatesCorrectLength() {
-        EMVField<String> field = new EMVField<>(
+        EmvField<String> field = new EmvField<>(
                 "Merchant Name",
                 "59",
                 "JOAO",

@@ -1,7 +1,7 @@
 package io.github.altenhofen.openpixapi.core.payload;
 
-import io.github.altenhofen.openpixapi.core.field.CompositeEMVField;
-import io.github.altenhofen.openpixapi.core.field.EMVField;
+import io.github.altenhofen.openpixapi.core.field.CompositeEmvField;
+import io.github.altenhofen.openpixapi.core.field.EmvField;
 
 import java.math.BigDecimal;
 
@@ -17,16 +17,16 @@ import java.math.BigDecimal;
 public class StaticPixPayload extends PixPayload {
 
 
-    StaticPixPayload(EMVField<Integer> payloadFormatIndicator,
-                     EMVField<Integer> pointOfInitiationMethod,
-                     CompositeEMVField merchantAccount,
-                     EMVField<Integer> merchantCategoryCode,
-                     EMVField<Integer> transactionCurrency,
-                     EMVField<BigDecimal> transactionAmount,
-                     EMVField<String> countryCode,
-                     EMVField<String> merchantName,
-                     EMVField<String> merchantCity,
-                     CompositeEMVField additionalData) {
+    StaticPixPayload(EmvField<Integer> payloadFormatIndicator,
+                     EmvField<Integer> pointOfInitiationMethod,
+                     CompositeEmvField merchantAccount,
+                     EmvField<Integer> merchantCategoryCode,
+                     EmvField<Integer> transactionCurrency,
+                     EmvField<BigDecimal> transactionAmount,
+                     EmvField<String> countryCode,
+                     EmvField<String> merchantName,
+                     EmvField<String> merchantCity,
+                     CompositeEmvField additionalData) {
         super(
                 payloadFormatIndicator,
                 pointOfInitiationMethod,

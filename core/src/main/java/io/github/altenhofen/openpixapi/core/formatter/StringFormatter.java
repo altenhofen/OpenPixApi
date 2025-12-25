@@ -1,5 +1,7 @@
 package io.github.altenhofen.openpixapi.core.formatter;
 
+import io.github.altenhofen.openpixapi.core.field.CompositeEmvField;
+
 import java.text.Normalizer;
 import java.util.Locale;
 
@@ -7,11 +9,11 @@ import java.util.Locale;
  * Implements EMVFormatter for String, normalizing the text as of the EMV specifications.
  *
  * @author Augusto Bussmann Altenhofen
- * @see io.github.altenhofen.openpixapi.core.field.CompositeEMVField
- * @see EMVFormatter
+ * @see CompositeEmvField
+ * @see EmvFormatter
  * @since 0.01-DEV
  */
-public final class StringFormatter implements EMVFormatter<String> {
+public final class StringFormatter implements EmvFormatter<String> {
     final private int maxLength;
     final private CharsetPolicy permittedCharset;
 

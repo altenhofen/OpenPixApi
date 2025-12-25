@@ -1,6 +1,6 @@
 package io.github.altenhofen.openpixapi.core.field;
 
-import io.github.altenhofen.openpixapi.core.formatter.EMVFormatter;
+import io.github.altenhofen.openpixapi.core.formatter.EmvFormatter;
 import io.github.altenhofen.openpixapi.core.formatter.DigitFormatter;
 import io.github.altenhofen.openpixapi.core.formatter.PaddingPolicy;
 import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
@@ -15,15 +15,15 @@ import org.jetbrains.annotations.Nullable;
  *
  * @param <T> type of EMVField's value field
  * @author Augusto Bussmann Altenhofen
- * @see io.github.altenhofen.openpixapi.core.field.CompositeEMVField
+ * @see CompositeEmvField
  * @since 0.01-DEV
  */
-public class EMVField<T> {
+public class EmvField<T> {
     private final String tag;
     private final T value;
     @Nullable
     private final String fieldName;
-    private final EMVFormatter<T> formatter;
+    private final EmvFormatter<T> formatter;
     private final DigitFormatter digitFormatter;
 
     /**
@@ -33,9 +33,9 @@ public class EMVField<T> {
      * @param tag       as specified in the EMV standard, it's usually a numeric string of 1 or 2 digits.
      * @param value     the value of type T that can be represented by the
      *                  Common Character Set as defined in <b>EMV Book 4</b>
-     * @param formatter a class that implements {@link EMVFormatter}
+     * @param formatter a class that implements {@link EmvFormatter}
      */
-    public EMVField(@Nullable String fieldName, String tag, T value, EMVFormatter<T> formatter) {
+    public EmvField(@Nullable String fieldName, String tag, T value, EmvFormatter<T> formatter) {
         this.fieldName = fieldName;
         this.tag = tag;
         this.value = value;
@@ -71,7 +71,7 @@ public class EMVField<T> {
      * This is where the actual serialization happens.
      * It's done this way so inherited classes can override just the serialization part
      *
-     * @see CompositeEMVField
+     * @see CompositeEmvField
      * @return a String containing the formatted value
      */
     protected String serializeValue() {

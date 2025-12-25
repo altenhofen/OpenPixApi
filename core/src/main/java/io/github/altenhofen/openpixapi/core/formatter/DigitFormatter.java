@@ -5,10 +5,10 @@ package io.github.altenhofen.openpixapi.core.formatter;
  *
  * @author Augusto Bussmann Altenhofen
  * @see io.github.altenhofen.openpixapi.core.payload.PixPayloadFactory
- * @see EMVFormatter
+ * @see EmvFormatter
  * @since 0.01-DEV
  */
-public class DigitFormatter implements EMVFormatter<Integer>{
+public final class DigitFormatter implements EmvFormatter<Integer> {
     final private int maxLength;
     final private CharsetPolicy charsetPolicy;
     final private PaddingPolicy paddingPolicy;
