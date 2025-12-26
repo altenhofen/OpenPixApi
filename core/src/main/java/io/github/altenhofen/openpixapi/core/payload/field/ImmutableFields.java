@@ -1,6 +1,5 @@
 package io.github.altenhofen.openpixapi.core.payload.field;
 
-import io.github.altenhofen.openpixapi.core.formatter.*;
 import io.github.altenhofen.openpixapi.core.payload.field.formatter.*;
 
 import java.math.BigDecimal;
