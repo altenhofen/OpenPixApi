@@ -28,7 +28,7 @@ public class PixTest {
     PixPayload validPix =
         Pix.builder()
             .dynamicPix()
-            .pspUrl("https://pix.example.com/api/webhook")
+            .pspUrl("pix.example.com/api/webhook")
             .merchantName("John Doe")
             .merchantCity("Porto Alegre")
             .txid("0512TX123456789")
@@ -73,7 +73,7 @@ public class PixTest {
   public void shouldBuildDynamicPix_WithPspUrlInConstructor() {
     PixPayload validPix =
         Pix.builder()
-            .dynamicPix("https://pix.example.com/api/webhook")
+            .dynamicPix("pix.example.com/api/webhook")
             .merchantName("John Doe")
             .merchantCity("Porto Alegre")
             .txid("1234ABC")

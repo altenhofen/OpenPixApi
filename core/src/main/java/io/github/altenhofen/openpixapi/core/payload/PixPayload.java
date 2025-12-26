@@ -2,12 +2,9 @@ package io.github.altenhofen.openpixapi.core.payload;
 
 import io.github.altenhofen.openpixapi.core.payload.field.CompositeEmvField;
 import io.github.altenhofen.openpixapi.core.payload.field.EmvField;
-
 import java.math.BigDecimal;
 
-/**
- * Abstract implementation of the Pix Payload as specified in the manual.
- */
+/** Abstract implementation of the Pix Payload as specified in the manual. */
 public abstract class PixPayload {
 
   private final EmvField<Integer> payloadFormatIndicator;
@@ -23,16 +20,16 @@ public abstract class PixPayload {
   protected final String crc;
 
   PixPayload(
-    EmvField<Integer> payloadFormatIndicator,
-    EmvField<Integer> pointOfInitiationMethod,
-    CompositeEmvField merchantAccount,
-    EmvField<Integer> merchantCategoryCode,
-    EmvField<Integer> transactionCurrency,
-    EmvField<BigDecimal> transactionAmount,
-    EmvField<String> countryCode,
-    EmvField<String> merchantName,
-    EmvField<String> merchantCity,
-    CompositeEmvField additionalData) {
+      EmvField<Integer> payloadFormatIndicator,
+      EmvField<Integer> pointOfInitiationMethod,
+      CompositeEmvField merchantAccount,
+      EmvField<Integer> merchantCategoryCode,
+      EmvField<Integer> transactionCurrency,
+      EmvField<BigDecimal> transactionAmount,
+      EmvField<String> countryCode,
+      EmvField<String> merchantName,
+      EmvField<String> merchantCity,
+      CompositeEmvField additionalData) {
     this.payloadFormatIndicator = payloadFormatIndicator;
     this.pointOfInitiationMethod = pointOfInitiationMethod;
     this.merchantAccount = merchantAccount;
@@ -183,7 +180,7 @@ public abstract class PixPayload {
 
   /**
    * @return The String representation of payload, can be pasted on websites that generate the
-   * QRCode such as <code>pix-qr-decoder/</code>
+   *     QRCode such as <code>pix-qr-decoder/</code>
    */
   public String getEmv() {
     return appendCRC(this.NoCrcString());

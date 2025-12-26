@@ -1,7 +1,5 @@
 package io.github.altenhofen.openpixapi.core.payload;
 
-import java.math.BigDecimal;
-
 abstract class AbstractPixBuilder<T extends AbstractPixBuilder<T>> {
   protected String merchantName;
   protected String merchantCity;
@@ -30,8 +28,6 @@ abstract class AbstractPixBuilder<T extends AbstractPixBuilder<T>> {
     this.merchantCity = city;
     return self();
   }
-
-
 
   /**
    * Adds the transaction ID to the builder

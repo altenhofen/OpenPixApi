@@ -40,8 +40,7 @@ public final class Pix {
    * @param merchantCity city of merchant/recebedor
    * @return a static pix's payload
    */
-  public static PixPayload newStatic(
-      String pixKey, String merchantName, String merchantCity) {
+  public static PixPayload newStatic(String pixKey, String merchantName, String merchantCity) {
     return PixPayloadFactory.staticPix(pixKey, merchantName, merchantCity, null);
   }
 

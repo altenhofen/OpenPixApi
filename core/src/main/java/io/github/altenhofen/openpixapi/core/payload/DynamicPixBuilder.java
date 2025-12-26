@@ -48,7 +48,6 @@ public class DynamicPixBuilder extends AbstractPixBuilder<DynamicPixBuilder> {
     if (txid == null) {
       throw new IllegalArgumentException("txid needs to be present for a dynamic pix");
     }
-    return PixPayloadFactory.dynamicPix(
-        pspUrl, super.merchantName, super.merchantCity, super.txid);
+    return PixPayloadFactory.dynamicPix(pspUrl, super.merchantName, super.merchantCity, super.txid);
   }
 }
