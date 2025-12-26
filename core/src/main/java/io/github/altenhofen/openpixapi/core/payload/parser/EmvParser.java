@@ -6,10 +6,7 @@ import io.github.altenhofen.openpixapi.core.payload.field.CompositeEmvField;
 import io.github.altenhofen.openpixapi.core.payload.field.EmvField;
 import io.github.altenhofen.openpixapi.core.payload.field.formatter.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /** EMVParser that will parse a payload String */
@@ -49,10 +46,13 @@ public final class EmvParser {
 
   // treating nodes
   private static Map<String, EmvNode> index(List<EmvNode> nodes) {
-    return nodes.stream()
-        .collect(
-            Collectors.toMap(
-                n -> (n instanceof EmvLeaf l ? l.id() : ((EmvComposite) n).id()), n -> n));
+    Map<String, EmvNode> map = new HashMap<>();
+    for (EmvNode n : nodes) {
+      if (map.put((n instanceof EmvLeaf l ? l.id() : ((EmvComposite) n).id()), n) != null) {
+        throw new IllegalStateException("Duplicate key");
+      }
+    }
+    return map;
   }
 
   private static String leafValue(Map<String, EmvNode> map, String id) {
@@ -70,8 +70,13 @@ public final class EmvParser {
 
     EmvComposite comp = (EmvComposite) node;
 
+    List<EmvField<?>> list = new ArrayList<>();
+    for (EmvNode emvNode : comp.children()) {
+      EmvField<?> emvField = toEmvField(emvNode);
+      list.add(emvField);
+    }
     List<? extends EmvField<?>> children =
-        comp.children().stream().map(EmvParser::toEmvField).toList();
+      list;
 
     return new CompositeEmvField(null, comp.id(), (List<EmvField<?>>) children);
   }
