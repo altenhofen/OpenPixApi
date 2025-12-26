@@ -29,22 +29,7 @@ public final class Pix {
    */
   public static PixPayload newDynamic(
       String pspUrl, String merchantName, String merchantCity, String txid) {
-    return PixPayloadFactory.dynamicPix(pspUrl, merchantName, merchantCity, null, txid);
-  }
-
-  /**
-   * Creates a dynamic pix with a specified amount.
-   *
-   * @param pspUrl payment service provider URL
-   * @param merchantName name of the merchant/recebedor
-   * @param merchantCity city of the merchant/recebedor
-   * @param amount the transaction amount
-   * @param txid transaction id
-   * @return the typed payload for pix
-   */
-  public static PixPayload newDynamic(
-      String pspUrl, String merchantName, String merchantCity, BigDecimal amount, String txid) {
-    return PixPayloadFactory.dynamicPix(pspUrl, merchantName, merchantCity, amount, txid);
+    return PixPayloadFactory.dynamicPix(pspUrl, merchantName, merchantCity, txid);
   }
 
   /**
@@ -53,12 +38,10 @@ public final class Pix {
    * @param pixKey can be random, e-mail, phone number (+000000000000) or CPF
    * @param merchantName name of merchant/recebedor
    * @param merchantCity city of merchant/recebedor
-   * @param txid transaction id
    * @return a static pix's payload
    */
-  public static PixPayload newStatic(
-      String pixKey, String merchantName, String merchantCity, String txid) {
-    return PixPayloadFactory.staticPix(pixKey, merchantName, merchantCity, null, txid);
+  public static PixPayload newStatic(String pixKey, String merchantName, String merchantCity) {
+    return PixPayloadFactory.staticPix(pixKey, merchantName, merchantCity, null);
   }
 
   /**
@@ -68,12 +51,11 @@ public final class Pix {
    * @param merchantName name of merchant/recebedor
    * @param merchantCity city of merchant/recebedor
    * @param amount value to be received
-   * @param txid transaction id
    * @return a static pix's payload
    */
   public static PixPayload newStatic(
-      String pixKey, String merchantName, String merchantCity, BigDecimal amount, String txid) {
-    return PixPayloadFactory.staticPix(pixKey, merchantName, merchantCity, amount, txid);
+      String pixKey, String merchantName, String merchantCity, BigDecimal amount) {
+    return PixPayloadFactory.staticPix(pixKey, merchantName, merchantCity, amount);
   }
 
   /**

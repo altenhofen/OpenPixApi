@@ -185,4 +185,21 @@ public abstract class PixPayload {
   public String getEmv() {
     return appendCRC(this.NoCrcString());
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof PixPayload other)) {
+      return false;
+    }
+
+    return this.getEmv().equals(other.getEmv());
+  }
+
+  @Override
+  public int hashCode() {
+    return getEmv().hashCode();
+  }
 }

@@ -18,10 +18,15 @@ public final class DynamicMerchantAccountInfo implements MerchantAccountInfo {
     if (url == null || url.isBlank()) {
       throw new IllegalArgumentException("Dynamic Pix URL must not be null or blank");
     }
-    if (!url.startsWith("https://")) {
-      throw new IllegalArgumentException("Dynamic Pix URL must use HTTPS");
+    if (url.startsWith("https://")) {
+      throw new IllegalArgumentException("Dynamic Pix URL must not have HTTPS prefix");
+    }
+
+    if (url.startsWith("http://")) {
+      throw new IllegalArgumentException("Dynamic Pix URL must not have HTTP prefix");
     }
     this.url = url;
+    // TODO: validate txid
   }
 
   /**
@@ -40,7 +45,7 @@ public final class DynamicMerchantAccountInfo implements MerchantAccountInfo {
 
     EmvField<String> urlField =
         new EmvField<>(
-            "Dynamic Pix URL", "25", url, new StringFormatter(99, CharsetPolicy.EMV_COMMON));
+            "URL do Payload", "25", url, new StringFormatter(99, CharsetPolicy.EMV_COMMON));
 
     return new CompositeEmvField("Merchant Account Information", "26", List.of(gui, urlField));
   }

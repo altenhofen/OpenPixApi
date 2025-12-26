@@ -28,10 +28,9 @@ public class PixTest {
     PixPayload validPix =
         Pix.builder()
             .dynamicPix()
-            .pspUrl("https://pix.example.com/api/webhook")
+            .pspUrl("pix.example.com/api/webhook")
             .merchantName("John Doe")
             .merchantCity("Porto Alegre")
-            .amount(BigDecimal.valueOf(123.99))
             .txid("0512TX123456789")
             .build();
 
@@ -66,7 +65,6 @@ public class PixTest {
                     .pspUrl("https://pix.example.com/api/webhook")
                     .merchantName("John Doe")
                     .merchantCity("Porto Alegre")
-                    .amount(BigDecimal.valueOf(52.00))
                     .build());
     assertNotNull(validPix);
   }
@@ -75,10 +73,9 @@ public class PixTest {
   public void shouldBuildDynamicPix_WithPspUrlInConstructor() {
     PixPayload validPix =
         Pix.builder()
-            .dynamicPix("https://pix.example.com/api/webhook")
+            .dynamicPix("pix.example.com/api/webhook")
             .merchantName("John Doe")
             .merchantCity("Porto Alegre")
-            .amount(BigDecimal.valueOf(52.00))
             .txid("1234ABC")
             .build();
     assertNotNull(validPix);
@@ -94,7 +91,6 @@ public class PixTest {
                     .dynamicPix()
                     .merchantName("John Doe")
                     .merchantCity("Porto Alegre")
-                    .amount(BigDecimal.valueOf(52.00))
                     .txid("1234ABC")
                     .build());
     assertNotNull(validPix);

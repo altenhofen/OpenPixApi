@@ -73,7 +73,7 @@ public class EmvField<T> {
    */
   protected String serializeValue() {
     if (formatter == null) {
-      throw new IllegalStateException("formatter is null");
+      return (String) value;
     }
 
     return this.formatter.format(this.value);
@@ -107,5 +107,21 @@ public class EmvField<T> {
    */
   public String getId() {
     return this.id;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof EmvField<?> other)) {
+      return false;
+    }
+    return serialize().equals(other.serialize());
+  }
+
+  @Override
+  public int hashCode() {
+    return 31 * getId().hashCode() + getValue().hashCode();
   }
 }

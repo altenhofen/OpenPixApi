@@ -20,11 +20,10 @@ public final class PixPayloadFactory {
    * @param merchantName name of the person who's receiving the transaction
    * @param merchantCity city of the person who's receiving the transaction
    * @param amount value to be received, can be null
-   * @param txid used in dynamic pix, it's basically ignored for now
    * @return a payload to be used by other classes or serialized to String
    */
   public static StaticPixPayload staticPix(
-      String pixKey, String merchantName, String merchantCity, BigDecimal amount, String txid) {
+      String pixKey, String merchantName, String merchantCity, BigDecimal amount) {
 
     Objects.requireNonNull(pixKey, "pixKey");
     Objects.requireNonNull(merchantName, "merchantName");
@@ -41,28 +40,27 @@ public final class PixPayloadFactory {
     MerchantAccountInfo merchantAccountInfo = new StaticMerchantAccountInfo(pixKey);
 
     return new StaticPixPayload(
-        ImmutableFields.payloadFormatIndicator(),
-        ImmutableFields.pointOfInitiationMethod(),
+        ImmutableEmvFields.payloadFormatIndicator(),
+        ImmutableEmvFields.pointOfInitiationMethod(),
         merchantAccountInfo.toEmvField(),
-        ImmutableFields.merchantCategoryCode(),
-        ImmutableFields.transactionCurrency(),
-        ImmutableFields.transactionAmount(amount),
-        ImmutableFields.countryCode(),
-        ImmutableFields.merchantName(merchantName),
-        ImmutableFields.merchantCity(merchantCity),
-        ImmutableFields.additionalData(txid));
+        ImmutableEmvFields.merchantCategoryCode(),
+        ImmutableEmvFields.transactionCurrency(),
+        ImmutableEmvFields.transactionAmount(amount),
+        ImmutableEmvFields.countryCode(),
+        ImmutableEmvFields.merchantName(merchantName),
+        ImmutableEmvFields.merchantCity(merchantCity),
+        ImmutableEmvFields.additionalData(null));
   }
 
   /**
    * @param pspUrl payment service provider URL
    * @param merchantName merchant/recebedor name
    * @param merchantCity merchant/recebedor city
-   * @param amount money amount, can be null
    * @param txid transaction id
    * @return a DynamicPixPayload
    */
   public static DynamicPixPayload dynamicPix(
-      String pspUrl, String merchantName, String merchantCity, BigDecimal amount, String txid) {
+      String pspUrl, String merchantName, String merchantCity, String txid) {
     Objects.requireNonNull(merchantName, "merchantName");
     Objects.requireNonNull(merchantCity, "merchantCity");
 
@@ -76,15 +74,14 @@ public final class PixPayloadFactory {
     MerchantAccountInfo merchantAccountInfo = new DynamicMerchantAccountInfo(pspUrl);
 
     return new DynamicPixPayload(
-        ImmutableFields.payloadFormatIndicator(),
-        ImmutableFields.pointOfInitiationMethod(),
+        ImmutableEmvFields.payloadFormatIndicator(),
+        ImmutableEmvFields.pointOfInitiationMethod(),
         merchantAccountInfo.toEmvField(),
-        ImmutableFields.merchantCategoryCode(),
-        ImmutableFields.transactionCurrency(),
-        ImmutableFields.transactionAmount(amount),
-        ImmutableFields.countryCode(),
-        ImmutableFields.merchantName(merchantName),
-        ImmutableFields.merchantCity(merchantCity),
-        ImmutableFields.additionalData(txid));
+        ImmutableEmvFields.merchantCategoryCode(),
+        ImmutableEmvFields.transactionCurrency(),
+        ImmutableEmvFields.countryCode(),
+        ImmutableEmvFields.merchantName(merchantName),
+        ImmutableEmvFields.merchantCity(merchantCity),
+        ImmutableEmvFields.additionalData(txid));
   }
 }

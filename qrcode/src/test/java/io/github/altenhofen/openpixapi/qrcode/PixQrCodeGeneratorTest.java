@@ -20,10 +20,10 @@ import org.junit.jupiter.api.Test;
 public class PixQrCodeGeneratorTest {
   final PixQrConfig config = PixQrConfig.defaultConfig();
   final PixPayload staticPixPayload =
-      Pix.newStatic("email@test.com", "JOAO SILVA", "SAO PAULO", new BigDecimal("10.00"), "TX123");
+      Pix.newStatic("email@test.com", "JOAO SILVA", "SAO PAULO", new BigDecimal("10.00"));
 
   final PixPayload dynamicPixPayload =
-      Pix.newDynamic("https://pix.example.com/api/webhook", "JOAO SILVA", "SAO PAULO", "TX123");
+      Pix.newDynamic("pix.example.com/api/webhook", "JOAO SILVA", "SAO PAULO", "TX123");
 
   @Test
   void static_qrGeneration_works() {

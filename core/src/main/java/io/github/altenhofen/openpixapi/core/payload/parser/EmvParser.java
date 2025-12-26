@@ -1,16 +1,16 @@
 package io.github.altenhofen.openpixapi.core.payload.parser;
 
+import io.github.altenhofen.openpixapi.core.payload.DynamicPixPayload;
+import io.github.altenhofen.openpixapi.core.payload.ImmutableEmvFields;
 import io.github.altenhofen.openpixapi.core.payload.PixPayload;
 import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
-import io.github.altenhofen.openpixapi.core.payload.field.CompositeEmvField;
-import io.github.altenhofen.openpixapi.core.payload.field.EmvField;
+import io.github.altenhofen.openpixapi.core.payload.field.*;
 import io.github.altenhofen.openpixapi.core.payload.field.formatter.*;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /** EMVParser that will parse a payload String */
-public final class EmvParser {
+final class EmvParser {
   // Pix-specific composite fields
   static final Set<String> COMPOSITE_FIELDS = Set.of("26", "62");
 
@@ -20,17 +20,31 @@ public final class EmvParser {
     int i = 0;
     while (i < payloadLength) {
       if (i + 2 > payloadLength) {
-        throw new EmvParseException(String.format("unexpected end while reading id %d", i));
+        throw new EmvParseException(String.format("Unexpected end while reading at %d", i));
       }
 
+      // tag, check it to be digit
       String tag = emvPayload.substring(i, i + 2);
       i += 2;
 
+      // length, check it to be number only
       String lengthString = emvPayload.substring(i, i + 2);
-      int length = Integer.parseInt(lengthString);
+      int length = 0;
+      try {
+        length = Integer.parseInt(lengthString);
+      } catch (NumberFormatException e) {
+        throw new EmvParseException(
+            String.format(
+                "Invalid length while reading at position %d, tried to format '%s' as Integer",
+                i, lengthString));
+      }
       i += 2;
 
       String value = emvPayload.substring(i, i + length);
+      //      if (value.length() != length) {
+      //        throw new EmvParseException(String.format("Invalid length while reading at position
+      // %d, value length is %d, expected %d", i, value.length(), length));
+      //      }
       i += length;
 
       if (COMPOSITE_FIELDS.contains(tag)) {
@@ -45,6 +59,7 @@ public final class EmvParser {
   }
 
   // treating nodes
+  /// turns a  list of nodes into a map where you can get by ID
   private static Map<String, EmvNode> index(List<EmvNode> nodes) {
     Map<String, EmvNode> map = new HashMap<>();
     for (EmvNode n : nodes) {
@@ -55,6 +70,7 @@ public final class EmvParser {
     return map;
   }
 
+  ///  gets the value of the node on map
   private static String leafValue(Map<String, EmvNode> map, String id) {
     EmvNode node = map.get(id);
     if (!(node instanceof EmvLeaf leaf)) {
@@ -63,6 +79,7 @@ public final class EmvParser {
     return leaf.value();
   }
 
+  /// transforms into typed EMVField object
   private static EmvField<?> toEmvField(EmvNode node) {
     if (node instanceof EmvLeaf leaf) {
       return new EmvField<>(null, leaf.id(), leaf.value(), null);
@@ -75,8 +92,7 @@ public final class EmvParser {
       EmvField<?> emvField = toEmvField(emvNode);
       list.add(emvField);
     }
-    List<? extends EmvField<?>> children =
-      list;
+    List<? extends EmvField<?>> children = list;
 
     return new CompositeEmvField(null, comp.id(), (List<EmvField<?>>) children);
   }
@@ -88,56 +104,84 @@ public final class EmvParser {
       throw new IllegalArgumentException("Expected composite field " + id);
     }
 
-    List<? extends EmvField> children =
-        comp.children().stream().map(EmvParser::toEmvField).toList();
+    List<EmvField<?>> list = new ArrayList<>();
+    for (EmvNode emvNode : comp.children()) {
+      EmvField<?> emvField = toEmvField(emvNode);
+      list.add(emvField);
+    }
+    List<? extends EmvField> children = list;
 
     return new CompositeEmvField(fieldName, id, (List<EmvField<?>>) children);
   }
 
   static PixPayload fromNodes(List<EmvNode> nodes) {
     Map<String, EmvNode> map = index(nodes);
+    String merchantName = leafValue(map, "59");
+    String merchantCity = leafValue(map, "60");
+
+    // merchant account info fields (composite)
+    EmvComposite mai = (EmvComposite) map.get("26");
+    if (mai == null) {
+      throw new IllegalArgumentException("Missing Merchant Account Information (26)");
+    }
+    // get those fields
+    Map<String, EmvNode> maiFields = index(mai.children());
+
+    // additional data field template (composite)
+    EmvComposite adft = (EmvComposite) map.get("62");
+    // get fields
+    Map<String, EmvNode> adftFields = adft != null ? index(adft.children()) : Map.of();
+
+    // "Os campos Valor e Identificador da Transação (txid) não devem ser preenchidos no QR Code
+    // dinâmico.
+    // Se preenchidos, seu conteúdo deve ser ignorado, prevalecendo sempre os campos obtidos através
+    // da
+    // URL (payload JSON)"
+
+    boolean isDynamicPix =
+        maiFields.containsKey("25")
+            && // PSP URL
+            adftFields.containsKey("05"); // TXID
+
+    // validate
+    if (isDynamicPix && map.containsKey("54")) {
+      throw new IllegalArgumentException("Dynamic Pix QR must not include transaction amount");
+    }
+
+    // return dynamic pix
+    if (isDynamicPix) {
+      String pspUrl = leafValue(maiFields, "25");
+      String txid = leafValue(adftFields, "05");
+
+      DynamicMerchantAccountInfo merchantAccountInfo = new DynamicMerchantAccountInfo(pspUrl);
+      // txid is present on 62.05
+
+      return new DynamicPixPayload(
+          ImmutableEmvFields.payloadFormatIndicator(),
+          ImmutableEmvFields.pointOfInitiationMethod(),
+          merchantAccountInfo.toEmvField(),
+          ImmutableEmvFields.merchantCategoryCode(),
+          ImmutableEmvFields.transactionCurrency(),
+          ImmutableEmvFields.countryCode(),
+          ImmutableEmvFields.merchantName(merchantName),
+          ImmutableEmvFields.merchantCity(merchantCity),
+          ImmutableEmvFields.additionalData(txid));
+    }
+    // return static pix payload
+    String pixKey = leafValue(maiFields, "01");
+    String amount = leafValue(map, "54");
+    StaticMerchantAccountInfo merchantAccountInfo = new StaticMerchantAccountInfo(pixKey);
 
     return new StaticPixPayload(
-        new EmvField<>(
-            "Payload Format",
-            "00",
-            Integer.parseInt(leafValue(map, "00")),
-            new DigitFormatter(2, PaddingPolicy.LEFT)),
-        new EmvField<>(
-            "POI Method",
-            "01",
-            Integer.parseInt(leafValue(map, "01")),
-            new DigitFormatter(2, PaddingPolicy.LEFT)),
-        composite(map, "26", "Merchant Account"),
-        new EmvField<>(
-            "MCC",
-            "52",
-            Integer.parseInt(leafValue(map, "52")),
-            new DigitFormatter(4, PaddingPolicy.LEFT)),
-        new EmvField<>(
-            "Currency",
-            "53",
-            Integer.parseInt(leafValue(map, "53")),
-            new DigitFormatter(4, PaddingPolicy.LEFT)),
-        map.containsKey("54")
-            ? new EmvField<>(
-                "Amount", "54", new BigDecimal(leafValue(map, "54")), new AmountFormatter())
-            : null,
-        new EmvField<>(
-            "Country",
-            "58",
-            leafValue(map, "58"),
-            new StringFormatter(2, CharsetPolicy.EMV_COMMON)),
-        new EmvField<>(
-            "Merchant Name",
-            "59",
-            leafValue(map, "59"),
-            new StringFormatter(25, CharsetPolicy.EMV_COMMON)),
-        new EmvField<>(
-            "Merchant City",
-            "60",
-            leafValue(map, "60"),
-            new StringFormatter(15, CharsetPolicy.EMV_COMMON)),
-        map.containsKey("62") ? composite(map, "62", "Additional Data") : null);
+        ImmutableEmvFields.payloadFormatIndicator(),
+        ImmutableEmvFields.pointOfInitiationMethod(),
+        merchantAccountInfo.toEmvField(),
+        ImmutableEmvFields.merchantCategoryCode(),
+        ImmutableEmvFields.transactionCurrency(),
+        ImmutableEmvFields.transactionAmount(new BigDecimal(amount)),
+        ImmutableEmvFields.countryCode(),
+        ImmutableEmvFields.merchantName(merchantName),
+        ImmutableEmvFields.merchantCity(merchantCity),
+        ImmutableEmvFields.additionalData(null));
   }
 }
