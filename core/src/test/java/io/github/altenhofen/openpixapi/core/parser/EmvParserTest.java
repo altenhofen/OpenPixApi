@@ -3,6 +3,7 @@ package io.github.altenhofen.openpixapi.core.parser;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import io.github.altenhofen.openpixapi.core.Pix;
+import io.github.altenhofen.openpixapi.core.payload.parser.EmvParseException;
 import org.junit.jupiter.api.Test;
 
 class EmvParserTest {

@@ -1,9 +1,8 @@
-package io.github.altenhofen.openpixapi.core.formatter;
+package io.github.altenhofen.openpixapi.core.payload.field.formatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import io.github.altenhofen.openpixapi.core.payload.field.formatter.PaddingPolicy;
 import org.junit.jupiter.api.Test;
 
 public class PaddingPolicyTest {

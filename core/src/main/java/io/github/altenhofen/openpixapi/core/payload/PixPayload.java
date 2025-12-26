@@ -4,6 +4,7 @@ import io.github.altenhofen.openpixapi.core.payload.field.CompositeEmvField;
 import io.github.altenhofen.openpixapi.core.payload.field.EmvField;
 import java.math.BigDecimal;
 
+/** Abstract implementation of the Pix Payload as specified in the manual. */
 public abstract class PixPayload {
 
   private final EmvField<Integer> payloadFormatIndicator;
@@ -18,7 +19,7 @@ public abstract class PixPayload {
   protected final CompositeEmvField additionalData;
   protected final String crc;
 
-  public PixPayload(
+  PixPayload(
       EmvField<Integer> payloadFormatIndicator,
       EmvField<Integer> pointOfInitiationMethod,
       CompositeEmvField merchantAccount,
@@ -77,46 +78,102 @@ public abstract class PixPayload {
     return toSign + crc;
   }
 
+  /**
+   * Getter for PayloadFormatIndicator
+   *
+   * @return the EMV Field with the integer value
+   */
   public EmvField<Integer> getPayloadFormatIndicator() {
     return payloadFormatIndicator;
   }
 
+  /**
+   * Getter for PointOfInitiationMethod.
+   *
+   * @return the EMV Field with the integer value
+   */
   public EmvField<Integer> getPointOfInitiationMethod() {
     return pointOfInitiationMethod;
   }
 
+  /**
+   * Getter for MerchantAccount.
+   *
+   * @return the EMV composite Field with the integer value
+   */
   public CompositeEmvField getMerchantAccount() {
     return merchantAccount;
   }
 
+  /**
+   * Getter for MerchantCategoryCode.
+   *
+   * @return the EMV field with the integer value
+   */
   public EmvField<Integer> getMerchantCategoryCode() {
     return merchantCategoryCode;
   }
 
+  /**
+   * Getter for TransactionCurrency.
+   *
+   * @return the EMV field with the integer value
+   */
   public EmvField<Integer> getTransactionCurrency() {
     return transactionCurrency;
   }
 
+  /**
+   * Getter for TransactionAmount.
+   *
+   * @return the EMV field with the BigDecimal value
+   */
   public EmvField<BigDecimal> getTransactionAmount() {
     return transactionAmount;
   }
 
+  /**
+   * Getter for CountryCode.
+   *
+   * @return the EMV field with the string value
+   */
   public EmvField<String> getCountryCode() {
     return countryCode;
   }
 
+  /**
+   * Getter for MerchantName.
+   *
+   * @return the EMV field with the string value
+   */
   public EmvField<String> getMerchantName() {
     return merchantName;
   }
 
+  /**
+   * Getter for MerchantCity.
+   *
+   * @return the EMV field with the string value
+   */
   public EmvField<String> getMerchantCity() {
     return merchantCity;
   }
 
+  /**
+   * Getter for Additional Data.
+   *
+   * @return the EMV composite field with the value
+   */
   public CompositeEmvField getAdditionalData() {
     return additionalData;
   }
 
+  /**
+   * Getter for the Crc field.
+   *
+   * @return the String for the crc field (it's not an EMV value!)
+   * @see EMVCRC16
+   */
   public String getCrc() {
     return crc;
   }

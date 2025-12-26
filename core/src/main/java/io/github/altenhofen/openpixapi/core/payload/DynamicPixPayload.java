@@ -2,6 +2,7 @@ package io.github.altenhofen.openpixapi.core.payload;
 
 import io.github.altenhofen.openpixapi.core.payload.field.CompositeEmvField;
 import io.github.altenhofen.openpixapi.core.payload.field.EmvField;
+import java.math.BigDecimal;
 
 class DynamicPixPayload extends PixPayload {
   DynamicPixPayload(
@@ -10,6 +11,7 @@ class DynamicPixPayload extends PixPayload {
       CompositeEmvField merchantAccount,
       EmvField<Integer> merchantCategoryCode,
       EmvField<Integer> transactionCurrency,
+      EmvField<BigDecimal> amount,
       EmvField<String> countryCode,
       EmvField<String> merchantName,
       EmvField<String> merchantCity,
@@ -20,7 +22,7 @@ class DynamicPixPayload extends PixPayload {
         merchantAccount,
         merchantCategoryCode,
         transactionCurrency,
-        null,
+        amount,
         countryCode,
         merchantName,
         merchantCity,

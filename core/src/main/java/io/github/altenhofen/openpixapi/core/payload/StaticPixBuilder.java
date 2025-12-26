@@ -1,5 +1,6 @@
 package io.github.altenhofen.openpixapi.core.payload;
 
+/** Static Pix builder for AbstractPixBuilder */
 public class StaticPixBuilder extends AbstractPixBuilder<StaticPixBuilder> {
 
   private String pixKey;
@@ -9,6 +10,10 @@ public class StaticPixBuilder extends AbstractPixBuilder<StaticPixBuilder> {
     return this;
   }
 
+  /**
+   * @param pixKey can be random, e-mail, phone number (+000000000000) or CPF
+   * @return this builder
+   */
   public StaticPixBuilder pixKey(String pixKey) {
     this.pixKey = pixKey;
     return this;
@@ -23,6 +28,6 @@ public class StaticPixBuilder extends AbstractPixBuilder<StaticPixBuilder> {
     }
 
     return PixPayloadFactory.staticPix(
-        this.pixKey, super.merchantName, super.merchantCity, super.merchantAmount, super.txid);
+        this.pixKey, super.merchantName, super.merchantCity, super.amount, super.txid);
   }
 }

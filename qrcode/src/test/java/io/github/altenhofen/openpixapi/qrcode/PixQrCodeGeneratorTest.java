@@ -76,11 +76,11 @@ public class PixQrCodeGeneratorTest {
 
   @Test
   void braile_Works() throws Exception {
-    PixQrOutput.Braile braile =
-        (PixQrOutput.Braile)
-            PixQrCodeGenerator.generate(staticPixPayload.getEmv(), PixQrFormat.BRAILE, config);
+    PixQrOutput.Braille braille =
+        (PixQrOutput.Braille)
+            PixQrCodeGenerator.generate(staticPixPayload.getEmv(), PixQrFormat.BRAILLE, config);
 
-    assertNotNull(braile);
+    assertNotNull(braille);
   }
 
   @Test

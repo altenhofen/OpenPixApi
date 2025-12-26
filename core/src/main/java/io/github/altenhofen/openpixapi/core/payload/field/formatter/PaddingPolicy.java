@@ -8,6 +8,7 @@ package io.github.altenhofen.openpixapi.core.payload.field.formatter;
  * @since 0.01-DEV
  */
 public enum PaddingPolicy {
+  /** Will check targetLength and not apply padding. */
   NONE {
     public String pad(String value, int targetLength, char padChar)
         throws IllegalArgumentException {
@@ -15,6 +16,8 @@ public enum PaddingPolicy {
       return value;
     }
   },
+
+  /** Will check targetLength and apply padding to the start of the String */
   LEFT {
     public String pad(String value, int targetLength, char padChar)
         throws IllegalArgumentException {
@@ -27,6 +30,8 @@ public enum PaddingPolicy {
       return sb.toString();
     }
   },
+
+  /** Will check targetLength and apply padding to the end of the String */
   RIGHT {
     public String pad(String value, int targetLength, char padChar)
         throws IllegalArgumentException {
@@ -48,6 +53,13 @@ public enum PaddingPolicy {
     }
   }
 
+  /**
+   * @param value to be padded
+   * @param targetLength amount of padded characters
+   * @param padChar the character to be used at padding, ex: '0' or ' '
+   * @return the padded string
+   * @throws IllegalArgumentException if targetLength is smaller than valueLength
+   */
   public abstract String pad(String value, int targetLength, char padChar)
       throws IllegalArgumentException;
 }

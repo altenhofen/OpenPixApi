@@ -1,11 +1,13 @@
-package io.github.altenhofen.openpixapi.core.payload.field;
+package io.github.altenhofen.openpixapi.core.payload;
 
+import io.github.altenhofen.openpixapi.core.payload.field.CompositeEmvField;
+import io.github.altenhofen.openpixapi.core.payload.field.EmvField;
 import io.github.altenhofen.openpixapi.core.payload.field.formatter.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-public class ImmutableFields {
+class ImmutableFields {
   public static EmvField<Integer> payloadFormatIndicator() {
     return new EmvField<Integer>(
         "Payload Format Indicator", "00", 1, new DigitFormatter(2, PaddingPolicy.LEFT));

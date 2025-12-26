@@ -1,11 +1,7 @@
-package io.github.altenhofen.openpixapi.core.formatter;
+package io.github.altenhofen.openpixapi.core.payload.field.formatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import io.github.altenhofen.openpixapi.core.payload.field.formatter.CharsetPolicy;
-import io.github.altenhofen.openpixapi.core.payload.field.formatter.DigitFormatter;
-import io.github.altenhofen.openpixapi.core.payload.field.formatter.PaddingPolicy;
-import io.github.altenhofen.openpixapi.core.payload.field.formatter.StringFormatter;
 import org.junit.jupiter.api.Test;
 
 public class StringFormatterTest {

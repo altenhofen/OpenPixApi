@@ -12,12 +12,10 @@ import org.jetbrains.annotations.Nullable;
  * See the constructor annotation for more details on architectural choices for formatters.
  *
  * @param <T> type of EMVField's value field
- * @author Augusto Bussmann Altenhofen
  * @see CompositeEmvField
- * @since 0.01-DEV
  */
 public class EmvField<T> {
-  private final String tag;
+  private final String id;
   private final T value;
   @Nullable private final String fieldName;
   private final EmvFormatter<T> formatter;
@@ -27,14 +25,14 @@ public class EmvField<T> {
    * @param fieldName used only for debugging situations. <br>
    *     It does not affect the {@link
    *     io.github.altenhofen.openpixapi.core.payload.StaticPixPayload} generation
-   * @param tag as specified in the EMV standard, it's usually a numeric string of 1 or 2 digits.
+   * @param id as specified in the EMV standard, it's usually a numeric string of 1 or 2 digits.
    * @param value the value of type T that can be represented by the Common Character Set as defined
    *     in <b>EMV Book 4</b>
    * @param formatter a class that implements {@link EmvFormatter}
    */
-  public EmvField(@Nullable String fieldName, String tag, T value, EmvFormatter<T> formatter) {
+  public EmvField(@Nullable String fieldName, String id, T value, EmvFormatter<T> formatter) {
     this.fieldName = fieldName;
-    this.tag = tag;
+    this.id = id;
     this.value = value;
     this.formatter = formatter;
     this.digitFormatter = new DigitFormatter(2, PaddingPolicy.LEFT);
@@ -52,6 +50,8 @@ public class EmvField<T> {
    * </pre>
    *
    * <p>If the field is not present (field name is {@code null}),
+   *
+   * @return serialized value String
    */
   public String serialize() {
     if (this.fieldName == null) {
@@ -80,13 +80,18 @@ public class EmvField<T> {
   }
 
   protected String formatId() {
-    if (tag.length() != 2) {
+    if (id.length() != 2) {
       throw new IllegalArgumentException(
-          String.format("EMV id must be exactly 2 characters: %s", tag));
+          String.format("EMV id must be exactly 2 characters: %s", id));
     }
-    return tag;
+    return id;
   }
 
+  /**
+   * Get the field name or description of the EMV Field.
+   *
+   * @return the field name/description
+   */
   public @Nullable String getFieldName() {
     return this.fieldName;
   }
@@ -95,7 +100,12 @@ public class EmvField<T> {
     return this.value;
   }
 
-  public String getTag() {
-    return this.tag;
+  /**
+   * Get the field id or tag of the EMV Field.
+   *
+   * @return the tag or id
+   */
+  public String getId() {
+    return this.id;
   }
 }

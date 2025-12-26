@@ -4,9 +4,15 @@ import io.github.altenhofen.openpixapi.core.payload.field.formatter.CharsetPolic
 import io.github.altenhofen.openpixapi.core.payload.field.formatter.StringFormatter;
 import java.util.List;
 
+/** Merchant account info for a static Pix */
 public final class StaticMerchantAccountInfo implements MerchantAccountInfo {
   private final String pixKey;
 
+  /**
+   * Constructor that receives
+   *
+   * @param pixKey can be random, e-mail, phone number (+000000000000) or CPF
+   */
   public StaticMerchantAccountInfo(String pixKey) {
     if (pixKey == null || pixKey.isBlank()) {
       throw new IllegalArgumentException("Pix key must not be null or blank");

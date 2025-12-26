@@ -1,8 +1,7 @@
-package io.github.altenhofen.openpixapi.core.field;
+package io.github.altenhofen.openpixapi.core.payload.field;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import io.github.altenhofen.openpixapi.core.payload.field.EmvField;
 import io.github.altenhofen.openpixapi.core.payload.field.formatter.CharsetPolicy;
 import io.github.altenhofen.openpixapi.core.payload.field.formatter.StringFormatter;
 import org.junit.jupiter.api.Test;

@@ -6,7 +6,9 @@ import com.google.zxing.common.BitMatrix;
 import java.io.ByteArrayOutputStream;
 import java.util.Base64;
 
+/** Represents all possible formats for QRCode creation */
 public enum PixQrFormat implements PixQrRenderer {
+  /** Png image format */
   PNG {
     @Override
     public PixQrOutput render(BitMatrix matrix, PixQrConfig config) throws Exception {
@@ -19,6 +21,7 @@ public enum PixQrFormat implements PixQrRenderer {
     }
   },
 
+  /** SVG (x)html tags format */
   SVG {
     @Override
     public PixQrOutput render(BitMatrix matrix, PixQrConfig config) throws Exception {
@@ -27,6 +30,7 @@ public enum PixQrFormat implements PixQrRenderer {
     }
   },
 
+  /** base64 (png) encoded image format */
   BASE64_PNG {
     @Override
     public PixQrOutput render(BitMatrix matrix, PixQrConfig config) throws Exception {
@@ -40,7 +44,8 @@ public enum PixQrFormat implements PixQrRenderer {
     }
   },
 
-  BRAILE {
+  /** Braille (Unicode) text format */
+  BRAILLE {
     @Override
     public PixQrOutput render(BitMatrix matrix, PixQrConfig config) {
       int width = matrix.getWidth();
@@ -70,7 +75,7 @@ public enum PixQrFormat implements PixQrRenderer {
         out.append('\n');
       }
 
-      return PixQrOutput.braile(out.toString());
+      return PixQrOutput.braille(out.toString());
     }
 
     private static boolean get(BitMatrix m, int x, int y) {

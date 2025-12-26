@@ -1,14 +1,12 @@
-package io.github.altenhofen.openpixapi.core.pixbuilder;
+package io.github.altenhofen.openpixapi.core.payload;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import io.github.altenhofen.openpixapi.core.Pix;
-import io.github.altenhofen.openpixapi.core.payload.PixPayload;
-import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 
-public class PixCreatorTest {
+public class PixTest {
 
   @Test
   public void shouldBuildValidStaticPix() {
@@ -17,7 +15,7 @@ public class PixCreatorTest {
             .staticPix()
             .merchantName("John Doe")
             .merchantCity("Porto Alegre")
-            .merchantAmount(BigDecimal.valueOf(123.99))
+            .amount(BigDecimal.valueOf(123.99))
             .txid("0512TX123456789")
             .pixKey("+5551999999999")
             .build();
@@ -33,7 +31,7 @@ public class PixCreatorTest {
             .pspUrl("https://pix.example.com/api/webhook")
             .merchantName("John Doe")
             .merchantCity("Porto Alegre")
-            .merchantAmount(BigDecimal.valueOf(123.99))
+            .amount(BigDecimal.valueOf(123.99))
             .txid("0512TX123456789")
             .build();
 
@@ -49,7 +47,7 @@ public class PixCreatorTest {
                     .staticPix()
                     .merchantName("John Doe")
                     .merchantCity("Porto Alegre")
-                    .merchantAmount(BigDecimal.valueOf(52.00))
+                    .amount(BigDecimal.valueOf(52.00))
                     .pixKey("+5551999999999")
                     .txid(null)
                     .build());
@@ -68,7 +66,7 @@ public class PixCreatorTest {
                     .pspUrl("https://pix.example.com/api/webhook")
                     .merchantName("John Doe")
                     .merchantCity("Porto Alegre")
-                    .merchantAmount(BigDecimal.valueOf(52.00))
+                    .amount(BigDecimal.valueOf(52.00))
                     .build());
     assertNotNull(validPix);
   }
@@ -80,7 +78,7 @@ public class PixCreatorTest {
             .dynamicPix("https://pix.example.com/api/webhook")
             .merchantName("John Doe")
             .merchantCity("Porto Alegre")
-            .merchantAmount(BigDecimal.valueOf(52.00))
+            .amount(BigDecimal.valueOf(52.00))
             .txid("1234ABC")
             .build();
     assertNotNull(validPix);
@@ -96,7 +94,7 @@ public class PixCreatorTest {
                     .dynamicPix()
                     .merchantName("John Doe")
                     .merchantCity("Porto Alegre")
-                    .merchantAmount(BigDecimal.valueOf(52.00))
+                    .amount(BigDecimal.valueOf(52.00))
                     .txid("1234ABC")
                     .build());
     assertNotNull(validPix);
@@ -111,7 +109,7 @@ public class PixCreatorTest {
                     .staticPix()
                     .merchantName("John Doe")
                     .merchantCity("Porto Alegre")
-                    .merchantAmount(null)
+                    .amount(null)
                     .txid("0512TX123456789")
                     .pixKey("+5551999999999")
                     .build());
@@ -130,7 +128,7 @@ public class PixCreatorTest {
                     .staticPix()
                     .merchantName(null)
                     .merchantCity("Porto Alegre")
-                    .merchantAmount(BigDecimal.valueOf(123.99))
+                    .amount(BigDecimal.valueOf(123.99))
                     .txid("0512TX123456789")
                     .pixKey("+5551999999999")
                     .build());
@@ -146,7 +144,7 @@ public class PixCreatorTest {
             .staticPix()
             .merchantName(name)
             .merchantCity("Porto Alegre")
-            .merchantAmount(BigDecimal.valueOf(123.99))
+            .amount(BigDecimal.valueOf(123.99))
             .txid("0512TX123456789")
             .pixKey("+5551999999999")
             .build();

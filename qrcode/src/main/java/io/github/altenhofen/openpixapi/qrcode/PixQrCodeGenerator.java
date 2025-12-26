@@ -4,8 +4,18 @@ import com.google.zxing.common.BitMatrix;
 import java.awt.*;
 import java.util.Objects;
 
+/** Contains factory methods for Pix QRCode generation, */
 public final class PixQrCodeGenerator {
 
+  /**
+   * Factory method for generation of Pix QRCode from EMV string payload
+   *
+   * @param emvRepresentation the QRCode payload
+   * @param format the output format
+   * @param config the QRCode configuration options
+   * @return PixQrOutput with typed outputs
+   * @throws PixQrGenerationException if output creation failed
+   */
   public static PixQrOutput generate(
       String emvRepresentation, PixQrFormat format, PixQrConfig config)
       throws PixQrGenerationException {

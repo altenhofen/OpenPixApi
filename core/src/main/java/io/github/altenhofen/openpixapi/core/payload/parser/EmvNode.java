@@ -1,6 +1,14 @@
-package io.github.altenhofen.openpixapi.core.parser;
+package io.github.altenhofen.openpixapi.core.payload.parser;
 
+/** Data structure used to parse the EMV field. */
 public sealed interface EmvNode permits EmvLeaf, EmvComposite {
+
+  /**
+   * Helper method to print a EmvNode
+   *
+   * @param node the node to be printed
+   * @param indent indentation level
+   */
   public static void print(EmvNode node, int indent) {
     String pad = " ".repeat(indent);
 

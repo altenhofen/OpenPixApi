@@ -16,6 +16,12 @@ public final class StringFormatter implements EmvFormatter<String> {
   private final int maxLength;
   private final CharsetPolicy permittedCharset;
 
+  /**
+   * Constructor for the StringFormatter class.
+   *
+   * @param maxLength will be used to trim the string if needed
+   * @param permittedCharset charset for validation
+   */
   public StringFormatter(int maxLength, CharsetPolicy permittedCharset) {
     this.maxLength = maxLength;
     this.permittedCharset = permittedCharset;
@@ -25,7 +31,7 @@ public final class StringFormatter implements EmvFormatter<String> {
    * @param input String to be normalized
    * @param maxLength if <code>input.length</code> is larget, we truncate based on this
    * @param fieldName passed for debugging reasons
-   * @return
+   * @return normalized string
    */
   private String normalize(String input, int maxLength, String fieldName) {
     if (input == null) {

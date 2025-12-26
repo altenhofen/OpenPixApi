@@ -1,9 +1,8 @@
-package io.github.altenhofen.openpixapi.core.formatter;
+package io.github.altenhofen.openpixapi.core.payload.field.formatter;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import io.github.altenhofen.openpixapi.core.payload.field.formatter.CharsetPolicy;
 import org.junit.jupiter.api.Test;
 
 public class CharsetPolicyTest {
