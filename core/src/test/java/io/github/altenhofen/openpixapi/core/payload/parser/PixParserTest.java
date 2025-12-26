@@ -20,11 +20,28 @@ class PixParserTest {
   }
 
   @Test
-  void payloadGeneratedIsReversible_fromPayloadString() throws EmvParseException {
+  void static_payloadGeneratedIsReversible_fromPayloadString() throws EmvParseException {
     final PixPayload payload = Pix.newStatic("test@email.com",
       "JOAO DA SILVA",
       "PORTO ALEGRE",
       BigDecimal.valueOf(123.99));
+
+    String validPayload = payload.getEmv();
+
+    PixParser parser = new PixParser();
+    PixPayload generatedPayload = assertDoesNotThrow(() -> parser.fromPayloadString(validPayload));
+
+    assertNotNull(payload.getMerchantAccount());
+    assertEquals(payload, generatedPayload);
+    assertEquals(payload.getMerchantAccount(), generatedPayload.getMerchantAccount());
+  }
+
+  @Test
+  void dynamic_payloadGeneratedIsReversible_fromPayloadString() throws EmvParseException {
+    final PixPayload payload = Pix.newDynamic("pix.example.com/api/webhook",
+      "JOAO DA SILVA",
+      "porto alegre",
+      "txifda");
 
     String validPayload = payload.getEmv();
 

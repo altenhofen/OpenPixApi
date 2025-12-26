@@ -150,8 +150,8 @@ final class EmvParser {
 
     // return dynamic pix
     if (isDynamicPix) {
-      String pspUrl = leafValue(maiFields, "01");
-      String txid = leafValue(maiFields, "25");
+      String pspUrl = leafValue(maiFields, "25");
+      String txid = leafValue(adftFields, "05");
 
       DynamicMerchantAccountInfo merchantAccountInfo =
         new DynamicMerchantAccountInfo(pspUrl);
