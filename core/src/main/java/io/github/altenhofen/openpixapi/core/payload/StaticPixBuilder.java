@@ -1,9 +1,12 @@
 package io.github.altenhofen.openpixapi.core.payload;
 
+import java.math.BigDecimal;
+
 /** Static Pix builder for AbstractPixBuilder */
 public class StaticPixBuilder extends AbstractPixBuilder<StaticPixBuilder> {
 
   private String pixKey;
+  private BigDecimal amount;
 
   @Override
   protected StaticPixBuilder self() {
@@ -19,6 +22,17 @@ public class StaticPixBuilder extends AbstractPixBuilder<StaticPixBuilder> {
     return this;
   }
 
+  /**
+   * Adds the amount to the builder.
+   *
+   * @param amount the BigDecimal value representing the PixAmount, can be omitted
+   * @return the builder
+   */
+  public StaticPixBuilder amount(BigDecimal amount) {
+    this.amount = amount;
+    return self();
+  }
+
   @Override
   public StaticPixPayload build() {
     validateCommon();
@@ -28,6 +42,6 @@ public class StaticPixBuilder extends AbstractPixBuilder<StaticPixBuilder> {
     }
 
     return PixPayloadFactory.staticPix(
-        this.pixKey, super.merchantName, super.merchantCity, super.amount, super.txid);
+        this.pixKey, super.merchantName, super.merchantCity, this.amount);
   }
 }

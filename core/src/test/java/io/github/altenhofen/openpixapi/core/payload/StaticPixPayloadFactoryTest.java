@@ -11,11 +11,11 @@ class StaticPixPayloadFactoryTest {
   void staticPix_isDeterministic() {
     StaticPixPayload pix1 =
         PixPayloadFactory.staticPix(
-            "email@test.com", "JOAO SILVA", "SAO PAULO", new BigDecimal("12.59"), "TX123");
+            "email@test.com", "JOAO SILVA", "SAO PAULO", new BigDecimal("12.59"));
 
     StaticPixPayload pix2 =
         PixPayloadFactory.staticPix(
-            "email@test.com", "JOAO SILVA", "SAO PAULO", new BigDecimal("12.59"), "TX123");
+            "email@test.com", "JOAO SILVA", "SAO PAULO", new BigDecimal("12.59"));
 
     assertEquals(pix1.getEmv(), pix2.getEmv());
   }
@@ -23,7 +23,7 @@ class StaticPixPayloadFactoryTest {
   @Test
   void staticPix_withoutAmount_doesNotContainField54() {
     StaticPixPayload payload =
-        PixPayloadFactory.staticPix("email@test.com", "JOAO SILVA", "SAO PAULO", null, "TX123");
+        PixPayloadFactory.staticPix("email@test.com", "JOAO SILVA", "SAO PAULO", null);
 
     assertFalse(payload.getEmv().contains("54"));
   }
@@ -32,7 +32,7 @@ class StaticPixPayloadFactoryTest {
   void staticPix_withoutTxid_doesNotContainField62() {
     StaticPixPayload payload =
         PixPayloadFactory.staticPix(
-            "email@test.com", "JOAO SILVA", "SAO PAULO", new BigDecimal("10.00"), null);
+            "email@test.com", "JOAO SILVA", "SAO PAULO", new BigDecimal("10.00"));
 
     assertFalse(payload.getEmv().contains("62"));
   }

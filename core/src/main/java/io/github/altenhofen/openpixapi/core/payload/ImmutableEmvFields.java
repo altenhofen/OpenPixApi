@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-class ImmutableFields {
+public class ImmutableEmvFields {
   public static EmvField<Integer> payloadFormatIndicator() {
     return new EmvField<Integer>(
         "Payload Format Indicator", "00", 1, new DigitFormatter(2, PaddingPolicy.LEFT));

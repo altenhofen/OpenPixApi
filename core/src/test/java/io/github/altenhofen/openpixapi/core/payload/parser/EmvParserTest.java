@@ -1,4 +1,4 @@
-package io.github.altenhofen.openpixapi.core.parser;
+package io.github.altenhofen.openpixapi.core.payload.parser;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 

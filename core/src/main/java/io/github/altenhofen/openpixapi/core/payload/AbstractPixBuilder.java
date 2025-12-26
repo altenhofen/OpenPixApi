@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 abstract class AbstractPixBuilder<T extends AbstractPixBuilder<T>> {
   protected String merchantName;
   protected String merchantCity;
-  protected BigDecimal amount;
   protected String txid;
 
   protected abstract T self();
@@ -32,16 +31,7 @@ abstract class AbstractPixBuilder<T extends AbstractPixBuilder<T>> {
     return self();
   }
 
-  /**
-   * Adds the amount to the builder.
-   *
-   * @param amount the BigDecimal value representing the PixAmount, can be omitted
-   * @return the builder
-   */
-  public T amount(BigDecimal amount) {
-    this.amount = amount;
-    return self();
-  }
+
 
   /**
    * Adds the transaction ID to the builder

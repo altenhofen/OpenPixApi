@@ -10,7 +10,7 @@ class StaticPixPayloadTest {
   void crc_isValid() {
     StaticPixPayload payload =
         PixPayloadFactory.staticPix(
-            "email@test.com", "JOAO SILVA", "SAO PAULO", new BigDecimal("10.00"), "TX123");
+            "email@test.com", "JOAO SILVA", "SAO PAULO", new BigDecimal("10.00"));
 
     String payloadString = payload.getEmv();
     String withoutCrc = payloadString.substring(0, payloadString.length() - 4);

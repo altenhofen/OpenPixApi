@@ -13,7 +13,7 @@ class PixQrSvgWriterTest {
 
   final PixPayload staticPayload =
       PixPayloadFactory.staticPix(
-          "email@test.com", "JOAO SILVA", "SAO PAULO", new BigDecimal("10.00"), "TX123");
+          "email@test.com", "JOAO SILVA", "SAO PAULO", new BigDecimal("10.00"));
 
   @Test
   void svg_containsSvgRoot() throws PixQrGenerationException {
