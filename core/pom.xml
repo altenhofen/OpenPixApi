@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.altenhofen</groupId>
         <artifactId>openpixapi</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.3.0</version>
     </parent>
 
     <groupId>io.github.altenhofen.openpixapi</groupId>
@@ -31,5 +31,32 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.14</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <packaging>jar</packaging>
 
 </project>

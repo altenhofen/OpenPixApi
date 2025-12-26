@@ -1,23 +1,14 @@
 package io.github.altenhofen.openpixapi.qrcode;
 
+/** Represents an error on image creation */
 public class PixQrGenerationException extends Exception {
-
-    public PixQrGenerationException() {
-    }
-
-    public PixQrGenerationException(String message) {
-        super(message);
-    }
-
-    public PixQrGenerationException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public PixQrGenerationException(Throwable cause) {
-        super(cause);
-    }
-
-    public PixQrGenerationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
+  /**
+   * String message and cause arguments constructor for PixQrGenerationException.
+   *
+   * @param message the message of the exception
+   * @param cause the throwable of the exception
+   */
+  public PixQrGenerationException(String message, Throwable cause) {
+    super(message, cause);
+  }
 }
