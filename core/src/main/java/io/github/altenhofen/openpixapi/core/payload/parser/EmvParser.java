@@ -59,6 +59,7 @@ final class EmvParser {
   }
 
   // treating nodes
+  /// turns a  list of nodes into a map where you can get by ID
   private static Map<String, EmvNode> index(List<EmvNode> nodes) {
     Map<String, EmvNode> map = new HashMap<>();
     for (EmvNode n : nodes) {
@@ -69,6 +70,7 @@ final class EmvParser {
     return map;
   }
 
+  ///  gets the value of the node on map
   private static String leafValue(Map<String, EmvNode> map, String id) {
     EmvNode node = map.get(id);
     if (!(node instanceof EmvLeaf leaf)) {
@@ -77,6 +79,7 @@ final class EmvParser {
     return leaf.value();
   }
 
+  /// transforms into typed EMVField object
   private static EmvField<?> toEmvField(EmvNode node) {
     if (node instanceof EmvLeaf leaf) {
       return new EmvField<>(null, leaf.id(), leaf.value(), null);
