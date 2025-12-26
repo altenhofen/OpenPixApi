@@ -2,12 +2,10 @@ package io.github.altenhofen.openpixapi.core.payload;
 
 import io.github.altenhofen.openpixapi.core.payload.field.CompositeEmvField;
 import io.github.altenhofen.openpixapi.core.payload.field.EmvField;
-
 import java.math.BigDecimal;
 
 /**
  * Data structure that represents the static pix PixPayload object.
- *
  *
  * @author Augusto Bussmann Altenhofen
  * @see PixPayloadFactory
@@ -15,28 +13,27 @@ import java.math.BigDecimal;
  */
 public class StaticPixPayload extends PixPayload {
 
-
-    StaticPixPayload(EmvField<Integer> payloadFormatIndicator,
-                     EmvField<Integer> pointOfInitiationMethod,
-                     CompositeEmvField merchantAccount,
-                     EmvField<Integer> merchantCategoryCode,
-                     EmvField<Integer> transactionCurrency,
-                     EmvField<BigDecimal> transactionAmount,
-                     EmvField<String> countryCode,
-                     EmvField<String> merchantName,
-                     EmvField<String> merchantCity,
-                     CompositeEmvField additionalData) {
-        super(
-                payloadFormatIndicator,
-                pointOfInitiationMethod,
-                merchantAccount,
-                merchantCategoryCode,
-                transactionCurrency,
-                transactionAmount,
-                countryCode,
-                merchantName,
-                merchantCity,
-                additionalData
-        );
-    }
+  StaticPixPayload(
+      EmvField<Integer> payloadFormatIndicator,
+      EmvField<Integer> pointOfInitiationMethod,
+      CompositeEmvField merchantAccount,
+      EmvField<Integer> merchantCategoryCode,
+      EmvField<Integer> transactionCurrency,
+      EmvField<BigDecimal> transactionAmount,
+      EmvField<String> countryCode,
+      EmvField<String> merchantName,
+      EmvField<String> merchantCity,
+      CompositeEmvField additionalData) {
+    super(
+        payloadFormatIndicator,
+        pointOfInitiationMethod,
+        merchantAccount,
+        merchantCategoryCode,
+        transactionCurrency,
+        transactionAmount,
+        countryCode,
+        merchantName,
+        merchantCity,
+        additionalData);
+  }
 }

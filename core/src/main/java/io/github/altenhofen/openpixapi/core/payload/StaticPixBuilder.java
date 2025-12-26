@@ -2,32 +2,27 @@ package io.github.altenhofen.openpixapi.core.payload;
 
 public class StaticPixBuilder extends AbstractPixBuilder<StaticPixBuilder> {
 
-    private String pixKey;
+  private String pixKey;
 
-    @Override
-    protected StaticPixBuilder self() {
-        return this;
+  @Override
+  protected StaticPixBuilder self() {
+    return this;
+  }
+
+  public StaticPixBuilder pixKey(String pixKey) {
+    this.pixKey = pixKey;
+    return this;
+  }
+
+  @Override
+  public StaticPixPayload build() {
+    validateCommon();
+
+    if (pixKey == null || pixKey.isBlank()) {
+      throw new IllegalStateException("Pix key is required");
     }
 
-    public StaticPixBuilder pixKey(String pixKey) {
-        this.pixKey = pixKey;
-        return this;
-    }
-
-    @Override
-    public StaticPixPayload build() {
-        validateCommon();
-
-        if (pixKey == null || pixKey.isBlank()) {
-            throw new IllegalStateException("Pix key is required");
-        }
-
-        return PixPayloadFactory.staticPix(
-                this.pixKey,
-                super.merchantName,
-                super.merchantCity,
-                super.merchantAmount,
-                super.txid
-        );
-    }
+    return PixPayloadFactory.staticPix(
+        this.pixKey, super.merchantName, super.merchantCity, super.merchantAmount, super.txid);
+  }
 }
