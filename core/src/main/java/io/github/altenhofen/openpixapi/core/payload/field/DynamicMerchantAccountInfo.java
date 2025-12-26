@@ -1,7 +1,7 @@
-package io.github.altenhofen.openpixapi.core.field;
+package io.github.altenhofen.openpixapi.core.payload.field;
 
-import io.github.altenhofen.openpixapi.core.formatter.CharsetPolicy;
-import io.github.altenhofen.openpixapi.core.formatter.StringFormatter;
+import io.github.altenhofen.openpixapi.core.payload.field.formatter.CharsetPolicy;
+import io.github.altenhofen.openpixapi.core.payload.field.formatter.StringFormatter;
 
 import java.util.List;
 

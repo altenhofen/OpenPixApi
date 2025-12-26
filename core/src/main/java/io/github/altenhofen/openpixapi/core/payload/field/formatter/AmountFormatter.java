@@ -1,4 +1,4 @@
-package io.github.altenhofen.openpixapi.core.formatter;
+package io.github.altenhofen.openpixapi.core.payload.field.formatter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

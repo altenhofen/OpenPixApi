@@ -1,6 +1,6 @@
-package io.github.altenhofen.openpixapi.core.formatter;
+package io.github.altenhofen.openpixapi.core.payload.field.formatter;
 
-import io.github.altenhofen.openpixapi.core.field.CompositeEmvField;
+import io.github.altenhofen.openpixapi.core.payload.field.CompositeEmvField;
 
 import java.text.Normalizer;
 import java.util.Locale;

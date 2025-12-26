@@ -1,6 +1,5 @@
 package io.github.altenhofen.openpixapi.core.payload;
 
-import io.github.altenhofen.openpixapi.core.field.EMVCRC16;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

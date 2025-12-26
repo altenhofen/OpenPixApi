@@ -1,4 +1,4 @@
-package io.github.altenhofen.openpixapi.core.field;
+package io.github.altenhofen.openpixapi.core.payload.field;
 
 import java.util.List;
 

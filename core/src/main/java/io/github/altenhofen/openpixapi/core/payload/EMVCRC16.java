@@ -1,15 +1,13 @@
-package io.github.altenhofen.openpixapi.core.field;
+package io.github.altenhofen.openpixapi.core.payload;
 
-import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
 
 /**
  * Basic EMVCRC16 implementation.
  *
  * @author Augusto Bussmann Altenhofen
- * @see StaticPixPayload
  * @since 0.01-DEV
  */
-public final class EMVCRC16 {
+final class EMVCRC16 {
 
     private static final int POLYNOMIAL = 0x1021;
     private static final int INITIAL_VALUE = 0xFFFF;

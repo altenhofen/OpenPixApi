@@ -1,8 +1,7 @@
 package io.github.altenhofen.openpixapi.core.payload;
 
-import io.github.altenhofen.openpixapi.core.field.CompositeEmvField;
-import io.github.altenhofen.openpixapi.core.field.EMVCRC16;
-import io.github.altenhofen.openpixapi.core.field.EmvField;
+import io.github.altenhofen.openpixapi.core.payload.field.CompositeEmvField;
+import io.github.altenhofen.openpixapi.core.payload.field.EmvField;
 
 import java.math.BigDecimal;
 

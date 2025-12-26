@@ -1,7 +1,4 @@
-package io.github.altenhofen.openpixapi.core.pixbuilder;
-
-import io.github.altenhofen.openpixapi.core.payload.DynamicPixPayload;
-import io.github.altenhofen.openpixapi.core.payload.PixPayloadFactory;
+package io.github.altenhofen.openpixapi.core.payload;
 
 public class DynamicPixBuilder extends AbstractPixBuilder<DynamicPixBuilder> {
     private String pspUrl;

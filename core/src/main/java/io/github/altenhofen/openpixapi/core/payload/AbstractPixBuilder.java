@@ -1,6 +1,4 @@
-package io.github.altenhofen.openpixapi.core.pixbuilder;
-
-import io.github.altenhofen.openpixapi.core.payload.PixPayload;
+package io.github.altenhofen.openpixapi.core.payload;
 
 import java.math.BigDecimal;
 
