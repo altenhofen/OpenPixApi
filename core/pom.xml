@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.altenhofen</groupId>
         <artifactId>openpixapi</artifactId>
-        <version>0.2-SNAPSHOT</version>
+        <version>0.3.0</version>
     </parent>
 
     <groupId>io.github.altenhofen.openpixapi</groupId>

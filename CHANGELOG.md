@@ -1,6 +1,6 @@
 # Changelog 
 
-## v.0.2
+## v.0.3.0
 - Added support for dynamic Pix.
 - Added QRCode support for PNG, BASE64, SVG and Unicode.
 - All public APIs have a Javadoc.
