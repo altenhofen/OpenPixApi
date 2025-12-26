@@ -1,18 +1,18 @@
 package io.github.altenhofen.openpixapi.core.payload;
 
-import io.github.altenhofen.openpixapi.core.field.CompositeEMVField;
-import io.github.altenhofen.openpixapi.core.field.EMVField;
+import io.github.altenhofen.openpixapi.core.payload.field.CompositeEmvField;
+import io.github.altenhofen.openpixapi.core.payload.field.EmvField;
 
-public class DynamicPixPayload extends PixPayload {
-    DynamicPixPayload(EMVField<Integer> payloadFormatIndicator,
-                      EMVField<Integer> pointOfInitiationMethod,
-                      CompositeEMVField merchantAccount,
-                      EMVField<Integer> merchantCategoryCode,
-                      EMVField<Integer> transactionCurrency,
-                      EMVField<String> countryCode,
-                      EMVField<String> merchantName,
-                      EMVField<String> merchantCity,
-                      CompositeEMVField additionalData) {
+class DynamicPixPayload extends PixPayload {
+    DynamicPixPayload(EmvField<Integer> payloadFormatIndicator,
+                      EmvField<Integer> pointOfInitiationMethod,
+                      CompositeEmvField merchantAccount,
+                      EmvField<Integer> merchantCategoryCode,
+                      EmvField<Integer> transactionCurrency,
+                      EmvField<String> countryCode,
+                      EmvField<String> merchantName,
+                      EmvField<String> merchantCity,
+                      CompositeEmvField additionalData) {
         super(
                 payloadFormatIndicator,
                 pointOfInitiationMethod,

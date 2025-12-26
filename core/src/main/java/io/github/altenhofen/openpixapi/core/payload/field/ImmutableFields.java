@@ -1,14 +1,15 @@
-package io.github.altenhofen.openpixapi.core.field;
+package io.github.altenhofen.openpixapi.core.payload.field;
 
 import io.github.altenhofen.openpixapi.core.formatter.*;
+import io.github.altenhofen.openpixapi.core.payload.field.formatter.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
 public class ImmutableFields {
-    public static EMVField<Integer> payloadFormatIndicator() {
-        return new EMVField<Integer>(
+    public static EmvField<Integer> payloadFormatIndicator() {
+        return new EmvField<Integer>(
                 "Payload Format Indicator",
                 "00",
                 1,
@@ -16,8 +17,8 @@ public class ImmutableFields {
         );
     }
 
-    public static EMVField<Integer> pointOfInitiationMethod() {
-        return new EMVField<Integer>(
+    public static EmvField<Integer> pointOfInitiationMethod() {
+        return new EmvField<Integer>(
                 "Point Initiation Method",
                 "01",
                 11,
@@ -25,8 +26,8 @@ public class ImmutableFields {
         );
     }
 
-    public static EMVField<Integer> merchantCategoryCode() {
-        return new EMVField<Integer>(
+    public static EmvField<Integer> merchantCategoryCode() {
+        return new EmvField<Integer>(
                 "Merchant Category Code",
                 "52",
                 0,
@@ -34,8 +35,8 @@ public class ImmutableFields {
         );
     }
 
-    public static EMVField<Integer> transactionCurrency() {
-        return new EMVField<Integer>(
+    public static EmvField<Integer> transactionCurrency() {
+        return new EmvField<Integer>(
                 "Transaction Currency",
                 "53",
                 986,
@@ -43,7 +44,7 @@ public class ImmutableFields {
         );
     }
 
-    public static EMVField<BigDecimal> transactionAmount(BigDecimal amount) {
+    public static EmvField<BigDecimal> transactionAmount(BigDecimal amount) {
         if (amount == null) {
             return null; // allowed by pix standard
         }
@@ -52,7 +53,7 @@ public class ImmutableFields {
                 .setScale(2, RoundingMode.UNNECESSARY)
                 .stripTrailingZeros();
 
-        return new EMVField<BigDecimal>(
+        return new EmvField<BigDecimal>(
                 "Transaction Amount",
                 "54",
                 normalized,
@@ -60,8 +61,8 @@ public class ImmutableFields {
         );
     }
 
-    public static EMVField<String> countryCode() {
-        return new EMVField<String>(
+    public static EmvField<String> countryCode() {
+        return new EmvField<String>(
                 "Country Code",
                 "58",
                 "BR",
@@ -69,8 +70,8 @@ public class ImmutableFields {
         );
     }
 
-    public static EMVField<String> merchantName(String name) {
-        return new EMVField<String>(
+    public static EmvField<String> merchantName(String name) {
+        return new EmvField<String>(
                 "Merchant Name",
                 "59",
                 name,
@@ -78,11 +79,11 @@ public class ImmutableFields {
         );
     }
 
-    public static EMVField<String> merchantCity(String merchantCity) {
+    public static EmvField<String> merchantCity(String merchantCity) {
         String normalized = merchantCity
                 .trim()
                 .toUpperCase();
-        return new EMVField<String>(
+        return new EmvField<String>(
                 "Merchant City",
                 "60",
                 normalized,
@@ -90,16 +91,16 @@ public class ImmutableFields {
         );
     }
 
-    public static CompositeEMVField additionalData(String txid) {
+    public static CompositeEmvField additionalData(String txid) {
         if (txid == null || txid.isBlank()) {
             return null;
         }
 
-        return new CompositeEMVField(
+        return new CompositeEmvField(
                 "Additional Data",
                 "62",
                 List.of(
-                        new EMVField<>("TXID", "05", txid,
+                        new EmvField<>("TXID", "05", txid,
                                 new StringFormatter(25, CharsetPolicy.EMV_COMMON)
                         )
                 )

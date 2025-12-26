@@ -1,4 +1,4 @@
-package io.github.altenhofen.openpixapi.core.field;
+package io.github.altenhofen.openpixapi.core.payload.field;
 
 import java.util.List;
 
@@ -8,11 +8,11 @@ import java.util.List;
  *
  * @author Augusto Bussmann Altenhofen
  * @since v.01-DEV
- * @see EMVField
+ * @see EmvField
  */
-public class CompositeEMVField extends EMVField<List<EMVField<?>>> {
+public class CompositeEmvField extends EmvField<List<EmvField<?>>> {
 
-    public CompositeEMVField(String fieldName, String id, List<EMVField<?>> value) {
+    public CompositeEmvField(String fieldName, String id, List<EmvField<?>> value) {
         super(fieldName, id, value, null);
     }
 
@@ -22,7 +22,7 @@ public class CompositeEMVField extends EMVField<List<EMVField<?>>> {
     @Override
     protected String serializeValue() {
         StringBuilder sb = new StringBuilder();
-        for (EMVField<?> field : getValue()) {
+        for (EmvField<?> field : getValue()) {
             sb.append(field.serialize());
         }
 

@@ -1,15 +1,13 @@
 package io.github.altenhofen.openpixapi.qrcode;
 
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import io.github.altenhofen.openpixapi.core.payload.PixPayload;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-public class PixQrCodeBuilder {
+public class PixQrCode {
     private final String emvPayload;
     private Color foreground = Color.black;
     private Color background = Color.white;
@@ -19,30 +17,30 @@ public class PixQrCodeBuilder {
     private int width, height = size;
 
 
-    public PixQrCodeBuilder(String emvPayload) {
+    public PixQrCode(String emvPayload) {
         this.emvPayload = emvPayload;
     }
 
-    public static PixQrCodeBuilder from(String payload) {
-        return new PixQrCodeBuilder(payload);
+    public static PixQrCode from(String payload) {
+        return new PixQrCode(payload);
     }
 
-    public PixQrCodeBuilder size(int size) {
+    public PixQrCode size(int size) {
         this.size = size;
         return this;
     }
 
-    public PixQrCodeBuilder foreground(Color foreground) {
+    public PixQrCode foreground(Color foreground) {
         this.foreground = foreground;
         return this;
     }
 
-    public PixQrCodeBuilder background(Color background) {
+    public PixQrCode background(Color background) {
         this.background = background;
         return this;
     }
 
-    public PixQrCodeBuilder errorCorrectionLevel(ErrorCorrectionLevel errorCorrectionLevel) {
+    public PixQrCode errorCorrectionLevel(ErrorCorrectionLevel errorCorrectionLevel) {
         this.errorCorrectionLevel = errorCorrectionLevel;
         return this;
     }

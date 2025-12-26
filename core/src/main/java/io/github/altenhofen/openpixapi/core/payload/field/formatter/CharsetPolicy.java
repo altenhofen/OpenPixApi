@@ -1,4 +1,4 @@
-package io.github.altenhofen.openpixapi.core.formatter;
+package io.github.altenhofen.openpixapi.core.payload.field.formatter;
 /**
  * Charsets for validation
  * Pix's charset is somewhat more flexible than the

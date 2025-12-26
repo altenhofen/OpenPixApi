@@ -1,5 +1,6 @@
 package io.github.altenhofen.openpixapi.core.pixbuilder;
 
+import io.github.altenhofen.openpixapi.core.Pix;
 import io.github.altenhofen.openpixapi.core.payload.PixPayload;
 import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
 import org.junit.jupiter.api.Test;
@@ -8,12 +9,11 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PixBuilderTest {
+public class PixCreatorTest {
 
     @Test
     public void shouldBuildValidStaticPix() {
-        StaticPixPayload validPix = PixBuilder
-                .staticPix()
+        StaticPixPayload validPix = Pix.builder().staticPix()
                 .merchantName("John Doe")
                 .merchantCity("Porto Alegre")
                 .merchantAmount(BigDecimal.valueOf(123.99))
@@ -25,8 +25,7 @@ public class PixBuilderTest {
     }
     @Test
     public void shouldBuildValidDynamicPix() {
-        PixPayload validPix = PixBuilder
-                .dynamicPix()
+        PixPayload validPix = Pix.builder().dynamicPix()
                 .pspUrl("https://pix.example.com/api/webhook")
                 .merchantName("John Doe")
                 .merchantCity("Porto Alegre")
@@ -40,7 +39,7 @@ public class PixBuilderTest {
     @Test
     public void shouldBuildValidStaticPix_NoTxid() {
         StaticPixPayload validPix = assertDoesNotThrow(
-                () -> PixBuilder
+                () -> Pix.builder()
                         .staticPix()
                         .merchantName("John Doe")
                         .merchantCity("Porto Alegre")
@@ -55,7 +54,7 @@ public class PixBuilderTest {
     @Test
     public void shouldNotBuildDynamicPix_NoTxid() {
         IllegalArgumentException validPix = assertThrows(IllegalArgumentException.class,
-                () -> PixBuilder
+                () -> Pix.builder()
                         .dynamicPix()
                         .pspUrl("https://pix.example.com/api/webhook")
                         .merchantName("John Doe")
@@ -68,7 +67,7 @@ public class PixBuilderTest {
 
     @Test
     public void shouldBuildDynamicPix_WithPspUrlInConstructor() {
-        PixPayload validPix = PixBuilder
+        PixPayload validPix = Pix.builder()
                         .dynamicPix("https://pix.example.com/api/webhook")
                         .merchantName("John Doe")
                         .merchantCity("Porto Alegre")
@@ -81,7 +80,7 @@ public class PixBuilderTest {
     @Test
     public void shouldNotBuildDynamicPix_NoPspUrl() {
         IllegalArgumentException validPix = assertThrows(IllegalArgumentException.class,
-                () -> PixBuilder
+                () -> Pix.builder()
                         .dynamicPix()
                         .merchantName("John Doe")
                         .merchantCity("Porto Alegre")
@@ -95,7 +94,7 @@ public class PixBuilderTest {
     @Test
     public void shouldBuildValidPix_NoAmount() {
         StaticPixPayload validPix = assertDoesNotThrow(
-                () -> PixBuilder
+                () -> Pix.builder()
                 .staticPix()
                 .merchantName("John Doe")
                 .merchantCity("Porto Alegre")
@@ -110,7 +109,7 @@ public class PixBuilderTest {
     @Test
     public void shouldNotBuildInvalidPix_MerchantIsNull() {
         // null
-        IllegalStateException nullException = assertThrows(IllegalStateException.class, () -> PixBuilder
+        IllegalStateException nullException = assertThrows(IllegalStateException.class, () -> Pix.builder()
                 .staticPix()
                 .merchantName(null)
                 .merchantCity("Porto Alegre")
@@ -125,8 +124,7 @@ public class PixBuilderTest {
     @Test
     public void shouldTruncateLargeMerchantName() {
         String name = "A".repeat(100);
-        StaticPixPayload payload = PixBuilder
-                .staticPix()
+        PixPayload payload = Pix.builder().staticPix()
                 .merchantName(name)
                 .merchantCity("Porto Alegre")
                 .merchantAmount(BigDecimal.valueOf(123.99))

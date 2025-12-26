@@ -1,7 +1,7 @@
-package io.github.altenhofen.openpixapi.core.field;
+package io.github.altenhofen.openpixapi.core.payload.field;
 
-import io.github.altenhofen.openpixapi.core.formatter.CharsetPolicy;
-import io.github.altenhofen.openpixapi.core.formatter.StringFormatter;
+import io.github.altenhofen.openpixapi.core.payload.field.formatter.CharsetPolicy;
+import io.github.altenhofen.openpixapi.core.payload.field.formatter.StringFormatter;
 
 import java.util.List;
 
@@ -20,22 +20,22 @@ public final class DynamicMerchantAccountInfo implements MerchantAccountInfo {
     }
 
     @Override
-    public CompositeEMVField toEmvField() {
-        EMVField<String> gui = new EMVField<>(
+    public CompositeEmvField toEmvField() {
+        EmvField<String> gui = new EmvField<>(
                 "Globally Unique Identifier",
                 "00",
                 "br.gov.bcb.pix",
                 new StringFormatter(14, CharsetPolicy.EMV_COMMON)
         );
 
-        EMVField<String> urlField = new EMVField<>(
+        EmvField<String> urlField = new EmvField<>(
                 "Dynamic Pix URL",
                 "25",
                 url,
                 new StringFormatter(99, CharsetPolicy.EMV_COMMON)
         );
 
-        return new CompositeEMVField(
+        return new CompositeEmvField(
                 "Merchant Account Information",
                 "26",
                 List.of(gui, urlField)

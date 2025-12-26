@@ -1,4 +1,4 @@
-package io.github.altenhofen.openpixapi.core.formatter;
+package io.github.altenhofen.openpixapi.core.payload.field.formatter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -8,10 +8,10 @@ import java.math.RoundingMode;
  *
  * @author Augusto Bussmann Altenhofen
  * @see io.github.altenhofen.openpixapi.core.payload.PixPayloadFactory
- * @see EMVFormatter
+ * @see EmvFormatter
  * @since 0.01-DEV
  */
-public final class AmountFormatter implements EMVFormatter<BigDecimal> {
+public final class AmountFormatter implements EmvFormatter<BigDecimal> {
 
     @Override
     public String format(BigDecimal value) {

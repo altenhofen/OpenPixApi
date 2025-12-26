@@ -5,6 +5,7 @@ import com.google.zxing.MultiFormatReader;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import io.github.altenhofen.openpixapi.core.Pix;
 import io.github.altenhofen.openpixapi.core.payload.PixPayload;
 import io.github.altenhofen.openpixapi.core.payload.PixPayloadFactory;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PixQrCodeGeneratorTest {
     final PixQrConfig config = PixQrConfig.defaultConfig();
-    final PixPayload staticPixPayload = PixPayloadFactory.staticPix(
+    final PixPayload staticPixPayload = Pix.newStatic(
             "email@test.com",
             "JOAO SILVA",
             "SAO PAULO",
@@ -28,7 +29,7 @@ public class PixQrCodeGeneratorTest {
             "TX123"
     );
 
-    final PixPayload dynamicPixPayload = PixPayloadFactory.dynamicPix(
+    final PixPayload dynamicPixPayload = Pix.newDynamic(
             "https://pix.example.com/api/webhook",
             "JOAO SILVA",
             "SAO PAULO",

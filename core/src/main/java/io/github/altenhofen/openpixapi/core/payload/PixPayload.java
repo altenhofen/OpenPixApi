@@ -1,36 +1,35 @@
 package io.github.altenhofen.openpixapi.core.payload;
 
-import io.github.altenhofen.openpixapi.core.field.CompositeEMVField;
-import io.github.altenhofen.openpixapi.core.field.EMVCRC16;
-import io.github.altenhofen.openpixapi.core.field.EMVField;
+import io.github.altenhofen.openpixapi.core.payload.field.CompositeEmvField;
+import io.github.altenhofen.openpixapi.core.payload.field.EmvField;
 
 import java.math.BigDecimal;
 
 public abstract class PixPayload {
 
-    private final EMVField<Integer> payloadFormatIndicator;
-    protected final EMVField<Integer> pointOfInitiationMethod;
-    protected final CompositeEMVField merchantAccount;
-    protected final EMVField<Integer> merchantCategoryCode;
-    protected final EMVField<Integer> transactionCurrency;
-    protected final EMVField<BigDecimal> transactionAmount;
-    protected final EMVField<String> countryCode;
-    protected final EMVField<String> merchantName;
-    protected final EMVField<String> merchantCity;
-    protected final CompositeEMVField additionalData;
+    private final EmvField<Integer> payloadFormatIndicator;
+    protected final EmvField<Integer> pointOfInitiationMethod;
+    protected final CompositeEmvField merchantAccount;
+    protected final EmvField<Integer> merchantCategoryCode;
+    protected final EmvField<Integer> transactionCurrency;
+    protected final EmvField<BigDecimal> transactionAmount;
+    protected final EmvField<String> countryCode;
+    protected final EmvField<String> merchantName;
+    protected final EmvField<String> merchantCity;
+    protected final CompositeEmvField additionalData;
     protected final String crc;
 
 
-    public PixPayload(EMVField<Integer> payloadFormatIndicator,
-                      EMVField<Integer> pointOfInitiationMethod,
-                      CompositeEMVField merchantAccount,
-                      EMVField<Integer> merchantCategoryCode,
-                      EMVField<Integer> transactionCurrency,
-                      EMVField<BigDecimal> transactionAmount,
-                      EMVField<String> countryCode,
-                      EMVField<String> merchantName,
-                      EMVField<String> merchantCity,
-                      CompositeEMVField additionalData
+    public PixPayload(EmvField<Integer> payloadFormatIndicator,
+                      EmvField<Integer> pointOfInitiationMethod,
+                      CompositeEmvField merchantAccount,
+                      EmvField<Integer> merchantCategoryCode,
+                      EmvField<Integer> transactionCurrency,
+                      EmvField<BigDecimal> transactionAmount,
+                      EmvField<String> countryCode,
+                      EmvField<String> merchantName,
+                      EmvField<String> merchantCity,
+                      CompositeEmvField additionalData
     ) {
         this.payloadFormatIndicator = payloadFormatIndicator;
         this.pointOfInitiationMethod = pointOfInitiationMethod;
@@ -81,49 +80,43 @@ public abstract class PixPayload {
         return toSign + crc;
     }
 
-    /**
-     *
-     * @return The String representation of payload,
-     * can be pasted on websites that generate the QRCode
-     * such as <code>pix-qr-decoder/</code>
-     */
-    public EMVField<Integer> getPayloadFormatIndicator() {
+    public EmvField<Integer> getPayloadFormatIndicator() {
         return payloadFormatIndicator;
     }
 
-    public EMVField<Integer> getPointOfInitiationMethod() {
+    public EmvField<Integer> getPointOfInitiationMethod() {
         return pointOfInitiationMethod;
     }
 
-    public CompositeEMVField getMerchantAccount() {
+    public CompositeEmvField getMerchantAccount() {
         return merchantAccount;
     }
 
-    public EMVField<Integer> getMerchantCategoryCode() {
+    public EmvField<Integer> getMerchantCategoryCode() {
         return merchantCategoryCode;
     }
 
-    public EMVField<Integer> getTransactionCurrency() {
+    public EmvField<Integer> getTransactionCurrency() {
         return transactionCurrency;
     }
 
-    public EMVField<BigDecimal> getTransactionAmount() {
+    public EmvField<BigDecimal> getTransactionAmount() {
         return transactionAmount;
     }
 
-    public EMVField<String> getCountryCode() {
+    public EmvField<String> getCountryCode() {
         return countryCode;
     }
 
-    public EMVField<String> getMerchantName() {
+    public EmvField<String> getMerchantName() {
         return merchantName;
     }
 
-    public EMVField<String> getMerchantCity() {
+    public EmvField<String> getMerchantCity() {
         return merchantCity;
     }
 
-    public CompositeEMVField getAdditionalData() {
+    public CompositeEmvField getAdditionalData() {
         return additionalData;
     }
 
@@ -131,6 +124,13 @@ public abstract class PixPayload {
         return crc;
     }
 
+
+    /**
+     *
+     * @return The String representation of payload,
+     * can be pasted on websites that generate the QRCode
+     * such as <code>pix-qr-decoder/</code>
+     */
     public String getEmv() {
         return appendCRC(this.NoCrcString());
     }

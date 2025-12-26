@@ -1,5 +1,6 @@
 package io.github.altenhofen.openpixapi.core.formatter;
 
+import io.github.altenhofen.openpixapi.core.payload.field.formatter.PaddingPolicy;
 import org.junit.jupiter.api.Test;
 
 

@@ -1,7 +1,4 @@
-package io.github.altenhofen.openpixapi.core.pixbuilder;
-
-import io.github.altenhofen.openpixapi.core.payload.StaticPixPayload;
-import io.github.altenhofen.openpixapi.core.payload.PixPayloadFactory;
+package io.github.altenhofen.openpixapi.core.payload;
 
 public class StaticPixBuilder extends AbstractPixBuilder<StaticPixBuilder> {
 
