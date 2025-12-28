@@ -1,8 +1,5 @@
 package io.github.altenhofen.openpixapi.core;
 
-import io.github.altenhofen.openpixapi.core.payload.*;
-import io.github.altenhofen.openpixapi.core.payload.parser.EmvParseException;
-import io.github.altenhofen.openpixapi.core.payload.parser.PixParser;
 import java.math.BigDecimal;
 
 /** Entrypoint for the Pix library API. */
