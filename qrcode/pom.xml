@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>io.github.altenhofen.openpixapi</groupId>
-    <artifactId>qrcode</artifactId>
+    <artifactId>openpixapi-qrcode</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -19,11 +19,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>io.github.altenhofen.openpixapi</groupId>
-            <artifactId>core</artifactId>
-            <version>0.3.0</version>
-        </dependency>
         <!-- tests -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>

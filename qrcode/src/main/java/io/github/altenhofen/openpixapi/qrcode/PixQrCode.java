@@ -115,6 +115,12 @@ public class PixQrCode {
     return svg.svg();
   }
 
+  public String toBase64Encode() throws PixQrGenerationException {
+    PixQrOutput output = build(PixQrFormat.BASE64_PNG);
+    PixQrOutput.Base64 base64 = (PixQrOutput.Base64) output;
+    return base64.base64();
+  }
+
   private PixQrOutput build(PixQrFormat format) throws PixQrGenerationException {
     PixQrConfig config =
         PixQrConfig.builder()

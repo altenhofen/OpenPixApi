@@ -10,6 +10,7 @@
     <modules>
         <module>core</module>
         <module>qrcode</module>
+        <module>openpixapi-spring-boot-starter</module>
     </modules>
 
     <properties>

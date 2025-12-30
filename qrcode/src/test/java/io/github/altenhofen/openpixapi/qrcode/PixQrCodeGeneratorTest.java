@@ -89,7 +89,7 @@ public class PixQrCodeGeneratorTest {
         (PixQrOutput.Base64)
             PixQrCodeGenerator.generate(staticPixPayload.getEmv(), PixQrFormat.BASE64_PNG, config);
 
-    byte[] bytes = Base64.getDecoder().decode(base64.value());
+    byte[] bytes = Base64.getDecoder().decode(base64.base64());
 
     BufferedImage image = ImageIO.read(new ByteArrayInputStream(bytes));
     assertNotNull(image);
