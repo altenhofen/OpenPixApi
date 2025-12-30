@@ -32,21 +32,21 @@ jobs:
           java-version: 17
           cache: maven
 
-#      # Configure Maven servers (OSSRH)
-#      - uses: s4u/maven-settings-action@v3.0.0
-#        with:
-#          servers: |
-#            [
-#              {
-#                "id": "ossrh",
-#                "username": "${{ secrets.OSSRH_USERNAME }}",
-#                "password": "${{ secrets.OSSRH_TOKEN }}"
-#              },
-#              {
-#                "id": "ossrh-snapshots",
-#                "username": "${{ secrets.OSSRH_USERNAME }}",
-#                "password": "${{ secrets.OSSRH_TOKEN }}"
-#              }
+      # Configure Maven servers (OSSRH)
+      - uses: s4u/maven-settings-action@v3.0.0
+        with:
+          servers: |
+            [
+              {
+                "id": "ossrh",
+                "username": "${{ secrets.OSSRH_USERNAME }}",
+                "password": "${{ secrets.OSSRH_TOKEN }}"
+              },
+              {
+                "id": "ossrh-snapshots",
+                "username": "${{ secrets.OSSRH_USERNAME }}",
+                "password": "${{ secrets.OSSRH_TOKEN }}"
+              }
             ]
 
       # Determine if this is a release (tag) or snapshot
@@ -70,30 +70,11 @@ jobs:
 
       # Build all modules
       - name: Build with Maven
-        run: mvn -B clean package
+        run: mvn -B clean package -P maven-publisher
 
-      - name: Generate Maven settings.xml
-        run: |
-          mkdir -p $HOME/.m2
-          cat > $HOME/.m2/settings.xml <<EOF <settings>
-          <servers>
-          <server>
-          <id>ossrh</id>
-          <username>${{ secrets.OSSRH_USERNAME }}</username>
-          <password>${{ secrets.OSSRH_TOKEN }}</password>
-          </server>
-          <server>
-          <id>ossrh-snapshots</id>
-          <username>${{ secrets.OSSRH_USERNAME }}</username>
-          <password>${{ secrets.OSSRH_TOKEN }}</password>
-          </server>
-          </servers>
-          </settings>
-          EOF
-
-    # Deploy artifacts to Maven Central
+      # Deploy artifacts to Maven Central
       - name: Deploy to OSSRH
-        run: mvn -B deploy -P maven-publisher --settings $HOME/.m2/settings.xml
+        run: mvn -B deploy -P maven-publisher
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
