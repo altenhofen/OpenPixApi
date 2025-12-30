@@ -7,8 +7,12 @@
   <parent>
     <groupId>io.github.altenhofen</groupId>
     <artifactId>openpixapi</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.0-SNAPSHOT</version>
   </parent>
+
+  <name>OpenPixApi</name>
+  <description>OpenPixApi starter for Spring Boot</description>
+  <url>https://github.com/altenhofen/openpixapi</url>
 
   <artifactId>openpixapi-spring-boot-starter</artifactId>
   <packaging>jar</packaging>
@@ -19,20 +23,16 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-autoconfigure</artifactId>
     </dependency>
-
     <!-- HTTP client (choose one) -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
       <optional>true</optional>
     </dependency>
-
-
     <!-- Optional: configuration metadata -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -42,16 +42,26 @@
     <dependency>
       <groupId>io.github.altenhofen.openpixapi</groupId>
       <artifactId>openpixapi-core</artifactId>
-      <version>0.3.0</version>
+      <version>0.3.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>io.github.altenhofen.openpixapi</groupId>
       <artifactId>openpixapi-qrcode</artifactId>
-      <version>0.3.0</version>
+      <version>0.3.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
+
+    <build>
+    <plugins>
+      <!-- Spring Boot Maven plugin (optional for starter) -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 
   <dependencyManagement>
     <dependencies>
