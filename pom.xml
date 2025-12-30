@@ -17,6 +17,28 @@
   <description>Multi-module Java library for Pix and QRCode</description>
   <url>https://github.com/altenhofen/openpixapi</url>
 
+  <licenses>
+    <license>
+      <name>Apache 2.0</name>
+      <url>https://opensource.org/license/apache-2-0</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Augusto Bussmann Altenhofen</name>
+      <email>augustoaltenhofen@protonmail.com</email>
+      <organization>OpenPixApi</organization>
+      <organizationUrl>https://github.com/altenhofen</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/altenhofen/openpixapi.git</connection>
+    <developerConnection>scm:git:ssh://github.com:altenhofen/openpixapi.git</developerConnection>
+    <url>https://github.com/altenhofen/openpixapi/tree/main</url>
+  </scm>
+
 
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
@@ -85,6 +107,34 @@
                 <phase>verify</phase>
                 <goals>
                   <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.3.0</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <!-- Javadoc Plugin -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.6.3</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
                 </goals>
               </execution>
             </executions>
