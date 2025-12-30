@@ -115,6 +115,12 @@ public class PixQrCode {
     return svg.svg();
   }
 
+  /**
+   * Creates a Base64-encoded PNG
+   *
+   * @return the base64 encoded string
+   * @throws PixQrGenerationException if image creation failed
+   */
   public String toBase64Encode() throws PixQrGenerationException {
     PixQrOutput output = build(PixQrFormat.BASE64_PNG);
     PixQrOutput.Base64 base64 = (PixQrOutput.Base64) output;
