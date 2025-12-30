@@ -75,8 +75,8 @@ public class QrCodeService {
   public PixQrCode builder(String payload) {
     return PixQrCode.from(payload)
         .size(properties.getSize())
-        .foreground(Color.decode(properties.getForeground()))
-        .background(Color.decode(properties.getBackground()))
+        .foreground(properties.getForeground())
+        .background(properties.getBackground())
         .errorCorrectionLevel(parseErrorCorrectionLevel(properties.getErrorCorrectionLevel()));
   }
 

@@ -3,16 +3,18 @@ package io.github.altenhofen.openpixapi.spring;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
+
 /** Configuration class for QrCode image */
 @Component
 @ConfigurationProperties(prefix = "openpix.qrcode")
 public class PixQrCodeProperties {
 
   /** Default QR foreground color, in hex e.g. "#000000" */
-  private String foreground = "#000000";
+  private Color foreground = Color.BLACK; // "#000000"
 
   /** Default QR background color, in hex e.g. "#FFFFFF" */
-  private String background = "#FFFFFF";
+  private Color background = Color.WHITE; // "#FFFFFF"
 
   /** Default QR error correction level: L, M, Q, H */
   private String errorCorrectionLevel = "M";
@@ -25,9 +27,9 @@ public class PixQrCodeProperties {
   /**
    * Get foregorund color.
    *
-   * @return hexadecimal string with foreground color value
+   * @return foreground color value
    */
-  public String getForeground() {
+  public Color getForeground() {
     return foreground;
   }
 
@@ -36,25 +38,25 @@ public class PixQrCodeProperties {
    *
    * @param foreground hex value
    */
-  public void setForeground(String foreground) {
+  public void setForeground(Color foreground) {
     this.foreground = foreground;
   }
 
   /**
    * Get the background color.
    *
-   * @return hexadecimal string with background color value
+   * @return background color value
    */
-  public String getBackground() {
+  public Color getBackground() {
     return background;
   }
 
   /**
    * Sets the background color
    *
-   * @param background hex value
+   * @param background value
    */
-  public void setBackground(String background) {
+  public void setBackground(Color background) {
     this.background = background;
   }
 
