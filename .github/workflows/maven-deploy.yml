@@ -1,10 +1,10 @@
 name: Maven Deploy
 
 on:
-  workflow_dispatch:      # manual trigger
+  workflow_dispatch:
   push:
     tags:
-      - 'v*'              # release trigger on tags like v0.3.0
+      - 'v*'
 
 jobs:
   build-deploy:
@@ -14,17 +14,14 @@ jobs:
       packages: write
 
     steps:
-      # Checkout code
       - uses: actions/checkout@v4
 
-      # Import GPG key for signing
       - name: Import GPG key
         uses: crazy-max/ghaction-import-gpg@v6
         with:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
-      # Setup JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -32,7 +29,6 @@ jobs:
           java-version: 17
           cache: maven
 
-      # Configure Maven servers (OSSRH)
       - uses: s4u/maven-settings-action@v3.0.0
         with:
           servers: |
@@ -49,7 +45,6 @@ jobs:
               }
             ]
 
-      # Determine if this is a release (tag) or snapshot
       - name: Determine release or snapshot
         run: |
           if [[ $GITHUB_REF == refs/tags/* ]]; then
@@ -59,46 +54,41 @@ jobs:
             echo "RELEASE=false" >> $GITHUB_ENV
           fi
 
-      # Set release version (remove -SNAPSHOT if tag)
+      # 1. Strip -SNAPSHOT from all modules if this is a Release
       - name: Set release version
         if: env.RELEASE == 'true'
-        run: mvn versions:set -DremoveSnapshot
+        run: mvn versions:set -DremoveSnapshot -DprocessAllModules=true
 
-      # Get current project version
-      - name: Get project version
-        run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
-
-      # Build all modules
-      - name: Build with Maven
-        run: mvn -B clean package -P maven-publisher
-
-      # Deploy artifacts to Maven Central
-      - name: Deploy to OSSRH
-        run: mvn -B deploy -P maven-publisher
+      # 2. Deploy (Combines build, sign, and upload)
+      # Added -DskipTests to speed up deploy, remove if you want tests to run here
+      - name: Deploy to Maven Central
+        run: mvn -B deploy -P maven-publisher -DskipTests
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
-      # Create GitHub Release for tags
+      # 3. Create GitHub Release (Using modern action)
       - name: Create GitHub Release
         if: env.RELEASE == 'true'
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.TAG_NAME }}
-          release_name: Release ${{ env.TAG_NAME }}
+          name: Release ${{ env.TAG_NAME }}
           draft: false
           prerelease: false
 
-      #  Commit next snapshot version
+      # 4. Bump to next SNAPSHOT version (Only on Release)
       - name: Bump next snapshot version
-        run: mvn versions:set -DnextSnapshot
+        if: env.RELEASE == 'true'
+        run: mvn versions:set -DnextSnapshot -DprocessAllModules=true
 
+      # 5. Commit the new SNAPSHOT version back to main
       - name: Commit snapshot version
+        if: env.RELEASE == 'true'
         run: |
-          git config --global user.name "altenhofen"
-          git config --global user.email "augustoaltenhofen@protonmail.com"
-          git add pom.xml
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Commit all POMs changed by versions:set
+          git add "**/pom.xml"
           git commit -m "[CI] Bumped to next snapshot"
-          git push origin HEAD
-        if: env.RELEASE == 'true' || env.RELEASE == 'false'
+          # Push specifically to the branch (usually main), not the tag
+          git push origin HEAD:main
