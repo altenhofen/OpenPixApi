@@ -21,9 +21,9 @@ public sealed interface PixQrOutput
   /**
    * base64 encoded image representation
    *
-   * @param value base64 encoded png image
+   * @param base64 base64 encoded png image
    */
-  record Base64(String value) implements PixQrOutput {}
+  record Base64(String base64) implements PixQrOutput {}
 
   /**
    * Unicode (braille) text representation
@@ -55,11 +55,11 @@ public sealed interface PixQrOutput
   /**
    * base64 encoded image representation
    *
-   * @param value base64 encoded png image
+   * @param base64 base64 encoded png image
    * @return the QRCode base64 encoded png
    */
-  static Base64 base64(String value) {
-    return new Base64(value);
+  static Base64 base64(String base64) {
+    return new Base64(base64);
   }
 
   /**

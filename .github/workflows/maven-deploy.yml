@@ -1,0 +1,104 @@
+name: Maven Deploy
+
+on:
+  workflow_dispatch:      # manual trigger
+  push:
+    tags:
+      - 'v*'              # release trigger on tags like v0.3.0
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      # Checkout code
+      - uses: actions/checkout@v4
+
+      # Import GPG key for signing
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
+      # Setup JDK 17
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+
+      # Configure Maven servers (OSSRH)
+      - uses: s4u/maven-settings-action@v3.0.0
+        with:
+          servers: |
+            [
+              {
+                "id": "ossrh",
+                "username": "${{ secrets.OSSRH_USERNAME }}",
+                "password": "${{ secrets.OSSRH_TOKEN }}"
+              },
+              {
+                "id": "ossrh-snapshots",
+                "username": "${{ secrets.OSSRH_USERNAME }}",
+                "password": "${{ secrets.OSSRH_TOKEN }}"
+              }
+            ]
+
+      # Determine if this is a release (tag) or snapshot
+      - name: Determine release or snapshot
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            echo "RELEASE=true" >> $GITHUB_ENV
+            echo "TAG_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
+          else
+            echo "RELEASE=false" >> $GITHUB_ENV
+          fi
+
+      # Set release version (remove -SNAPSHOT if tag)
+      - name: Set release version
+        if: env.RELEASE == 'true'
+        run: mvn versions:set -DremoveSnapshot
+
+      # Get current project version
+      - name: Get project version
+        run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+      # Build all modules
+      - name: Build with Maven
+        run: mvn -B clean package -P maven-publisher
+
+      # Deploy artifacts to Maven Central
+      - name: Deploy to OSSRH
+        run: mvn -B deploy -P maven-publisher --settings ${{ github.workspace }}/settings.xml
+        env:
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      # Create GitHub Release for tags
+      - name: Create GitHub Release
+        if: env.RELEASE == 'true'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.TAG_NAME }}
+          release_name: Release ${{ env.TAG_NAME }}
+          draft: false
+          prerelease: false
+
+      #  Commit next snapshot version
+      - name: Bump next snapshot version
+        run: mvn versions:set -DnextSnapshot
+
+      - name: Commit snapshot version
+        run: |
+          git config --global user.name "altenhofen"
+          git config --global user.email "augustoaltenhofen@protonmail.com"
+          git add pom.xml
+          git commit -m "[CI] Bumped to next snapshot"
+          git push origin HEAD
+        if: env.RELEASE == 'true' || env.RELEASE == 'false'
