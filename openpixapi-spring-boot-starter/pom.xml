@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.github.altenhofen</groupId>
     <artifactId>openpixapi</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -44,13 +44,13 @@
     <dependency>
       <groupId>io.github.altenhofen.openpixapi</groupId>
       <artifactId>openpixapi-core</artifactId>
-      <version>1.0.3</version>
+      <version>1.0.4</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>io.github.altenhofen.openpixapi</groupId>
       <artifactId>openpixapi-qrcode</artifactId>
-      <version>1.0.3</version>
+      <version>1.0.4</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
