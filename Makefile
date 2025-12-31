@@ -42,11 +42,12 @@ docs:
 
 release:
 	@echo "Current version: $$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
-	@read -p "Enter Release Version (e.g., 1.0.1): " version; \
+	@read -p "Enter Release Version (e.g., 1.0.4): " version; \
 	echo "Updating project to version $$version..."; \
 	mvn versions:set -DnewVersion=$$version -DprocessAllModules=true -DgenerateBackupPoms=false; \
-	git add "**/pom.xml"; \
+	# Force add the root pom.xml AND all sub-module pom.xml files
+	git add pom.xml */pom.xml; \
 	git commit -m "Prepare release v$$version"; \
 	git tag -a "v$$version" -m "Release v$$version"; \
 	git push origin master --tags; \
-	echo "Release v$$version pushed! Check Actions."
+	echo "Release v$$version pushed!"

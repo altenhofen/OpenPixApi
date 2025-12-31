@@ -7,6 +7,7 @@
         <groupId>io.github.altenhofen</groupId>
         <artifactId>openpixapi</artifactId>
         <version>1.0.3</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>io.github.altenhofen.openpixapi</groupId>
@@ -31,7 +32,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
+            <version>24.1.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

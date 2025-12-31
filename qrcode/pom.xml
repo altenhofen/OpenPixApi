@@ -7,6 +7,7 @@
     <groupId>io.github.altenhofen</groupId>
     <artifactId>openpixapi</artifactId>
     <version>1.0.3</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <groupId>io.github.altenhofen.openpixapi</groupId>
