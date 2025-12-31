@@ -41,16 +41,12 @@ docs:
 
 
 release:
-	@echo "Current project version: $(PROJECT_VERSION)"
-	@read -p "Enter Release Version (default: $(SUGGESTED_VERSION)): " v; \
-	VERSION=$${v:-$(SUGGESTED_VERSION)}; \
-	echo "This will create and push tag: v$$VERSION"; \
-	read -p "Are you sure? [y/N] " confirmation; \
-	if [ "$$confirmation" = "y" ]; then \
-		git tag -a "v$$VERSION" -m "Release v$$VERSION"; \
-		git push origin "v$$VERSION"; \
-		echo "Tag v$$VERSION pushed! Watch the deployment here: https://github.com/$(shell git config --get remote.origin.url | sed 's/.*github.com[:/]\(.*\).git/\1/')/actions"; \
-		echo "IMPORTANT: Wait for the Action to finish, then run 'git pull' to get the new SNAPSHOT version."; \
-	else \
-		echo "Release cancelled."; \
-	fi
+	@echo "Current version: $$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
+	@read -p "Enter Release Version (e.g., 1.0.1): " version; \
+	echo "Updating project to version $$version..."; \
+	mvn versions:set -DnewVersion=$$version -DprocessAllModules=true -DgenerateBackupPoms=false; \
+	git add "**/pom.xml"; \
+	git commit -m "Prepare release v$$version"; \
+	git tag -a "v$$version" -m "Release v$$version"; \
+	git push origin master --tags; \
+	echo "Release v$$version pushed! Check Actions."
