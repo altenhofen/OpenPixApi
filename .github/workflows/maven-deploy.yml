@@ -45,49 +45,32 @@ jobs:
               }
             ]
 
-      - name: Determine release or snapshot
+      # 1. Enforce that the POM version matches the Tag
+      - name: Ensure POM version matches Tag
         run: |
-          if [[ $GITHUB_REF == refs/tags/* ]]; then
-            echo "RELEASE=true" >> $GITHUB_ENV
-            echo "TAG_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
-          else
-            echo "RELEASE=false" >> $GITHUB_ENV
-          fi
+          TAG_VERSION=${GITHUB_REF##*/v}
+          echo "Tag Version: $TAG_VERSION"
+          mvn versions:set -DnewVersion=$TAG_VERSION -DprocessAllModules=true -DgenerateBackupPoms=false
 
-      # 1. Strip -SNAPSHOT from all modules if this is a Release
-      - name: Set release version
-        if: env.RELEASE == 'true'
-        run: mvn versions:set -DremoveSnapshot -DprocessAllModules=true
-
-      # 2. Deploy (Combines build, sign, and upload)
-      # Added -DskipTests to speed up deploy, remove if you want tests to run here
       - name: Deploy to Maven Central
         run: mvn -B deploy -P maven-publisher -DskipTests
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
-      # 3. Create GitHub Release (Using modern action)
       - name: Create GitHub Release
-        if: env.RELEASE == 'true'
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ env.TAG_NAME }}
-          name: Release ${{ env.TAG_NAME }}
+          name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
 
-      # 4. Bump to next SNAPSHOT version (Only on Release)
       - name: Bump next snapshot version
-        if: env.RELEASE == 'true'
-        run: mvn versions:set -DnextSnapshot -DprocessAllModules=true
+        run: mvn versions:set -DnextSnapshot -DprocessAllModules=true -DgenerateBackupPoms=false
 
-      # 5. Commit the new SNAPSHOT version back to master
       - name: Commit snapshot version
-        if: env.RELEASE == 'true'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Commit all POMs changed by versions:set
           git add "**/pom.xml"
           git commit -m "[CI] Bumped to next snapshot"
           git push origin HEAD:master
