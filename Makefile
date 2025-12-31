@@ -1,9 +1,8 @@
-.PHONY: help build test clean release format check docs
+SHELL := /bin/bash
+.PHONY: help build test clean release format check docs check-status
 
 # Extract the current version from pom.xml (e.g., 0.3.0-SNAPSHOT)
-PROJECT_VERSION := $(shell mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-# Remove -SNAPSHOT to suggest the tag name (e.g., 0.3.0)
-SUGGESTED_VERSION := $(shell echo $(PROJECT_VERSION) | sed 's/-SNAPSHOT//')
+BRANCH := master
 
 help:
 	@echo "Available targets:"
@@ -39,15 +38,28 @@ docs:
 	@echo "Docs generated in target/site/apidocs/"
 
 
+release: check-status
+	@if [ -z "$(v)" ]; then \
+		echo "Error: Version argument missing."; \
+		echo "Usage: make release v=1.0.5"; \
+		exit 1; \
+	fi
+	@echo "Preparing release v$(v) on branch $(BRANCH)..."
+	@mvn versions:set -DnewVersion=$(v) -DprocessAllModules=true -DgenerateBackupPoms=false
+	@git add pom.xml */pom.xml
+	@git commit -m "Prepare release v$(v)"
+	@git tag -a "v$(v)" -m "Release v$(v)"
+	@git push origin $(BRANCH) --tags
+	@echo "✅ Done! v$(v) pushed. Watch GitHub Actions for deployment."
 
-release:
-	@echo "Current version: $$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
-	@read -p "Enter Release Version (e.g., 1.0.4): " version; \
-	echo "Updating project to version $$version..."; \
-	mvn versions:set -DnewVersion=$$version -DprocessAllModules=true -DgenerateBackupPoms=false; \
-	# Force add the root pom.xml AND all sub-module pom.xml files
-	git add pom.xml */pom.xml; \
-	git commit -m "Prepare release v$$version"; \
-	git tag -a "v$$version" -m "Release v$$version"; \
-	git push origin master --tags; \
-	echo "Release v$$version pushed!"
+check-status:
+	@# Check if we are on the correct branch
+	@if [ "$$(git rev-parse --abbrev-ref HEAD)" != "$(BRANCH)" ]; then \
+		echo "Error: You are not on the '$(BRANCH)' branch."; \
+		exit 1; \
+	fi
+	@# Check if the working directory is clean (ignore untracked files)
+	@if ! git diff-index --quiet HEAD --; then \
+		echo "Error: Your git working directory is not clean. Commit or stash changes first."; \
+		exit 1; \
+	fi
