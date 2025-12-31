@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.github.altenhofen</groupId>
     <artifactId>openpixapi</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <version>1.0.2</version>
   </parent>
 
   <name>OpenPixApi</name>
@@ -43,13 +43,13 @@
     <dependency>
       <groupId>io.github.altenhofen.openpixapi</groupId>
       <artifactId>openpixapi-core</artifactId>
-      <version>0.3.0-SNAPSHOT</version>
+      <version>1.0.2</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>io.github.altenhofen.openpixapi</groupId>
       <artifactId>openpixapi-qrcode</artifactId>
-      <version>0.3.0-SNAPSHOT</version>
+      <version>1.0.2</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
