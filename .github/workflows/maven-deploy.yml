@@ -81,7 +81,7 @@ jobs:
         if: env.RELEASE == 'true'
         run: mvn versions:set -DnextSnapshot -DprocessAllModules=true
 
-      # 5. Commit the new SNAPSHOT version back to main
+      # 5. Commit the new SNAPSHOT version back to master
       - name: Commit snapshot version
         if: env.RELEASE == 'true'
         run: |
@@ -90,5 +90,4 @@ jobs:
           # Commit all POMs changed by versions:set
           git add "**/pom.xml"
           git commit -m "[CI] Bumped to next snapshot"
-          # Push specifically to the branch (usually main), not the tag
-          git push origin HEAD:main
+          git push origin HEAD:master
