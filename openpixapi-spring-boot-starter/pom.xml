@@ -14,6 +14,7 @@
   <description>OpenPixApi starter for Spring Boot</description>
   <url>https://github.com/altenhofen/openpixapi</url>
 
+  <groupId>io.github.altenhofen.openpixapi</groupId>
   <artifactId>openpixapi-spring-boot-starter</artifactId>
   <packaging>jar</packaging>
 
