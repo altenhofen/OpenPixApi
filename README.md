@@ -10,8 +10,6 @@ It's divided in three modules:
 Depends only on ZXing for QRCode generation and parsing.
 - **openpixapi-spring-boot-starter**: plugin for spring boot
 
-Some of these features are not yet implemented see [the roadmap](ROADMAP.md) and/or [changelog](CHANGELOG.md).
-
 ## Usage
 Using fluent API with the Pix class:
 ```java
@@ -40,14 +38,31 @@ They can also be directly typed to `StaticPixPayload` and `DynamicPixPayload` fo
 
 ## Installation
 
-As of this version we don't have a [mvn repository](https://mvnrepository.com) package. It'll be released on version 
-1.0.0
+For the core module (EMV parsing, payload creation):
+```xml
+<dependency>
+    <groupId>io.github.altenhofen</groupId>
+    <artifactId>openpixapi</artifactId>
+    <version>1.0.7</version>
+</dependency>
+```
 
-Either way, you can download the source code and run `mvn install` to test the library's .jar.
+For the QRCode module:
+```xml
+<dependency>
+    <groupId>io.github.altenhofen.openpixapi</groupId>
+    <artifactId>openpixapi-qrcode</artifactId>
+    <version>1.0.7</version>
+</dependency>
+```
 
-```bash
-# One command to install
-mvn install
+For the Spring Boot starter module:
+```xml
+<dependency>
+    <groupId>io.github.altenhofen</groupId>
+    <artifactId>openpixapi-spring-boot-starter</artifactId>
+    <version>0.3.0</version>
+</dependency>
 ```
 ## Features
 
